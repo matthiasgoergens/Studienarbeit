@@ -16,7 +16,7 @@ set A := {<s,c,h,s_,c_,h_> in V * V
       	  with c+1==c_
 	  and h >= h_ and h_ == s_ - s
 	  };
-var f[A] real;
+var f[A] real >= 0 <= infinity;
 
 set aus[<s,c,h>    in V] :=   {<s, c, h>}*V inter A;
 set ein[<s_,c_,h_> in V] := V*{<s_,c_,h_>}  inter A;
@@ -33,7 +33,7 @@ subto balance:
 set Y := {<s,c> in states * cluster
     with c <= s};
 param p[<s,c> in Y] := random(-10,10);
-var y[Y] real >= -infinity <= infinity;
+var y[Y] real >= 0 <= infinity;
 
 subto coupling:
 forall <sx,cx> in Y:
