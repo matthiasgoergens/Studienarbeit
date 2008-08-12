@@ -1,10 +1,11 @@
-param ncluster := 10;
-param nstates := 10;
+param nn := 10;
+param ncluster := nn;
+param nstates := nn;
 set cluster := {1 .. ncluster};
 set states := {1 .. nstates};
 
-set V := states*cluster + {<0,0>};
-#set V_ := V \ {<0,0>}\ ({nstates}*cluster);
+set V := {<s,c> in states*cluster with s >= c} + {<0,0>};
+set V_ := V \ ({nstates}*cluster);
 
 set aus[<s,c> in V] := {<s+1,c>,<s+1,c+1>} inter V;
 set ein[<s,c> in V] := {<s-1,c>,<s-1,c-1>} inter V;
@@ -12,9 +13,9 @@ set ein[<s,c> in V] := {<s-1,c>,<s-1,c-1>} inter V;
 set A := union <s,c> in V: {<s,c>}*aus[s,c];
 
 #var y[states * cluster] binary;
-var y[V] real;# >=0 <=1;
+var y[V] real >=0 <=1;
 
-var f[A] real;# >= 0 <= 1;
+var f[A] real >= 0;
 
 #y = map (sum . aus) V
 
@@ -26,14 +27,21 @@ subto ausf:
 subto einf:
       forall <s,c> in V \ {<0,0>}:
       	     sum <s_,c_> in ein[s,c]: f[s_,c_,s,c] == y[s,c];
-## Erhält die Ganzzahligkeit nicht:
-#subto absteigend:
-#      forall <c> in cluster with c > 1:
-#      	     sum <s> in states: y[s, c] <=
-#	     sum <s> in states: y[s, c-1] ;
+## Erhält die Ganzzahligkeit nicht: #?
+subto absteigend:
+      forall <c> in cluster with c > 1:
+      	     sum <s> in proj(states*{<c>} inter V, <1>) : y[s, c] <=
+	     sum <s> in proj(states*{<c>} inter V, <1>): y[s, c-1] ;
+subto diag:
+     forall <s> in states with s>2:
+      	     y[s,s] == y[s-1,s-1];
+subto ndiag:
+      forall <s,c> in V_ with c>s/2 and c > 1:
+      	     forall <sx,cx> in aus[s,c] inter {<s+1,c+1>}:
+ 	      	     y[s,c] == y[s+1,c+1];
 
 
-param p[<s,c> in V] := random(-10,10);
+param p[<s,c> in V] := random(-1,1);
 
 maximize s: sum <s,c> in V: p[s,c]*y[s,c];
 

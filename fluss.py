@@ -1,15 +1,14 @@
-param ncluster :=10;
-param nstates := 10;
-param hoehe := 10;
+param ncluster := 20;
+param nstates := 20;
+param hoehe := 20;
 set cluster := {1 .. ncluster};
 set states := {1 .. nstates};
 set hoehen := {1 .. hoehe};
 
 set V_ := {<s,c,h> in states * cluster * hoehen
     #nur so ueberhaupt erreichbar:
-    with  #c <= s and
-    	 h*c <= s
-};
+    with c <= s and
+    	 h <= s/c};
 set V := V_ + {<0,0,hoehe>};
 
 
@@ -22,6 +21,7 @@ var f[A] real >= 0 <= infinity;
 set aus[<s,c,h>    in V] :=   {<s, c, h>}*V inter A;
 set ein[<s_,c_,h_> in V] := V*{<s_,c_,h_>}  inter A;
 
+# B * f = b
 subto eingang:
       sum <s,c,h,s_, c_, h_> in aus[0,0,hoehe]: f[s,c,h,s_,c_,h_] == 1;
 subto balance:
@@ -36,6 +36,7 @@ set Y := {<s,c> in states * cluster
 param p[<s,c> in Y] := random(-10,10);
 var y[Y] real >= 0 <= infinity;
 
+## A * f = y
 subto coupling:
 forall <sx,cx> in Y:
        y[sx,cx] == sum <s, c, h, s_, c_, h_> in A
