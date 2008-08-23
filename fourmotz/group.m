@@ -1,11 +1,21 @@
-function m = group(A, n, row);
-if nargin < 3,
+function m = group(A, row);
+if nargin < 2,
 	row = 1; 			% if row was not specified: choose 1
 end
 
+
+
 [y,x] = size(A);
+
+
+n = -1/2 + sqrt(1/4 + 2*x);
 r = A(row, :);
-for i = 0:n:x-1
-  m (i/n+1,:) = r(i+1:i+n);
+
+start = 0;
+stop = 0;
+for i = 1:n
+  start = stop + 1;
+  stop = start + i - 1;
+  m (i,1:i) = r(start:stop);
 end
 

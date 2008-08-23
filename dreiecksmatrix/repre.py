@@ -3,6 +3,7 @@ from pprint import pprint
 import numpy as np
 import scipy as sp
 import scipy.linalg as la
+import getopt
 
 def flatten1(m):
     return sum(m, [])
@@ -20,19 +21,77 @@ def part(n,k):
         return [[]]
     else:
         return flatten1([cross([[i]],part(n-i,i)) for i in range(min(k, n), 0, -1)])
-        
+def flattenTri(A, s):
+    return [A[i][0:i+1] for i in range(s)]
+
+
 def part2array(p):
     Sum = sum(p)
     i = 0
     r = enumerate(p)
+    t = (flatten1([S*[c*[0]+[1]+(Sum-c-1)*[0]] for c,S in r]))
+    return flatten1(flattenTri(t, Sum))
+#    return (flatten1 (t))
+
+def part2square(p):
+    Sum = sum(p)
+    i = 0
+    r = enumerate(p)
+    t = (flatten1([S*[c*[0]+[1]+(Sum-c-1)*[0]] for c,S in r]))
+#    return flatten1(flattenTri(t, Sum))
+    return (flatten1 (t))
+
     
-    return (flatten1 (flatten1([S*[c*[0]+[1]+(Sum-c-1)*[0]] for c,S in r])))
 
 def matlabify (r):
+    n = size(r)
     return '['+''.join([' '.join(map(str, line))+';\n' for line in r])+']'
 
-N = 10
-reps = [part2array(reversed(p)) for p in part(N,N)]
+#def fluss(r):
+#    def coor(y,x):
+#        if y < x:
+#            return 0
+#        return r[y*(y+1)/2 + x]
+#    def group(r, l):
+#        if r:
+#            return [r[0:l]] + group(r[l:], l+1)
+#        else:
+#            return []
+#    print group (r)
+    
+
+def lrsify (r):
+    if r[0]:
+        n = len(r)
+    else:
+        n = 1
+#    print r
+    dim = len(r[0])
+    A = '\n'.join([' '.join(map(str, [1]+line)) for line in r])
+    return """fnord
+
+V-representation
+begin
+%(n)s  %(dp)s  integer
+%(A)s
+end""" % {'n': n, 'dp': dim+1, 'A':A};
+
+#def fluss(
+
+import sys
+N = int(sys.argv[1])
+
+# Fluss
+def fluesse(N):
+    reps = [part2square(p) for p in part(N,N)]
+    pprint( reps)
+#    def fluss(rep):
+        
+    print lrsify(reps)
+fluesse (N)
+
+#reps = [part2square(p) for p in part(N,N)]
+#print map (reversed, part (N,N))
 #pprint (reps)
 #pprint (reps)
 #print np.matrix(reps)
@@ -41,7 +100,13 @@ reps = [part2array(reversed(p)) for p in part(N,N)]
 #print "L\n",l
 #print "U\n",u
 #pprint(reps)
-print matlabify(reps)
+#print reps
+
+
+#fluss(reps)
+#print len(reps)
+
+#print matlabify(reps)
 # print "SUM:"
 # print (sum(reps))
 # while len(reps):
