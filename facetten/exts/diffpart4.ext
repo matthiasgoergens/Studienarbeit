@@ -1,0 +1,21 @@
+
+*lrs:lrslib v.4.2b, 2007.6.6(32bit,lrsmp.h)
+*Copyright (C) 1995,2006, David Avis   avis@cs.mcgill.ca 
+fnord
+H-representation
+linearity 2  1 2
+begin
+***** 6 rational
+-12  4  3  2  1  0 
+ 8 -3 -2 -1  0  1 
+-8  3  2  1  0  0 
+ 12 -4 -3 -2  0  0 
+-6  2  2  1  0  0 
+ 0  0  0  1  0  0 
+end
+*Volume= 1/3 
+*Totals: facets=4 bases=2 linearities=2 facets+linearities=6
+*lrs:lrslib v.4.2b, 2007.6.6(32bit,lrsmp.h) max digits=8/100
+*0.004u 0.000s 0Kb 0 flts 0 swaps 0 blks-in 8 blks-out 
+
+

@@ -39,7 +39,7 @@ def part2square(p):
     r = enumerate(p)
     t = (flatten1([S*[c*[0]+[1]+(Sum-c-1)*[0]] for c,S in r]))
 #    return flatten1(flattenTri(t, Sum))
-    return (flatten1 (t))
+    return t
 
     
 
@@ -47,18 +47,17 @@ def matlabify (r):
     n = size(r)
     return '['+''.join([' '.join(map(str, line))+';\n' for line in r])+']'
 
-#def fluss(r):
-#    def coor(y,x):
-#        if y < x:
-#            return 0
-#        return r[y*(y+1)/2 + x]
-#    def group(r, l):
-#        if r:
-#            return [r[0:l]] + group(r[l:], l+1)
-#        else:
-#            return []
-#    print group (r)
-    
+def fluss(r):
+    l = len(r)
+    def down(r):
+        return [[r[y][x] and r[y-1][x] for x in range(y)] for y in range(1,l)]
+    def downRight(r):
+        return [[r[y][x] and r[y-1][x-1] for x in range(1,y+1)] for y in range(1,l)]
+    return (flatten1(down(r) + downRight(r)))
+
+def fluesse(N):
+    return [fluss(part2square(p)) for p in part(N,N)]
+   
 
 def lrsify (r):
     if r[0]:
@@ -76,19 +75,31 @@ begin
 %(A)s
 end""" % {'n': n, 'dp': dim+1, 'A':A};
 
-#def fluss(
-
 import sys
 N = int(sys.argv[1])
 
-# Fluss
-def fluesse(N):
-    reps = [part2square(p) for p in part(N,N)]
-    pprint( reps)
-#    def fluss(rep):
+## Fluss
         
-    print lrsify(reps)
-fluesse (N)
+#print lrsify(fluesse (N))
+
+# Partitionen:
+
+def unify(p):
+    n = sum(p)
+    return p + [0]*(n-len(p))
+    
+def differ(p):
+    from operator import sub
+    n = sum(p)
+    return map(sub, [n]+p,p+[0])
+
+parts = part(N,N)
+#print (lrsify(map(unify, parts)))
+#pprint (             map (unify, parts))
+#pprint (map (differ, map (unify, parts)))
+print lrsify(map (differ, map (unify, parts)))
+
+#print lrsify(reps)
 
 #reps = [part2square(p) for p in part(N,N)]
 #print map (reversed, part (N,N))

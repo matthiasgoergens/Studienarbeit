@@ -1,0 +1,118 @@
+\documentclass{article}
+
+\usepackage[ngerman]{babel}
+\usepackage{a4}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\usepackage{units}
+\usepackage{icomma}
+
+\usepackage{psfrag, graphicx}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{longtable}
+\usepackage{booktabs}
+\setcounter{LTchunksize}{1000}
+
+
+\graphicspath{{img/}}
+\author{Matthias Görgens}
+
+\begin{document}
+
+\title{Partinioning Orbitopes for Permutation of Rows and Columns -- Term Paper}
+\maketitle
+\section{Abstract}
+
+\section{Introduction}
+Symmetry is a problem in integer programming.  The introduction and
+analysis of orbitopes has been one recent step towards removing those
+symmetries.  Orbitopes exploit the fact that one can introduce groups
+acting on the feasible solutions of a symmetric integer problem such
+that members of the same orbit share the same objective value.
+Obviously, any optimization algorithm that only considers at least one
+representative of each orbit will still find an optimal solution, if
+there is one.  Orbitopes are the convex hulls of all representatives
+thus considered.
+
+In this paper I will consider a certain kind of partitioning
+orbitopes.  Partitioning orbitopes are polytopes that live in the
+set of $0/1$-matrices with at most, resp. exactly, one 1-entry per
+row.  Matrices that can be transformed into each other by permutation
+of columns are considered equal and belong to one orbit.  The
+partitioning orbitopes are inclusion minimal polytopes that contain
+one and only one member from each orbit: the unique representative
+matrix with lexicographically sorted columns.
+
+In \cite{faenza-2008} Faenza and Kaibel give compact extended
+formulations for the packing and partitioning orbitopes.  In this
+paper I want to give extended formulations for symmetric partitioning
+orbitopes: In addition to column permutation, row permutations are
+allowed as well.  More formally the group \(S = S_R \times S_C\) acts
+on the solution, where \(S_R\) and \(S_C\) are the symmetric groups on
+rows and columns.  The next section gives a description of the
+representatives contained in a symmetric partitioning orbitope.
+
+% Consider the very special instance of the partioning problem of
+% partitioning the $p$ nodes of complete graph into at most $q$ parts.
+% One well-known formulation uses variables $x_{ij}$ to indicate whether
+% node $i$ is put into part $j$.
+
+\section{Vertices of the Symmetric Partitioning Orbitope}
+Let $p$ be the number of columns and $q$ be the number of rows of
+matrices in the set \(M \subseteq \left\{0,1\right\}^{p\times q}\) of all
+$0/1$-matrices with exactly one 1-entry in each row.  Let \(S = S_R
+\times S_C\) be the Cartesian product of the symmetric groups on rows
+and columns.  \(S\) acts on \(M\).
+
+% Sortierung der Zeilen reicht auch schon für simple s.p.o.
+
+Obviously we can require representatives to be lexicographically
+sorted along rows and columns.  Thus we get representative matrices
+with 1 in the top-left.  In each row the 1-entry stays in the column
+it dwelled in the row above -- or wanders off one column right.
+
+Using a very simple flow network one can easily find the facettes of
+the resulting \textit{simple symmetric partition orbitope} -- see
+\ref{fluss}.
+
+Unfortunately this way some orbits of $S$ intersect the orbitope with
+more than one member.  To guarantee exactly one representative per
+orbit we can require runs of 1-entries in the same column to descend
+in length.
+
+Computer generated examples suggest that no polynomial in \(p \cdot
+q\) limits the number of the resulting \textit{exact symmetric partioning
+orbitope}'s facettes.
+
+But - I will show an extended formulation for this exact symmetric
+partitioning orbitope that is polynomially bounded in number of both
+variables and facettes in \(p \cdot q\).
+
+\section{Facettes of the Simple Symmetric Partitioning Orbitope}
+%Bild!
+
+The simple symmetric partitioning orbitope permits an efficient
+description by equalities and inequalities in the original space of
+variables.
+
+% 1  1  1
+%-1 -1 -1
+
+%-1 -1 -1
+% 1  1  1  1
+
+\section{Polynomial Optimization on the Exact Symmetric Partitioning
+  Orbitope}
+
+
+
+\bibliographystyle{plain}
+\bibliography{quellen}
+
+\end{document}
