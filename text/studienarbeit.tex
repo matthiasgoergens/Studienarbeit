@@ -1,12 +1,16 @@
-\documentclass{article}
+pdf\documentclass{amsart}
 
-\usepackage[ngerman]{babel}
-\usepackage{a4}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+
+\usepackage[english]{babel}
 \usepackage{amsmath}
+\usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
 
 \usepackage{units}
 \usepackage{icomma}
@@ -19,15 +23,20 @@
 \usepackage{booktabs}
 \setcounter{LTchunksize}{1000}
 
+\usepackage{palatino}
+\usepackage{euler}
 
 \graphicspath{{img/}}
 \author{Matthias Görgens}
+
+\DeclareMathOperator{\In}{in}
+\DeclareMathOperator{\Out}{out}
 
 \begin{document}
 
 \title{Partinioning Orbitopes for Permutation of Rows and Columns -- Term Paper}
 \maketitle
-\section{Abstract}
+%\section{Abstract}
 
 \section{Introduction}
 Symmetry is a problem in integer programming.  The introduction and
@@ -63,7 +72,7 @@ representatives contained in a symmetric partitioning orbitope.
 % One well-known formulation uses variables $x_{ij}$ to indicate whether
 % node $i$ is put into part $j$.
 
-\section{Vertices of the Symmetric Partitioning Orbitope}
+\section{Vertices of the Symmetric Partitioning Orbitopes}
 Let $p$ be the number of columns and $q$ be the number of rows of
 matrices in the set \(M \subseteq \left\{0,1\right\}^{p\times q}\) of all
 $0/1$-matrices with exactly one 1-entry in each row.  Let \(S = S_R
@@ -75,24 +84,37 @@ and columns.  \(S\) acts on \(M\).
 Obviously we can require representatives to be lexicographically
 sorted along rows and columns.  Thus we get representative matrices
 with 1 in the top-left.  In each row the 1-entry stays in the column
-it dwelled in the row above -- or wanders off one column right.
+it dwelled in the row above -- or wanders off one column right.  In
+fact sorting along the rows is sufficent for this normal form; sorting
+the columns does not add to the requirements.
 
 Using a very simple flow network one can easily find the facettes of
 the resulting \textit{simple symmetric partition orbitope} -- see
 \ref{fluss}.
 
+% sort columns by hamming distance
+
 Unfortunately this way some orbits of $S$ intersect the orbitope with
 more than one member.  To guarantee exactly one representative per
-orbit we can require runs of 1-entries in the same column to descend
-in length.
+orbit we restrict the orbitope further:
+
+\begin{defn}[Exact Symmetric Partitioning Orbitope]
+  \label{espo}
+  Given \(p, q \in \mathbb{N} \setminus \{0\}\), define the exact
+  symmetric partitioning orbitope \(S^=_{p,q}\) as the convex hull of
+  all matrices in \(\left\{0,1\right\}^{p\times q}\) whose rows are in
+  lexicographically decreasing order and whose columns are in
+  decreasing order by Hamming weight.
+\end{defn}
 
 Computer generated examples suggest that no polynomial in \(p \cdot
-q\) limits the number of the resulting \textit{exact symmetric partioning
-orbitope}'s facettes.
+q\) limits the number of exact symmetric partioning orbitope's
+facettes.
 
-But - I will show an extended formulation for this exact symmetric
-partitioning orbitope that is polynomially bounded in number of both
-variables and facettes in \(p \cdot q\).
+But - I will show an extended formulation for \(S^=_{p,q}\) by linear
+inequalities that is polynomially bounded in number of both variables
+and facettes in \(p \cdot q\).
+
 
 \section{Facettes of the Simple Symmetric Partitioning Orbitope}
 %Bild!
@@ -109,8 +131,90 @@ variables.
 
 \section{Polynomial Optimization on the Exact Symmetric Partitioning
   Orbitope}
+\label{fluss}
+
+We will reduce maximization over the orbitope to finding a longest
+path in an acyclic weighted digraph.
+
+Let \(p, q \in \mathbb{N} \setminus \{0\}\).  Given a matrix \(M \in
+\mathbb{Q}^{p \times q}\) of objective values, consider the program:
+\begin{equation}
+\label{optS}
+\max \left<M, \mathbf{x} \right>  \text{ s.t. } x \in S^=_{p,q}
+\end{equation}
+where \[\left<M, \mathbf{x} \right> := \sum_{(i,j)\in [p]\times [q]} x_{i,j}\cdot M_{i,j}\text{.}\]
+We will construct a acyclic weighted graph \(D := (V, A)\) to project each vertex of
+\(S^=_{p,q}\) and its objective value to one \(s\)-\(t\)-path in \(D\) and its length.
+
+Define the vertex set:
+\[V := \left( [p]\times [q] \times [p]\right) \uplus \{s\} \uplus \{t\}\text{.}\] 
+Each \textit{ordinary} vertex, that is
+each vertex besides \(s\) and \(t\), encodes a row, a column and the
+maximum Hamming weight per column still allowed.
+
+The arcs \(A := \overline{A} \uplus A_t\) can be described as a union
+of ordinary arcs \(\overline{A}\) and arcs \(A_t\) ending in \(t\).  Setting
+\(s:=(0,\, 0,\,q)\) allows the arcs from $s$ to be formalized as
+ordinary arcs.
+\begin{align}
+  \overline{A} &:=
+  \left\{ \left(r,\, c,\, h\right) \rightarrow \left(r+h',\, c+1,\, h'\right) \in V \times V \; | \;
+  h' \leq h \right\} \\
+  A_t &:= ([p] \times {q} \times [p]) \times \{t\}
+\end{align}
+
+To link objective values over \(S^=_{p,q}\) with
+\(s\)-\(t\)-path-lengths in \(D\) we introduce arc weights \(m\colon A \to \mathbb{Q}\).
+\begin{align}
+\label{objLink}
+  m\left(\left(r,\, c,\, h\right) \rightarrow \left(r+h',\, c+1,\, h'\right) \right) & := \sum_{i=r+1}^{r+h'} M_{i,c+1} \\
+  m\left(\left(r,\, c,\, h\right) \rightarrow t \right) & := 0
+\end{align}
+
+%Bilder!
+
+\section{Extended Formulation for the Exact Symmetric Partitioning Orbitope}
+The aforementioned Graph \(D\) can be used to derive an extended
+formulation for the exact symmetric partitioning orbitope.  For this
+formulation we have to construct a linear description of finding the
+longest path in a digraph.  Fortunately -- as it is well known --
+network flows do the trick.  The transformation from network flows
+back to the original variable space of \(S^=_{p,q}\) can be done with
+a linear function, as well.
+
+We introduce flow variables \(f \in \mathbb{R}^A_{\geq 0}\).  We will use
+the following notation:
+\begin{align*}
+\In\colon  V &\to \mathcal{P}(A) \\
+v &\mapsto \left(V \times \{v\}\right) \cap A
+\end{align*}
+\begin{align*}
+\Out\colon  V &\to \mathcal{P}(A) \\
+v &\mapsto \left(\{v\} \times V\right) \cap A
+\end{align*}
+For sets \(M\) we define
+\[f (M) := \sum_{m\in M} f(m)\text{.}\]
+
+Now, we can begin with the extendend formulation for the exact
+symmetric partitioning orbitope.  For each vertex \(v \in V \setminus
+\{s,t\}\) we have:
+\begin{equation}
+f\left(\In(v)\right) = f\left(\Out(v)\right)
+\end{equation}
+and for \(s\) we get:
+\begin{equation}
+f\left(\Out(s)\right) = 1
+\end{equation}
 
 
+\section{Restricting the Symmetric Group}
+S_t auf t-elementiger Teilmengen der Zeilen:
+z.B. erste t-Zeilen,
+     letzte t-Zeilen
+beliebige t-Zeilen (erstmal t=2)
+
+\section{Cartesian Products of Symmetric Groups}
+Kartesisches Produkt von symmetrischen Gruppen (vereinfachung?)
 
 \bibliographystyle{plain}
 \bibliography{quellen}
