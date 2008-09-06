@@ -1,16 +1,16 @@
-param ncluster :=10;
-param nstates := 10;
-param hoehe := 10;
-set cluster := {1 .. ncluster};
-set states := {1 .. nstates};
-set hoehen := {1 .. hoehe};
+param q := 10;
+param p := 10;
+param hammWeight := 10;
+set columns := {1 .. q};
+set rows := {1 .. p};
+set hammWeights := {1 .. p};
 
-set V_ := {<s,c,h> in states * cluster * hoehen
+set V_ := {<s,c,h> in rows * columns * hammWeights
     #nur so ueberhaupt erreichbar:
     with  #c <= s and
     	 h*c <= s
 };
-set V := V_ + {<0,0,hoehe>};
+set V := V_ + {<0,0,hammWeight>};
 
 
 set A := {<s,c,h,s_,c_,h_> in V * V
@@ -23,17 +23,17 @@ set aus[<s,c,h>    in V] :=   {<s, c, h>}*V inter A;
 set ein[<s_,c_,h_> in V] := V*{<s_,c_,h_>}  inter A;
 
 subto eingang:
-      sum <s,c,h,s_, c_, h_> in aus[0,0,hoehe]: f[s,c,h,s_,c_,h_] == 1;
+      sum <s,c,h,s_, c_, h_> in aus[0,0,hammWeight]: f[s,c,h,s_,c_,h_] == 1;
 subto balance:
-      forall <sx,cx,hx> in V_ with sx < nstates:
+      forall <sx,cx,hx> in V_ with sx < p:
       	     sum  <s,c,h, s_, c_, h_> in ein[sx,cx,hx]:
 	     f[s,c,h, s_, c_, h_] ==
       	     sum  <s,c,h, s_, c_, h_> in aus[sx,cx,hx]:
 	     f[s,c,h, s_, c_, h_];
 
-set Y := {<s,c> in states * cluster
+set Y := {<s,c> in rows * columns
     with c <= s};
-param p[<s,c> in Y] := random(-10,10);
+param m[<s,c> in Y] := random(-10,10);
 var y[Y] real >= 0 <= infinity;
 
 subto coupling:
@@ -43,4 +43,4 @@ forall <sx,cx> in Y:
 		   and cx == c_
 	    	   and s < sx and sx <= s_ :
 	   	   f[s, c, h, s_, c_, h_];
-maximize s: sum <s,c> in Y: p[s,c]*y[s,c];
+maximize s: sum <s,c> in Y: m[s,c]*y[s,c];

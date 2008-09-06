@@ -21,6 +21,14 @@ def part(n,k):
         return [[]]
     else:
         return flatten1([cross([[i]],part(n-i,i)) for i in range(min(k, n), 0, -1)])
+def simplePart(n,k):
+    if n == 0:
+        return [[]]
+    elif n == 1:
+        return [[k]]
+    else:
+        return flatten1([[[i]+r for r in simplePart(n-1,k-i)] for i in range(k+1)])
+                
 def flattenTri(A, s):
     return [A[i][0:i+1] for i in range(s)]
 
@@ -93,13 +101,15 @@ def differ(p):
     n = sum(p)
     return map(sub, [n]+p,p+[0])
 
-parts = part(N,N)
+#parts = part(N,N)
 #print (lrsify(map(unify, parts)))
 #pprint (             map (unify, parts))
 #pprint (map (differ, map (unify, parts)))
-print lrsify(map (differ, map (unify, parts)))
+#print lrsify(map (differ, map (unify, parts)))
 
-#print lrsify(reps)
+reps = simplePart(N,N)
+
+print lrsify( map (part2array,reps))
 
 #reps = [part2square(p) for p in part(N,N)]
 #print map (reversed, part (N,N))
