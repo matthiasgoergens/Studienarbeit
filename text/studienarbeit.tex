@@ -1,4 +1,4 @@
-pdf\documentclass{amsart}
+\documentclass{amsart}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -206,12 +206,27 @@ and for \(s\) we get:
 f\left(\Out(s)\right) = 1
 \end{equation}
 
+% subto coupling:
+% forall <sx,cx> in Y:
+%        y[sx,cx] == sum <s, c, h, s_, c_, h_> in A
+%               	   with c+1 == cx
+% 		   and cx == c_
+% 	    	   and s < sx and sx <= s_ :
+% 	   	   f[s, c, h, s_, c_, h_];
 
+
+To link \(f\) with \(x\) of our original problem (\ref{optS}) we
+introduce the following conditions that are in analogue to \ref{objLink}:
+%TODO: nachschauen, wie man die Indexbereiche unter der Summe stapelt
+\begin{equation}
+  x \left( r,\, c \right) =
+  \sum_{r' - h' \leq r \leq r'; h' \leq h} f\left(\left(r'-h',\, c-1,\, h\right) \rightarrow \left(r',\, c,\, h'\right) \right)
+\end{equation}
 \section{Restricting the Symmetric Group}
-S_t auf t-elementiger Teilmengen der Zeilen:
-z.B. erste t-Zeilen,
-     letzte t-Zeilen
-beliebige t-Zeilen (erstmal t=2)
+% S_t auf t-elementiger Teilmengen der Zeilen:
+% z.B. erste t-Zeilen,
+%      letzte t-Zeilen
+% beliebige t-Zeilen (erstmal t=2)
 
 \section{Cartesian Products of Symmetric Groups}
 Kartesisches Produkt von symmetrischen Gruppen (vereinfachung?)
