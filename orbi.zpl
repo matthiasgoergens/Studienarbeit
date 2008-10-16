@@ -1,4 +1,4 @@
-param nn := 100;
+param nn := 30;
 param ncluster := nn;
 param nstates := nn;
 set cluster := {1 .. ncluster};
@@ -61,7 +61,6 @@ subto absteigend:
       	     sum <sT,cT> in top[S,C] with cT>C: f[sT-1, cT, sT, cT] >=
       	     sum <sT,cT> in top[S_,C_]: f[sT-1, cT, sT, cT];
       	   	     	 
-      	     
 #subto ausf:
 #      forall <s,c> in V \ ({nstates}*cluster):
 #      	     sum <s_,c_> in aus[s,c]: f[s,c,s_,c_] == y[s,c];
@@ -69,6 +68,15 @@ subto absteigend:
 #      forall <s,c> in V \ {<0,0>}:
 #      	     sum <s_,c_> in ein[s,c]: f[s_,c_,s,c] == y[s,c];
 ## Erhält die Ganzzahligkeit nicht: #?
+var weight[cluster] integer;
+subto weight_absteigend:
+      forall <c> in cluster with c > 1:
+      	     weight[c] <= weight[c-1];
+#subto weight1:
+#      weight[1] <= nstates;
+subto coupling_weight:
+      forall <c> in cluster:
+      	     weight[c] == sum <s> in states: y[s,c];
 #subto absteigend:
 #      forall <c> in cluster with c > 1:
 #      	     sum <s> in proj(states*{<c>} inter V, <1>) : y[s, c] <=

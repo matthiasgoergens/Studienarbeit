@@ -1,4 +1,4 @@
-This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2008.1.29)  6 SEP 2008 16:03
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2008.10.3)  4 OCT 2008 11:33
 entering extended mode
  %&-line parsing enabled.
 **studienarbeit.tex
@@ -476,7 +476,7 @@ Package: longtable 2004/02/01 v4.11 Multi-page Table package (DPC)
 \LT@p@ftn=\toks28
 )
 (/usr/share/texmf-texlive/tex/latex/booktabs/booktabs.sty
-Package: booktabs 2005/03/16 v1.6180 publication quality tables
+Package: booktabs 2005/04/14 v1.61803 publication quality tables
 \heavyrulewidth=\dimen127
 \lightrulewidth=\dimen128
 \cmidrulewidth=\dimen129
@@ -495,246 +495,141 @@ Package: booktabs 2005/03/16 v1.6180 publication quality tables
 \@lastruleclass=\count120
 \@thisrulewidth=\dimen139
 )
-(/usr/share/texmf-texlive/tex/latex/psnfss/palatino.sty
-Package: palatino 2005/04/12 PSNFSS-v9.2a (SPQR) 
+(/usr/share/texmf-texlive/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2007/02/07 v6.75r Hypertext links for LaTeX
+\@linkdim=\dimen140
+\Hy@linkcounter=\count121
+\Hy@pagecounter=\count122
+
+(/usr/share/texmf-texlive/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2007/02/07 v6.75r Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
 )
-(/usr/share/texmf-texlive/tex/latex/euler/euler.sty
-Package: euler 1995/03/05 v2.5
+(/etc/texmf/tex/latex/config/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+(/usr/share/texmf-texlive/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2006/08/22 v2.4 Connects package keyval with LaTeX options (
+HO)
+)
+Package hyperref Info: Hyper figures OFF on input line 2288.
+Package hyperref Info: Link nesting OFF on input line 2293.
+Package hyperref Info: Hyper index ON on input line 2296.
+Package hyperref Info: Plain pages OFF on input line 2303.
+Package hyperref Info: Backreferencing OFF on input line 2308.
 
-Package: `euler' v2.5 <1995/03/05> (FJ and FMi)
-LaTeX Font Info:    Redeclaring symbol font `letters' on input line 35.
-
-LaTeX Font Warning: Encoding `OML' has changed to `U' for symbol font
-(Font)              `letters' in the math version `normal' on input line 35.
-
-LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
-(Font)                  OML/cmm/m/it --> U/eur/m/n on input line 35.
-
-LaTeX Font Warning: Encoding `OML' has changed to `U' for symbol font
-(Font)              `letters' in the math version `bold' on input line 35.
-
-LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
-(Font)                  OML/cmm/b/it --> U/eur/m/n on input line 35.
-LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
-(Font)                  U/eur/m/n --> U/eur/b/n on input line 36.
-LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 47.
-LaTeX Font Info:    Redeclaring math symbol \Delta on input line 48.
-LaTeX Font Info:    Redeclaring math symbol \Theta on input line 49.
-LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 50.
-LaTeX Font Info:    Redeclaring math symbol \Xi on input line 51.
-LaTeX Font Info:    Redeclaring math symbol \Pi on input line 52.
-LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 53.
-LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 54.
-LaTeX Font Info:    Redeclaring math symbol \Phi on input line 55.
-LaTeX Font Info:    Redeclaring math symbol \Psi on input line 56.
-LaTeX Font Info:    Redeclaring math symbol \Omega on input line 57.
-\symEulerFraktur=\mathgroup6
-LaTeX Font Info:    Overwriting symbol font `EulerFraktur' in version `bold'
-(Font)                  U/euf/m/n --> U/euf/b/n on input line 63.
-LaTeX Font Info:    Redeclaring math alphabet \mathfrak on input line 64.
-LaTeX Info: Redefining \oldstylenums on input line 85.
-\symEulerScript=\mathgroup7
-LaTeX Font Info:    Overwriting symbol font `EulerScript' in version `bold'
-(Font)                  U/eus/m/n --> U/eus/b/n on input line 93.
-LaTeX Font Info:    Redeclaring math symbol \aleph on input line 97.
-LaTeX Font Info:    Redeclaring math symbol \Re on input line 98.
-LaTeX Font Info:    Redeclaring math symbol \Im on input line 99.
-LaTeX Font Info:    Redeclaring math delimiter \vert on input line 101.
-LaTeX Font Info:    Redeclaring math delimiter \backslash on input line 103.
-LaTeX Font Info:    Redeclaring math symbol \neg on input line 106.
-LaTeX Font Info:    Redeclaring math symbol \wedge on input line 108.
-LaTeX Font Info:    Redeclaring math symbol \vee on input line 110.
-LaTeX Font Info:    Redeclaring math symbol \setminus on input line 112.
-LaTeX Font Info:    Redeclaring math symbol \sim on input line 113.
-LaTeX Font Info:    Redeclaring math symbol \mid on input line 114.
-LaTeX Font Info:    Redeclaring math delimiter \arrowvert on input line 116.
-LaTeX Font Info:    Redeclaring math symbol \mathsection on input line 117.
-\symEulerExtension=\mathgroup8
-LaTeX Font Info:    Redeclaring math symbol \coprod@ on input line 125.
-LaTeX Font Info:    Redeclaring math symbol \prod@ on input line 125.
-LaTeX Font Info:    Redeclaring math symbol \sum@ on input line 125.
-LaTeX Font Info:    Redeclaring math symbol \intop on input line 130.
-LaTeX Font Info:    Redeclaring math symbol \ointop on input line 131.
-LaTeX Font Info:    Redeclaring math symbol \braceld on input line 132.
-LaTeX Font Info:    Redeclaring math symbol \bracerd on input line 133.
-LaTeX Font Info:    Redeclaring math symbol \bracelu on input line 134.
-LaTeX Font Info:    Redeclaring math symbol \braceru on input line 135.
-LaTeX Font Info:    Redeclaring math symbol \infty on input line 136.
-LaTeX Font Info:    Redeclaring math symbol \nearrow on input line 153.
-LaTeX Font Info:    Redeclaring math symbol \searrow on input line 154.
-LaTeX Font Info:    Redeclaring math symbol \nwarrow on input line 155.
-LaTeX Font Info:    Redeclaring math symbol \swarrow on input line 156.
-LaTeX Font Info:    Redeclaring math symbol \Leftrightarrow on input line 157.
-LaTeX Font Info:    Redeclaring math symbol \Leftarrow on input line 158.
-LaTeX Font Info:    Redeclaring math symbol \Rightarrow on input line 159.
-LaTeX Font Info:    Redeclaring math symbol \leftrightarrow on input line 160.
-LaTeX Font Info:    Redeclaring math symbol \leftarrow on input line 161.
-LaTeX Font Info:    Redeclaring math symbol \rightarrow on input line 163.
-LaTeX Font Info:    Redeclaring math delimiter \uparrow on input line 166.
-LaTeX Font Info:    Redeclaring math delimiter \downarrow on input line 168.
-LaTeX Font Info:    Redeclaring math delimiter \updownarrow on input line 170.
-LaTeX Font Info:    Redeclaring math delimiter \Uparrow on input line 172.
-LaTeX Font Info:    Redeclaring math delimiter \Downarrow on input line 174.
-LaTeX Font Info:    Redeclaring math delimiter \Updownarrow on input line 176.
-LaTeX Font Info:    Redeclaring math symbol \leftharpoonup on input line 177.
-LaTeX Font Info:    Redeclaring math symbol \leftharpoondown on input line 178.
-
-LaTeX Font Info:    Redeclaring math symbol \rightharpoonup on input line 179.
-LaTeX Font Info:    Redeclaring math symbol \rightharpoondown on input line 180
-.
-LaTeX Font Info:    Redeclaring math delimiter \lbrace on input line 182.
-LaTeX Font Info:    Redeclaring math delimiter \rbrace on input line 184.
-\symcmmigroup=\mathgroup9
-LaTeX Font Info:    Overwriting symbol font `cmmigroup' in version `bold'
-(Font)                  OML/cmm/m/it --> OML/cmm/b/it on input line 200.
-LaTeX Font Info:    Redeclaring math accent \vec on input line 201.
-LaTeX Font Info:    Redeclaring math symbol \triangleleft on input line 202.
-LaTeX Font Info:    Redeclaring math symbol \triangleright on input line 203.
-LaTeX Font Info:    Redeclaring math symbol \star on input line 204.
-LaTeX Font Info:    Redeclaring math symbol \lhook on input line 205.
-LaTeX Font Info:    Redeclaring math symbol \rhook on input line 206.
-LaTeX Font Info:    Redeclaring math symbol \flat on input line 207.
-LaTeX Font Info:    Redeclaring math symbol \natural on input line 208.
-LaTeX Font Info:    Redeclaring math symbol \sharp on input line 209.
-LaTeX Font Info:    Redeclaring math symbol \smile on input line 210.
-LaTeX Font Info:    Redeclaring math symbol \frown on input line 211.
-LaTeX Font Info:    Redeclaring math accent \grave on input line 245.
-LaTeX Font Info:    Redeclaring math accent \acute on input line 246.
-LaTeX Font Info:    Redeclaring math accent \tilde on input line 247.
-LaTeX Font Info:    Redeclaring math accent \ddot on input line 248.
-LaTeX Font Info:    Redeclaring math accent \check on input line 249.
-LaTeX Font Info:    Redeclaring math accent \breve on input line 250.
-LaTeX Font Info:    Redeclaring math accent \bar on input line 251.
-LaTeX Font Info:    Redeclaring math accent \dot on input line 252.
-LaTeX Font Info:    Redeclaring math accent \hat on input line 254.
+Implicit mode ON; LaTeX internals redefined
+Package hyperref Info: Bookmarks ON on input line 2444.
+LaTeX Info: Redefining \url on input line 2599.
+\Fld@menulength=\count123
+\Field@Width=\dimen141
+\Fld@charsize=\dimen142
+\Choice@toks=\toks29
+\Field@toks=\toks30
+Package hyperref Info: Hyper figures OFF on input line 3102.
+Package hyperref Info: Link nesting OFF on input line 3107.
+Package hyperref Info: Hyper index ON on input line 3110.
+Package hyperref Info: backreferencing OFF on input line 3117.
+Package hyperref Info: Link coloring OFF on input line 3122.
+\Hy@abspage=\count124
+\c@Item=\count125
+\c@Hfootnote=\count126
+)
+*hyperref using default driver hpdftex*
+(/usr/share/texmf-texlive/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2007/02/07 v6.75r Hyperref driver for pdfTeX
+\Fld@listcount=\count127
 ) (./studienarbeit.aux)
 \openout1 = `studienarbeit.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Try loading font information for T1+ppl on input line 35.
- (/usr/share/texmf-texlive/tex/latex/psnfss/t1ppl.fd
-File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
-)
-LaTeX Font Info:    Try loading font information for U+eur on input line 35.
-
-(/usr/share/texmf-texlive/tex/latex/amsfonts/ueur.fd
-File: ueur.fd 2002/01/19 v2.2g AMS font definitions
-)
-LaTeX Font Info:    Try loading font information for U+msa on input line 35.
-
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Try loading font information for U+msa on input line 45.
 (/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2002/01/19 v2.2g AMS font definitions
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 35.
+LaTeX Font Info:    Try loading font information for U+msb on input line 45.
 
 (/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2002/01/19 v2.2g AMS font definitions
 )
-LaTeX Font Info:    Try loading font information for U+euf on input line 35.
+Package hyperref Info: Link coloring OFF on input line 45.
 
-(/usr/share/texmf-texlive/tex/latex/amsfonts/ueuf.fd
-File: ueuf.fd 2002/01/19 v2.2g AMS font definitions
+(/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
+Package: nameref 2006/12/27 v2.28 Cross-referencing by name of section
+
+(/usr/share/texmf-texlive/tex/latex/oberdiek/refcount.sty
+Package: refcount 2006/02/20 v3.0 Data extraction from references (HO)
 )
-LaTeX Font Info:    Try loading font information for U+eus on input line 35.
-
-(/usr/share/texmf-texlive/tex/latex/amsfonts/ueus.fd
-File: ueus.fd 2002/01/19 v2.2g AMS font definitions
+\c@section@level=\count128
 )
-LaTeX Font Info:    Try loading font information for U+euex on input line 35.
+LaTeX Info: Redefining \ref on input line 45.
+LaTeX Info: Redefining \pageref on input line 45.
 
-(/usr/share/texmf-texlive/tex/latex/amsfonts/ueuex.fd
-File: ueuex.fd 2002/01/19 v2.2g AMS font definitions
-)
-LaTeX Font Info:    External font `euex7' loaded for size
-(Font)              <6> on input line 35.
-LaTeX Font Info:    External font `euex7' loaded for size
-(Font)              <5> on input line 35.
-LaTeX Font Info:    Redeclaring symbol font `operators' on input line 35.
+(./studienarbeit.out) (./studienarbeit.out)
+\@outlinefile=\write4
+\openout4 = `studienarbeit.out'.
 
-
-LaTeX Font Warning: Encoding `OT1' has changed to `T1' for symbol font
-(Font)              `operators' in the math version `normal' on input line 35.
-
-LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> T1/ppl/m/n on input line 35.
-
-LaTeX Font Warning: Encoding `OT1' has changed to `T1' for symbol font
-(Font)              `operators' in the math version `bold' on input line 35.
-
-LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> T1/ppl/m/n on input line 35.
-LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  T1/ppl/m/n --> T1/ppl/bx/n on input line 35.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 35.
-LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> T1/ppl/bx/n on input line 35.
-LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> T1/ppl/bx/n on input line 35.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 35.
-LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> T1/phv/m/n on input line 35.
-LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> T1/phv/m/n on input line 35.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 35.
-LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> T1/ppl/m/it on input line 35.
-LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> T1/ppl/m/it on input line 35.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 35.
-LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> T1/pcr/m/n on input line 35.
-LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> T1/pcr/m/n on input line 35.
-LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  T1/phv/m/n --> T1/phv/bx/n on input line 35.
-LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  T1/ppl/m/it --> T1/ppl/bx/it on input line 35.
-LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <10> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 38.
-LaTeX Font Info:    External font `euex7' loaded for size
-(Font)              <7> on input line 54.
-[1
+ [1
 Non-PDF special ignored!{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <7> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 143.
-LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <5> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 143.
+[2]
 
-[2] (./studienarbeit.bbl) [3] (./studienarbeit.aux) ) 
+Package hyperref Warning: Token not allowed in a PDFDocEncoded string,
+(hyperref)                removing `math shift' on input line 206.
+
+
+Package hyperref Warning: Token not allowed in a PDFDocEncoded string,
+(hyperref)                removing `math shift' on input line 206.
+
+
+Package hyperref Warning: Token not allowed in a PDFDocEncoded string,
+(hyperref)                removing `math shift' on input line 206.
+
+
+Overfull \hbox (8.65303pt too wide) has occurred while \output is active
+[] \T1/cmr/m/n/7 PARTINIONING ORBITOPES FOR PERMUTATION OF ROWS AND COLUMNS -- 
+TERM PAPER []
+ []
+
+[3] (./studienarbeit.bbl) [4] (./studienarbeit.aux) ) 
 Here is how much of TeX's memory you used:
- 3277 strings out of 94101
- 37388 string characters out of 1165810
- 97596 words of memory out of 1500000
- 6291 multiletter control sequences out of 10000+50000
- 25346 words of font info for 67 fonts, out of 1200000 for 2000
+ 4923 strings out of 94101
+ 61258 string characters out of 1165810
+ 126757 words of memory out of 1500000
+ 7925 multiletter control sequences out of 10000+50000
+ 14571 words of font info for 44 fonts, out of 1200000 for 2000
  798 hyphenation exceptions out of 8191
- 34i,10n,32p,257b,236s stack positions out of 5000i,500n,6000p,200000b,5000s
-{/usr/share/texmf-texlive/
-fonts/enc/dvips/base/8r.enc}</usr/share/texmf-texlive/fonts/type1/bluesky/cm/cm
-sy10.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmsy5.pfb></usr/share
-/texmf-texlive/fonts/type1/bluesky/cm/cmsy7.pfb></usr/share/texmf-texlive/fonts
-/type1/bluesky/ams/euex10.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/ams
-/eufm10.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/ams/eufm7.pfb></usr/s
-hare/texmf-texlive/fonts/type1/bluesky/ams/eurm10.pfb></usr/share/texmf-texlive
-/fonts/type1/bluesky/ams/eurm7.pfb></usr/share/texmf-texlive/fonts/type1/bluesk
-y/ams/eusm10.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/ams/msbm10.pfb><
-/usr/share/texmf-texlive/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texmf-
-texlive/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texmf-texlive/fonts/typ
-e1/urw/palatino/uplri8a.pfb>
-Output written on studienarbeit.pdf (3 pages, 97705 bytes).
+ 34i,11n,40p,1079b,452s stack positions out of 5000i,500n,6000p,200000b,5000s
+ </home/matthias/.texmf-va
+r/fonts/pk/ljfour/jknappen/ec/ecrm0700.600pk> </home/matthias/.texmf-var/fonts/
+pk/ljfour/jknappen/ec/ecti1000.600pk> </home/matthias/.texmf-var/fonts/pk/ljfou
+r/jknappen/ec/eccc1000.600pk> </home/matthias/.texmf-var/fonts/pk/ljfour/jknapp
+en/ec/ecrm1000.600pk> </home/matthias/.texmf-var/fonts/pk/ljfour/jknappen/ec/ec
+rm0800.600pk> </home/matthias/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.6
+00pk></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmbx10.pfb></usr/share/te
+xmf-texlive/fonts/type1/bluesky/cm/cmex10.pfb></usr/share/texmf-texlive/fonts/t
+ype1/bluesky/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmm
+i7.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmr10.pfb></usr/share/t
+exmf-texlive/fonts/type1/bluesky/cm/cmr7.pfb></usr/share/texmf-texlive/fonts/ty
+pe1/bluesky/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmsy
+5.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmsy7.pfb></usr/share/te
+xmf-texlive/fonts/type1/bluesky/ams/msbm10.pfb>
+Output written on studienarbeit.pdf (4 pages, 136875 bytes).
 PDF statistics:
- 65 PDF objects out of 1000 (max. 8388607)
- 0 named destinations out of 1000 (max. 131072)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 375 PDF objects out of 1000 (max. 8388607)
+ 26 named destinations out of 1000 (max. 131072)
+ 105 words of extra memory for PDF output out of 10000 (max. 10000000)
 

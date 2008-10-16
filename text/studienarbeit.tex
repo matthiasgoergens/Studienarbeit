@@ -23,20 +23,31 @@
 \usepackage{booktabs}
 \setcounter{LTchunksize}{1000}
 
-\usepackage{palatino}
-\usepackage{euler}
+%\usepackage{palatino}
+%\usepackage{euler}
 
 \graphicspath{{img/}}
 \author{Matthias Görgens}
 
+
 \DeclareMathOperator{\In}{in}
 \DeclareMathOperator{\Out}{out}
 
+%für ein/aus-gehende kanten
+\newcommand{\ina}{\ensuremath{\vec{\In}}}
+\newcommand{\outa}{\ensuremath{\vec{\Out}}}
+
+%für knoten ein/aus-gehender kanten.
+\newcommand{\inv}{\ensuremath{\dot{\In}}}
+\newcommand{\outv}{\ensuremath{\dot{\Out}}}
+
+\usepackage{hyperref}
 \begin{document}
 
 \title{Partinioning Orbitopes for Permutation of Rows and Columns -- Term Paper}
 \maketitle
 %\section{Abstract}
+
 
 \section{Introduction}
 Symmetry is a problem in integer programming.  The introduction and
@@ -132,9 +143,10 @@ variables.
 \section{Polynomial Optimization on the Exact Symmetric Partitioning
   Orbitope}
 \label{fluss}
-
 We will reduce maximization over the orbitope to finding a longest
-path in an acyclic weighted digraph.
+\(s\)-\(t\)-path in an acyclic weighted digraph.
+
+\subsection{Setup}
 
 Let \(p, q \in \mathbb{N} \setminus \{0\}\).  Given a matrix \(M \in
 \mathbb{Q}^{p \times q}\) of objective values, consider the program:
@@ -158,10 +170,28 @@ of ordinary arcs \(\overline{A}\) and arcs \(A_t\) ending in \(t\).  Setting
 ordinary arcs.
 \begin{align}
   \overline{A} &:=
-  \left\{ \left(r,\, c,\, h\right) \rightarrow \left(r+h',\, c+1,\, h'\right) \in V \times V \; | \;
+  \left\{ \left(r,\, c,\, h\right) \rightarrow \left(r+h',\, c+1,\, h'\right) \in V \times V \colon
   h' \leq h \right\} \\
   A_t &:= ([p] \times {q} \times [p]) \times \{t\}
 \end{align}
+
+For parent and child nodes and arcs we will use the following notation:
+\begin{align*}
+\ina\colon  V &\to \mathcal{P}(A) \\
+v &\mapsto \left(V \times \{v\}\right) \cap A\\
+%\end{align*}
+%\begin{align*}
+\outa\colon  V &\to \mathcal{P}(A) \\
+v &\mapsto \left(\{v\} \times V\right) \cap A\\
+%\end{align*}
+%\begin{align*}
+\inv\colon  V &\to \mathcal{P}(V) \\
+v &\mapsto \left\{ u \colon \left(u,v\right) \in \ina(v) \right\}\\
+%\end{align*}
+%\begin{align*}
+\outv\colon  V &\to \mathcal{P}(V) \\
+v &\mapsto \left\{w \colon \left(v,w\right) \in \outa\left(v\right) \right\}\\
+\end{align*}
 
 To link objective values over \(S^=_{p,q}\) with
 \(s\)-\(t\)-path-lengths in \(D\) we introduce arc weights \(m\colon A \to \mathbb{Q}\).
@@ -170,6 +200,43 @@ To link objective values over \(S^=_{p,q}\) with
   m\left(\left(r,\, c,\, h\right) \rightarrow \left(r+h',\, c+1,\, h'\right) \right) & := \sum_{i=r+1}^{r+h'} M_{i,c+1} \\
   m\left(\left(r,\, c,\, h\right) \rightarrow t \right) & := 0
 \end{align}
+
+\subsection{Finding the Longest \(s\)-\(t\)-Path in \(D\)}
+
+Call \(P_s \colon V \to A^* \) the function that maps each node \(v\)
+to the longest path connecting \(s\) and \(v\).  Here \(A^*\) means
+the Kleene closure of \(A\): I.e. the set of all strings of arcs \(a
+\in A\) including the empty string.  Also set 
+\begin{align*}
+m \colon A^* &\to \mathbb{R} \\
+\omega &\mapsto \sum_{a\in \omega} m \left(a \right)
+\end{align*}
+
+To find the longest \(s\)-\(t\)-path in \(D\) is to calculate
+\(P_s (t)\).  Dynamic programming lends itself to this task.  Since
+\(D\) is acyclic we start knowing \(P_s (s) = \lambda\).
+
+For each \(v \in V\) for which \(P_s (v)\) is unknown but for whose
+every parent \(w \in \inv(v)\) the path \(P_s (w)\) is already known,
+we conclude
+\[m\left(P_s \left(v\right)\right) = \max_{w \in \inv(v)}
+m\left(P_s(w) \cdot \left(w \rightarrow v \right) \right)\text{.}\]
+
+The graph \(D\) admits at least one trivial path from \(s\) to \(t\).
+Together with the acyclic and finite nature of \(D\) this guarantees that we
+learn \(P_s (t)\) eventually.  More specifically we get to know \(P_s
+(t)\) after looking at each arc of \(D\) at most a constant number of
+times.
+
+%the
+%following dynamic programming technique: Since \(D\) is an acyclic
+%digraph we can sort its vertices topologically.
+
+%Afterwards for each node \(v\) in topological order we calculate the
+%longest \(s\)-\(v\) path and distance based on the known longest
+%\(s\)-\(w\)-distances
+
+%Topologische Sortierung, 
 
 %Bilder!
 
@@ -182,16 +249,8 @@ network flows do the trick.  The transformation from network flows
 back to the original variable space of \(S^=_{p,q}\) can be done with
 a linear function, as well.
 
-We introduce flow variables \(f \in \mathbb{R}^A_{\geq 0}\).  We will use
-the following notation:
-\begin{align*}
-\In\colon  V &\to \mathcal{P}(A) \\
-v &\mapsto \left(V \times \{v\}\right) \cap A
-\end{align*}
-\begin{align*}
-\Out\colon  V &\to \mathcal{P}(A) \\
-v &\mapsto \left(\{v\} \times V\right) \cap A
-\end{align*}
+We introduce flow variables \(f \in \mathbb{R}^A_{\geq 0}\).  
+
 For sets \(M\) we define
 \[f (M) := \sum_{m\in M} f(m)\text{.}\]
 
@@ -199,11 +258,11 @@ Now, we can begin with the extendend formulation for the exact
 symmetric partitioning orbitope.  For each vertex \(v \in V \setminus
 \{s,t\}\) we have:
 \begin{equation}
-f\left(\In(v)\right) = f\left(\Out(v)\right)
+f\left(\ina(v)\right) = f\left(\outa(v)\right)
 \end{equation}
 and for \(s\) we get:
 \begin{equation}
-f\left(\Out(s)\right) = 1
+f\left(\outa(s)\right) = 1
 \end{equation}
 
 % subto coupling:
@@ -220,16 +279,29 @@ introduce the following conditions that are in analogue to \ref{objLink}:
 %TODO: nachschauen, wie man die Indexbereiche unter der Summe stapelt
 \begin{equation}
   x \left( r,\, c \right) =
-  \sum_{r' - h' \leq r \leq r'; h' \leq h} f\left(\left(r'-h',\, c-1,\, h\right) \rightarrow \left(r',\, c,\, h'\right) \right)
+  \sum_{r' - h' \leq r \leq r'; h' \leq h} f\left(\left(r'-h',\, c-1,\, h\right)
+    \rightarrow \left(r',\, c,\, h'\right) \right)
 \end{equation}
+
 \section{Restricting the Symmetric Group}
+In this section we will have a look at some other groups \(G =
+G_{Rows} \times S_{Columns}\) operating on the solutions.  Always the
+permutation of all columns will be allowed.  But we will look at
+\(G_{Rows}\) being the symmetric group on the last \(t\) rows and then
+on the first \(t\) rows in order.
+
+\subsection{Permuting the last rows}
+
+
+\subsection{Permuting the first rows}
+
 % S_t auf t-elementiger Teilmengen der Zeilen:
 % z.B. erste t-Zeilen,
 %      letzte t-Zeilen
 % beliebige t-Zeilen (erstmal t=2)
 
-\section{Cartesian Products of Symmetric Groups}
-Kartesisches Produkt von symmetrischen Gruppen (vereinfachung?)
+%\section{Cartesian Products of Symmetric Groups}
+%Kartesisches Produkt von symmetrischen Gruppen (vereinfachung?)
 
 \bibliographystyle{plain}
 \bibliography{quellen}
