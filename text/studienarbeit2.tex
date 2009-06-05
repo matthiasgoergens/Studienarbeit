@@ -1,4 +1,5 @@
-\documentclass{amsart}
+\documentclass[a4paper]{amsart}
+\usepackage{textcase}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -23,8 +24,33 @@
 \usepackage{booktabs}
 \setcounter{LTchunksize}{1000}
 
+\newcommand\mpar[1]{\marginpar {\flushleft\sffamily\small #1}}
+\setlength{\marginparwidth}{3cm}
+\setlength{\marginparpush}{1cm}
+
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\todo}[1]{\mpar{#1}}
+%\newcommand{\todo}[1]{\footnote{#1}}
+
+\usepackage{charter}
 %\usepackage{palatino}
 %\usepackage{euler}
+
+% ---- LATIN ----
+\def\etal{\emph{et~al.}}
+\def\ie{\emph{i.e.}}
+\def\Ie{\emph{I.e.}}
+\def\eg{\emph{e.g.}}
+\def\Eg{\emph{E.g.}}
+\def\vitae{vit\ae{}}
+\def\apriori{\emph{a~priori}}
+\def\aposteriori{\emph{a~posteriori}}
+
+% ---- FRENCH ----
+\def\naive{na\"{\i}ve}
+\def\Naive{Na\"{\i}ve}
+\def\naively{na\"{\i}vely}	% Okay, I know, this isn't French.
+\def\Naively{Na\"{\i}vely}
 
 \graphicspath{{img/}}
 \author{Matthias Görgens}
@@ -43,31 +69,31 @@
 
 \usepackage{hyperref}
 \begin{document}
-
+\date{today}
 \title{Partinioning Orbitopes for Permutation of Rows and Columns -- Term Paper}
 \maketitle
 %\section{Abstract}
-
+\tableofcontents
 
 \section{Introduction}
-Symmetry is a problem in integer programming.  The introduction and
-analysis of orbitopes has been one recent step towards removing those
-symmetries.  Orbitopes exploit the fact that one can introduce groups
-acting on the feasible solutions of a symmetric integer problem such
-that members of the same orbit share the same objective value.
-Obviously, any optimization algorithm that only considers at least one
-representative of each orbit will still find an optimal solution, if
-there is one.  Orbitopes are the convex hulls of all representatives
-thus considered.
+Symmetry is a problem in integer programming.  \todo{Why?} The
+introduction and analysis of orbitopes has been one recent step
+towards removing those symmetries.  Orbitopes exploit the fact that
+one can introduce groups acting on the feasible solutions of a
+symmetric integer problem such that members of the same orbit share
+the same objective value.  Obviously, any optimization algorithm that
+only considers at least one representative of each orbit will still
+find an optimal solution, if there is one.  Orbitopes are the convex
+hulls of all representatives thus considered.
 
-In this paper I will consider a certain kind of partitioning
-orbitopes.  Partitioning orbitopes are polytopes that live in the
-set of $0/1$-matrices with at most, resp. exactly, one 1-entry per
-row.  Matrices that can be transformed into each other by permutation
-of columns are considered equal and belong to one orbit.  The
-partitioning orbitopes are inclusion minimal polytopes that contain
-one and only one member from each orbit: the unique representative
-matrix with lexicographically sorted columns.
+In this paper I will look at a certain kind of partitioning orbitopes.
+Partitioning orbitopes are polytopes that live in the set of
+\(0/1\)-matrices with exactly, one \(1\)-entry per row.  Matrices that
+can be transformed into each other by permutation of columns are
+considered equal and belong to one orbit.  The partitioning orbitopes
+are inclusion minimal convex polytopes that contain exactly one member
+from each orbit: the unique representative matrix with
+lexicographically sorted columns.
 
 In \cite{faenza-2008} Faenza and Kaibel give compact extended
 formulations for the packing and partitioning orbitopes.  In this
@@ -86,7 +112,7 @@ representatives contained in a symmetric partitioning orbitope.
 \section{Vertices of the Symmetric Partitioning Orbitopes}
 Let $p$ be the number of columns and $q$ be the number of rows of
 matrices in the set \(M \subseteq \left\{0,1\right\}^{p\times q}\) of all
-\(0/1\)-matrices with exactly one 1-entry in each row.  Let \(S = S_R
+$0/1$-matrices with exactly one 1-entry in each row.  Let \(S = S_R
 \times S_C\) be the Cartesian product of the symmetric groups on rows
 and columns.  \(S\) acts on \(M\).
 
@@ -127,24 +153,25 @@ inequalities that is polynomially bounded in number of both variables
 and facettes in \(p \cdot q\).
 
 
-\section{Facettes of the Simple Symmetric Partitioning Orbitope}
+%\section{Facettes of the Simple Symmetric Partitioning Orbitope}
 %Bild!
 
-The simple symmetric partitioning orbitope permits an efficient
-description by equalities and inequalities in the original space of
-variables.
+%The simple symmetric partitioning orbitope permits an efficient
+%description by equalities and inequalities in the original space of
+%variables.
 
-% 1  1  1
-%-1 -1 -1
+%% 1  1  1
+%%-1 -1 -1
 
-%-1 -1 -1
-% 1  1  1  1
+%%-1 -1 -1
+%% 1  1  1  1
 
 \section{Polynomial Optimization on the Exact Symmetric Partitioning
   Orbitope}
 \label{fluss}
 We will reduce maximization over the orbitope to finding a longest
-\(s\)-\(t\)-path in an acyclic weighted digraph.
+\(s\)-\(t\)-path in an acyclic weighted digraph.  The reduction will
+take no more than polynomial time.
 
 \subsection{Setup}
 
@@ -159,10 +186,13 @@ We will construct a acyclic weighted graph \(D := (V, A)\) to project each verte
 \(S^=_{p,q}\) and its objective value to one \(s\)-\(t\)-path in \(D\) and its length.
 
 Define the vertex set:
-\[V := \left( [p]\times [q] \times [p]\right) \uplus \{s\} \uplus \{t\}\text{.}\] 
-Each \textit{ordinary} vertex, that is
-each vertex besides \(s\) and \(t\), encodes a row, a column and the
-maximum Hamming weight per column still allowed.
+\begin{equation}
+  V := \left( [p]\times [q] \times [p]\right) \uplus \{s\} \uplus \{t\}\text{.}
+\end{equation}
+Each \textit{ordinary} vertex, that is each vertex besides \(s\) and
+\(t\), encodes a row, a column and the maximum Hamming weight per
+column still allowed.\todo{Still allowed for this and all following
+  vertices?}
 
 The arcs \(A := \overline{A} \uplus A_t\) can be described as a union
 of ordinary arcs \(\overline{A}\) and arcs \(A_t\) ending in \(t\).  Setting
@@ -201,20 +231,24 @@ To link objective values over \(S^=_{p,q}\) with
   m\left(\left(r,\, c,\, h\right) \rightarrow t \right) & := 0
 \end{align}
 
-\subsection{Finding the Longest \(s\)-\(t\)-Path in \(D\)}
+
+\todo{make M-x preview-buffer work with subsection headings including
+  math \eg{} with \textbackslash{}subsection\{Finding the Longest
+  \(s\)-\(t\)-Path in \(D\)\}}
+\subsection{Finding a longest path}
 
 Call \(P_s \colon V \to A^* \) the function that maps each node \(v\)
 to the longest path connecting \(s\) and \(v\).  Here \(A^*\) means
-the Kleene closure of \(A\): I.e. the set of all strings of arcs \(a
-\in A\) including the empty string.  Also set 
-\begin{align*}
+the Kleene closure of \(A\): \Ie{} the set of all finite strings of
+elements from \(A\) including the empty string.  Also set
+\begin{align}
 m \colon A^* &\to \mathbb{R} \\
-\omega &\mapsto \sum_{a\in \omega} m \left(a \right)
-\end{align*}
+\nonumber \omega &\mapsto \sum_{a\in \omega} m \left(a \right)
+\end{align}
 
 To find the longest \(s\)-\(t\)-path in \(D\) is to calculate
 \(P_s (t)\).  Dynamic programming lends itself to this task.  Since
-\(D\) is acyclic we start knowing \(P_s (s) = \lambda\).
+\(D\) is acyclic we start knowing \(P_s (s) = \lambda\) (the empty path).
 
 For each \(v \in V\) for which \(P_s (v)\) is unknown but for whose
 every parent \(w \in \inv(v)\) the path \(P_s (w)\) is already known,
@@ -223,10 +257,10 @@ we conclude
 m\left(P_s(w) \cdot \left(w \rightarrow v \right) \right)\text{.}\]
 
 The graph \(D\) admits at least one trivial path from \(s\) to \(t\).
-Together with the acyclic and finite nature of \(D\) this guarantees that we
-learn \(P_s (t)\) eventually.  More specifically we get to know \(P_s
-(t)\) after looking at each arc of \(D\) at most a constant number of
-times.
+Together with the acyclic and finite nature of \(D\) this guarantees
+that we learn \(P_s (t)\) eventually.  More specifically we get to
+know \(P_s (t)\) after looking at each arc of \(D\) at most a constant
+number of times.
 
 %the
 %following dynamic programming technique: Since \(D\) is an acyclic
@@ -275,20 +309,23 @@ f\left(\outa(s)\right) = 1
 
 
 To link \(f\) with \(x\) of our original problem (\ref{optS}) we
-introduce the following conditions that are in analogue to \ref{objLink}:
-%TODO: nachschauen, wie man die Indexbereiche unter der Summe stapelt
+introduce the following conditions that are analogue to \ref{objLink}:
 \begin{equation}
   x \left( r,\, c \right) =
-  \sum_{r' - h' \leq r \leq r'; h' \leq h} f\left(\left(r'-h',\, c-1,\, h\right)
+  \mathop{\sum_{r' - h' \leq r \leq r'}}_{h' \leq h} f\left(\left(r'-h',\, c-1,\, h\right)
     \rightarrow \left(r',\, c,\, h'\right) \right)
 \end{equation}
 
 \section{Restricting the Symmetric Group}
 In this section we will have a look at some other groups \(G =
-G_{Rows} \times S_{Columns}\) operating on the solutions.  Always the
-permutation of all columns will be allowed.  But we will look at
+G_{Rows} \times S_{Columns}\)
+operating on the solutions.  The
+permutation of all columns will always be allowed.  But we will look at
 \(G_{Rows}\) being the symmetric group on the last \(t\) rows and then
 on the first \(t\) rows in order.
+
+%\subsection{Permuting the last rows}
+
 
 \subsection{Permuting the last rows}
 
@@ -298,13 +335,7 @@ columns.  We investigate each orbit of \(G_{Columns} \times G_{Rows}\)
 to determine its lexicographically smallest member that will serve as
 that orbit's representative.
 
-% Einfach zu machen, da die Gleichheitsprobleme erst in den letzten rows anfangen, und keinen Einfluss auf die Spalten und Zeilen vorher haben.  Oder?
-
-\subsection{Permuting the first rows}
-
-% Erstmal Repr. beschreiben.
-
-% Schwieriger.  Vielleicht einfach mehrere Reps pro Orbit aktzeptieren?
+%\subsection{Permuting the first rows}
 
 % S_t auf t-elementiger Teilmengen der Zeilen:
 % z.B. erste t-Zeilen,

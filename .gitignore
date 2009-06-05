@@ -1,0 +1,14 @@
+fluss.tbl
+intervall.tbl
+orbi.tbl
+fluss.lp
+intervall.lp
+orbi.lp
+text/studienarbeit.aux
+text/studienarbeit.log
+text/studienarbeit.pdf
+*~
+.bzr/
+fourmotz/
+*.pyc
+*.log
