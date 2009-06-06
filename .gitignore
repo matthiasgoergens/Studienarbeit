@@ -4,9 +4,14 @@ orbi.tbl
 fluss.lp
 intervall.lp
 orbi.lp
-text/studienarbeit.aux
-text/studienarbeit.log
-text/studienarbeit.pdf
+*.aux
+*.log
+text/studienarbeit*.pdf
+text/auto/
+*.dvi
+text/studienarbeit*.ps
+*#*
+*_region_*
 *~
 .bzr/
 fourmotz/
