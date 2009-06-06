@@ -41,6 +41,14 @@
 \newcommand{\inv}{\ensuremath{\dot{\In}}}
 \newcommand{\outv}{\ensuremath{\dot{\Out}}}
 
+\newcommand\mpar[1]{\marginpar {\flushleft\sffamily\small #1}}
+\setlength{\marginparwidth}{3cm}
+\setlength{\marginparpush}{1cm}
+
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\todo}[1]{\mpar{#1}}
+%\newcommand{\todo}[1]{\footnote{#1}}
+
 \usepackage{hyperref}
 \begin{document}
 
@@ -297,6 +305,11 @@ the last \(a\) rows.  As usually \(G_{Columns} = S_p\) operates on all
 columns.  We investigate each orbit of \(G_{Columns} \times G_{Rows}\)
 to determine its lexicographically smallest member that will serve as
 that orbit's representative.
+
+In a representative the columns will be sorted lexigraphically, for
+\(G_{Columns}= S_p\).  The last rows will also be sorted this way.
+But we can demand even more.  \todo{Describe two items sorted this
+  way, but in the same orbit.}
 
 % Einfach zu machen, da die Gleichheitsprobleme erst in den letzten rows anfangen, und keinen Einfluss auf die Spalten und Zeilen vorher haben.  Oder?
 
