@@ -6,6 +6,7 @@ intervall.lp
 orbi.lp
 *.aux
 *.log
+text/studienarbeit.pdf
 text/studienarbeit*.pdf
 text/auto/
 *.dvi
