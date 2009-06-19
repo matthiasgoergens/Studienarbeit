@@ -17,4 +17,5 @@ text/studienarbeit*.ps
 .bzr/
 fourmotz/
 *.pyc
-*.logtext/prv_studienarbeit.fmt
+*.logtext/
+prv_studienarbeit.fmt
