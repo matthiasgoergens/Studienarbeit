@@ -49,6 +49,10 @@
 \newcommand{\todo}[1]{\mpar{#1}}
 %\newcommand{\todo}[1]{\footnote{#1}}
 
+\newcommand{\lr}[1]{\ensuremath{\left( #1 \right)}}
+% and for equivalency classes
+\newcommand{\lrE}[1]{\ensuremath{\left[ #1 \right]}}
+
 \usepackage{hyperref}
 \begin{document}
 
@@ -69,13 +73,14 @@ there is one.  Orbitopes are the convex hulls of all representatives
 thus considered.
 
 In this paper I will consider a certain kind of partitioning
-orbitopes.  Partitioning orbitopes are polytopes that live in the
-set of $0/1$-matrices with at most, resp. exactly, one 1-entry per
-row.  Matrices that can be transformed into each other by permutation
-of columns are considered equal and belong to one orbit.  The
+orbitopes.  Partitioning orbitopes are polytopes that live in the set
+of $0/1$-matrices with at most, resp. exactly, one 1-entry per row.
+Matrices that can be transformed into each other by permutation of
+columns are considered equal and belong to one orbit.  The
 partitioning orbitopes are inclusion minimal polytopes that contain
 one and only one member from each orbit: the unique representative
-matrix with lexicographically sorted columns.
+matrix with lexicographically sorted columns.  (Henceforth we will
+silently imply lexicographically whenever we speak of ``sorting''.)
 
 In \cite{faenza-2008} Faenza and Kaibel give compact extended
 formulations for the packing and partitioning orbitopes.  In this
@@ -117,9 +122,9 @@ Unfortunately this way some orbits of $S$ intersect the orbitope with
 more than one member.  To guarantee exactly one representative per
 orbit we restrict the orbitope further:
 
-\begin{defn}[Exact Symmetric Partitioning Orbitope]
+\begin{defn}[ Symmetric Partitioning Orbitope]
   \label{espo}
-  Given \(p, q \in \mathbb{N} \setminus \{0\}\), define the exact
+  Given \(p, q \in \mathbb{N} \setminus \{0\}\), define the 
   symmetric partitioning orbitope \(S^=_{p,q}\) as the convex hull of
   all matrices in \(\left\{0,1\right\}^{p\times q}\) whose rows are in
   lexicographically decreasing order and whose columns are in
@@ -127,7 +132,7 @@ orbit we restrict the orbitope further:
 \end{defn}
 
 Computer generated examples suggest that no polynomial in \(p \cdot
-q\) limits the number of exact symmetric partioning orbitope's
+q\) limits the number of  symmetric partioning orbitope's
 facettes.
 
 But - I will show an extended formulation for \(S^=_{p,q}\) by linear
@@ -148,7 +153,7 @@ variables.
 %-1 -1 -1
 % 1  1  1  1
 
-\section{Polynomial Optimization on the Exact Symmetric Partitioning
+\section{Polynomial Optimization on the  Symmetric Partitioning
   Orbitope}
 \label{fluss}
 We will reduce maximization over the orbitope to finding a longest
@@ -209,7 +214,9 @@ To link objective values over \(S^=_{p,q}\) with
   m\left(\left(r,\, c,\, h\right) \rightarrow t \right) & := 0
 \end{align}
 
-\subsection{Finding the Longest \(s\)-\(t\)-Path in \(D\)}
+% \subsection{Finding the Longest \(s\)-\(t\)-Path in \(D\)}
+\subsection{Finding the Longest s-t-Path in D}
+\todo{Change to the math-version of the subsection headline}
 
 Call \(P_s \colon V \to A^* \) the function that maps each node \(v\)
 to the longest path connecting \(s\) and \(v\).  Here \(A^*\) means
@@ -248,9 +255,9 @@ times.
 
 %Bilder!
 
-\section{Extended Formulation for the Exact Symmetric Partitioning Orbitope}
+\section{Extended Formulation for the Symmetric Partitioning Orbitope}
 The aforementioned Graph \(D\) can be used to derive an extended
-formulation for the exact symmetric partitioning orbitope.  For this
+formulation for the  symmetric partitioning orbitope.  For this
 formulation we have to construct a linear description of finding the
 longest path in a digraph.  Fortunately -- as it is well known --
 network flows do the trick.  The transformation from network flows
@@ -262,7 +269,7 @@ We introduce flow variables \(f \in \mathbb{R}^A_{\geq 0}\).
 For sets \(M\) we define
 \[f (M) := \sum_{m\in M} f(m)\text{.}\]
 
-Now, we can begin with the extendend formulation for the exact
+Now, we can begin with the extendend formulation for the 
 symmetric partitioning orbitope.  For each vertex \(v \in V \setminus
 \{s,t\}\) we have:
 \begin{equation}
@@ -289,7 +296,7 @@ introduce the following conditions that are in analogue to \ref{objLink}:
   x \left( r,\, c \right) =
   \sum_{r' - h' \leq r \leq r'; h' \leq h} f\left(\left(r'-h',\, c-1,\, h\right)
     \rightarrow \left(r',\, c,\, h'\right) \right)
-\end{equation}
+2\end{equation}
 
 \section{Restricting the Symmetric Group}
 In this section we will have a look at some other groups \(G =
@@ -306,12 +313,39 @@ columns.  We investigate each orbit of \(G_{Columns} \times G_{Rows}\)
 to determine its lexicographically smallest member that will serve as
 that orbit's representative.
 
-In a representative the columns will be sorted lexigraphically, for
-\(G_{Columns}= S_p\).  The last rows will also be sorted this way.
-But we can demand even more.  \todo{Describe two items sorted this
-  way, but in the same orbit.}
+In a representative the columns will be sorted, and the last rows,
+too.  But we can demand even more.  Say \(a = 3\), then the following
+two matrices satisfy both condition, but are still in the same
+equivalency class:
 
-% Einfach zu machen, da die Gleichheitsprobleme erst in den letzten rows anfangen, und keinen Einfluss auf die Spalten und Zeilen vorher haben.  Oder?
+\[\lrE{\lr{\begin{matrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1 \\
+\end{matrix}}} = \lrE{\lr{\begin{matrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1 \\
+\end{matrix}}}
+\]
+
+
+
+% [1 0 0
+% ,0 1 0
+% ,0 1 0
+% ,0 0 1]
+
+% [1 0 0
+% ,0 1 0
+% ,0 0 1
+% ,0 0 1]
+
+\todo{Einfach zu machen, da die Gleichheitsprobleme erst in den
+  letzten rows anfangen, und keinen Einfluss auf die Spalten und
+  Zeilen vorher haben.  Oder?}
 
 \subsection{Permuting the first rows}
 
