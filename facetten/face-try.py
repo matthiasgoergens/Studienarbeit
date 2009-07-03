@@ -1,8 +1,8 @@
 from faceUtil import *
 
-n = 9
+n = 3
 
-flines = file("exts/part%s.ext"%n,'r').xreadlines()
+flines = file("exts/part%s.ext" % n,'r').xreadlines()
 flines = it.ifilter(isNoComment, flines)
 
 
