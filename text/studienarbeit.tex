@@ -52,6 +52,10 @@
 \newcommand{\lr}[1]{\ensuremath{\left( #1 \right)}}
 % and for equivalency classes
 \newcommand{\lrE}[1]{\ensuremath{\left[ #1 \right]}}
+\newcommand{\lrM}[1]{\ensuremath{\left\{ #1 \right\}}}
+
+\newcommand{\Reals}{\ensuremath{\mathbb{R}}}
+\newcommand{\Naturals}{\ensuremath{\mathbb{N}}}
 
 \usepackage{hyperref}
 \begin{document}
@@ -305,31 +309,58 @@ permutation of all columns will be allowed.  But we will look at
 \(G_{Rows}\) being the symmetric group on the last \(t\) rows and then
 on the first \(t\) rows in order.
 
-\subsection{Permuting the last rows}
+\subsection{Permuting a subset of rows}
+
+Allowing permutations of all columns and a subset of rows produces an
+NP hard optimization problem.  This can be shown by reducing a know NP hard problem:
+
+For some \(p,q \in \Naturals\) consider the packing matrices \(M
+\subseteq \{0,1\}^{p,q}\), \ie a matrices with exactly one 1-entry per
+row.  Choose some disjoint pairs \((c_{i,1}, c_{i,2})\) of adjacent
+columns.  Let \(G\) be the cartesian product of symmetric groups
+\(S_i\) over those pairs.  Let \(G\) operate on \(M\), and let \(O\)
+be the orbitope of \(G\) on \(M\), \ie the set of lexicographically
+smallest representatives of each orbit.  Given an objective function
+\(o\) linear in the entries of \(M\), maximization of \(o\) over \(O\)
+is a NP hard problem in the chosen inputs \(p,q,\rmM{\lr{c_{i,1},c_{i,2}}}_i, o\).
+
+the
+problem of optimization on a packing orbitope over a cartesian product
+of symmetric groups on the rows
 
 For a natural number \(a \leq q\), let \(G_{Rows} = S_a\) operate on
-the last \(a\) rows.  As usually \(G_{Columns} = S_p\) operates on all
-columns.  We investigate each orbit of \(G_{Columns} \times G_{Rows}\)
-to determine its lexicographically smallest member that will serve as
-that orbit's representative.
-
-In a representative the columns will be sorted, and the last rows,
-too.  But we can demand even more.  Say \(a = 3\), then the following
-two matrices satisfy both condition, but are still in the same
-equivalency class:
+the first \(a\) rows.  As usually \(G_{Columns} = S_p\) operates on
+all columns.  Look at the orbits of \(G_{Columns} \times G_{Rows}\)
+and take each orbit's lexicographically smallest member as its
+representative.
 
 \[\lrE{\lr{\begin{matrix}
 1 & 0 & 0 \\
 0 & 1 & 0 \\
 0 & 1 & 0 \\
-0 & 0 & 1 \\
-\end{matrix}}} = \lrE{\lr{\begin{matrix}
-1 & 0 & 0 \\
-0 & 1 & 0 \\
-0 & 1 & 0 \\
-0 & 0 & 1 \\
-\end{matrix}}}
+0 & 0 & 1\\
+\end{matrix}
+}}
 \]
+
+
+% In a representative the columns will be sorted, and the last rows,
+% too.  But we can demand even more.  Say \(a = 3\), then the following
+% two matrices satisfy both condition, but are still in the same
+% equivalency class:
+
+% \[\lrE{\lr{\begin{matrix}
+% 1 & 0 & 0 \\
+% 0 & 1 & 0 \\
+% 0 & 1 & 0 \\
+% 0 & 0 & 1 \\
+% \end{matrix}}} = \lrE{\lr{\begin{matrix}
+% 1 & 0 & 0 \\
+% 0 & 1 & 0 \\
+% 0 & 1 & 0 \\
+% 0 & 0 & 1 \\
+% \end{matrix}}}
+% \]
 
 
 
@@ -347,7 +378,7 @@ equivalency class:
   letzten rows anfangen, und keinen Einfluss auf die Spalten und
   Zeilen vorher haben.  Oder?}
 
-\subsection{Permuting the first rows}
+% \subsection{Permuting the first rows}
 
 % Erstmal Repr. beschreiben.
 
