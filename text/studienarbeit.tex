@@ -29,6 +29,20 @@
 \graphicspath{{img/}}
 \author{Matthias Görgens}
 
+% ---- LATIN ----
+\def\etal{\emph{et~al.}}
+\def\ie{\emph{i.e.}}
+\def\eg{\emph{e.g.}}
+\def\vitae{vit\ae{}}
+\def\apriori{\emph{a~priori}}
+\def\aposteriori{\emph{a~posteriori}}
+
+% ---- FRENCH ----
+\def\naive{na\"{\i}ve}
+\def\Naive{Na\"{\i}ve}
+\def\naively{na\"{\i}vely}	% Okay, I know, this isn't French.
+\def\Naively{Na\"{\i}vely}
+
 
 \DeclareMathOperator{\In}{in}
 \DeclareMathOperator{\Out}{out}
@@ -49,9 +63,11 @@
 \newcommand{\todo}[1]{\mpar{#1}}
 %\newcommand{\todo}[1]{\footnote{#1}}
 
+% lr stands for left,right
 \newcommand{\lr}[1]{\ensuremath{\left( #1 \right)}}
 % and for equivalency classes
 \newcommand{\lrE}[1]{\ensuremath{\left[ #1 \right]}}
+% and Mengen
 \newcommand{\lrM}[1]{\ensuremath{\left\{ #1 \right\}}}
 
 \newcommand{\Reals}{\ensuremath{\mathbb{R}}}
@@ -322,7 +338,7 @@ columns.  Let \(G\) be the cartesian product of symmetric groups
 be the orbitope of \(G\) on \(M\), \ie the set of lexicographically
 smallest representatives of each orbit.  Given an objective function
 \(o\) linear in the entries of \(M\), maximization of \(o\) over \(O\)
-is a NP hard problem in the chosen inputs \(p,q,\rmM{\lr{c_{i,1},c_{i,2}}}_i, o\).
+is a NP hard problem in the chosen inputs \(p,q,\lrM{\lr{c_{i,1},c_{i,2}}}_i, o\).
 
 the
 problem of optimization on a packing orbitope over a cartesian product
