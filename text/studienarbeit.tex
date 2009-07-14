@@ -1,4 +1,11 @@
-\documentclass{amsart}
+\documentclass[a4paper]{amsart}
+
+%\usepackage{palatino}
+%\usepackage{euler}
+\usepackage{charter}
+%\usepackage{computermodern}
+
+\usepackage{amsfonts}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -6,14 +13,18 @@
 \usepackage[english]{babel}
 \usepackage{amsmath}
 \usepackage{amsthm}
-\usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{bbm}
 
+\usepackage{listing}
+
+\newtheorem{theorem}{Theorem}
 \theoremstyle{definition}
 \newtheorem{defn}{Definition}
 
 \usepackage{units}
-\usepackage{icomma}
+%\usepackage{icomma}
 
 \usepackage{psfrag, graphicx}
 \usepackage{url}
@@ -23,8 +34,7 @@
 \usepackage{booktabs}
 \setcounter{LTchunksize}{1000}
 
-%\usepackage{palatino}
-%\usepackage{euler}
+
 
 \graphicspath{{img/}}
 \author{Matthias Görgens}
@@ -32,6 +42,7 @@
 % ---- LATIN ----
 \def\etal{\emph{et~al.}}
 \def\ie{\emph{i.e.}}
+\def\Ie{\emph{I.e.}}
 \def\eg{\emph{e.g.}}
 \def\vitae{vit\ae{}}
 \def\apriori{\emph{a~priori}}
@@ -43,13 +54,16 @@
 \def\naively{na\"{\i}vely}	% Okay, I know, this isn't French.
 \def\Naively{Na\"{\i}vely}
 
-
 \DeclareMathOperator{\In}{in}
 \DeclareMathOperator{\Out}{out}
+\DeclareMathOperator{\conv}{conv}
+
 
 %für ein/aus-gehende kanten
 \newcommand{\ina}{\ensuremath{\vec{\In}}}
 \newcommand{\outa}{\ensuremath{\vec{\Out}}}
+
+\newcommand{\lex}{\ensuremath{\prec}} % \leq_{\mathop{lex}}}}
 
 %für knoten ein/aus-gehender kanten.
 \newcommand{\inv}{\ensuremath{\dot{\In}}}
@@ -69,9 +83,18 @@
 \newcommand{\lrE}[1]{\ensuremath{\left[ #1 \right]}}
 % and Mengen
 \newcommand{\lrM}[1]{\ensuremath{\left\{ #1 \right\}}}
+\newcommand{\lrX}[1]{\ensuremath{\left< #1 \right>}}
 
-\newcommand{\Reals}{\ensuremath{\mathbb{R}}}
-\newcommand{\Naturals}{\ensuremath{\mathbb{N}}}
+\newcommand{\abs}[1]{\ensuremath{\left| #1 \right|}}
+
+\newcommand{\reals}{\ensuremath{\mathbb{R}}}
+\newcommand{\naturals}{\ensuremath{\mathbb{N}}}
+\newcommand{\rationals}{\ensuremath{\mathbb{Q}}}
+
+\newcommand{\Hom}{\ensuremath{\mathrm{Hom}}}
+
+\newcommand{\M}{\ensuremath{\mathcal{M}}}
+\newcommand{\Sym}{\ensuremath{\mathfrak{S}}}
 
 \usepackage{hyperref}
 \begin{document}
@@ -82,55 +105,175 @@
 
 
 \section{Introduction}
-Symmetry is a problem in integer programming.  The introduction and
-analysis of orbitopes has been one recent step towards removing those
-symmetries.  Orbitopes exploit the fact that one can introduce groups
-acting on the feasible solutions of a symmetric integer problem such
+Symmetry pops up in places as diverse as aesthetics, and conserved
+physical quantities.  Or algorithmic problem solving: Say, you are
+given a problem that consists of many independent but similar
+subproblems, like doing some calculation with all numbers in a list.
+Your solution can exploit the problem's symmetry of repetition: ``Just
+do the same operation for each element of the list and collect the
+results.''% -- or, if you want to be more formal and use a programming
+%language (\eg{} Haskell): \todo{Oder lieber mit Funktoren?  Oder ganz informell?}
+%%TeXify Haskell
+%\begin{verbatim}
+%solution :: [Input] -> [Output]
+%solution = fmap operation
+%\end{verbatim}
+%You may even calculate in parallel.
+
+But symmetry can also be a problem.  Take Buridan's ass.
+\todo{Recherche, about name and so on} Placed exactly at the midpoint
+between two equally enticing haystacks, the philosopher's ass can not
+decide where to go and starves \todo{kl"aglich!}.  Of course even if
+such an exact placement was possibly, no real donkey \todo{synonym
+  ok?} would have a problem making an arbitrary choice for one of the
+stacks.  However contrived the relation to a real animal, Buridan's
+ass does bear some resemblance to computer programs.  One has to teach
+them explicitly how to make arbitrary decisions to get out of these traps.
+
+Programs for solving linear integer optimization problems have often
+been caught between haystacks, forced to evaluate all possibilities
+and not deciding until the last moment.  The introduction and analysis
+of orbitopes has been one recent step towards fashioning those
+programs with more judgement to cut short their search for the
+optimum.  Orbitopes exploit the situation where one can introduce
+groups acting on the feasible solutions of an integer problem such
 that members of the same orbit share the same objective value.
 Obviously, any optimization algorithm that only considers at least one
 representative of each orbit will still find an optimal solution, if
 there is one.  Orbitopes are the convex hulls of all representatives
-thus considered.
+thus considered.  It is customary to take the lexicographically
+smallest member of each orbit as its representative.
 
 In this paper I will consider a certain kind of partitioning
 orbitopes.  Partitioning orbitopes are polytopes that live in the set
-of $0/1$-matrices with at most, resp. exactly, one 1-entry per row.
+of \(0/1\)-matrices with at most, resp. exactly, one 1-entry per row.
 Matrices that can be transformed into each other by permutation of
 columns are considered equal and belong to one orbit.  The
 partitioning orbitopes are inclusion minimal polytopes that contain
 one and only one member from each orbit: the unique representative
-matrix with lexicographically sorted columns.  (Henceforth we will
-silently imply lexicographically whenever we speak of ``sorting''.)
+matrix with lexicographically descending sorted columns.  (Henceforth
+we will silently imply lexicographically whenever we speak of
+``biggest'', or ``least'', and furthermore imply descending order with
+``sorting'', .)
 
 In \cite{faenza-2008} Faenza and Kaibel give compact extended
 formulations for the packing and partitioning orbitopes.  In this
-paper I want to give extended formulations for symmetric partitioning
-orbitopes: In addition to column permutation, row permutations are
-allowed as well.  More formally the group \(S = S_R \times S_C\) acts
-on the solution, where \(S_R\) and \(S_C\) are the symmetric groups on
-rows and columns.  The next section gives a description of the
-representatives contained in a symmetric partitioning orbitope.
+paper I want to review symmetric partitioning orbitopes: In addition
+to column permutation allowed for mere partitoning orbitopes, row
+permutations are allowed as well.  I will give an extended formulation
+for symmetric partitioning orbitopes with full row symmetry. And I
+will show that optimization over symmetric partitioning orbitopes can
+be an NP-hard problem \todo{or NP complete?} with certain other groups
+acting on the rows.
+
 
 % Consider the very special instance of the partioning problem of
 % partitioning the $p$ nodes of complete graph into at most $q$ parts.
 % One well-known formulation uses variables $x_{ij}$ to indicate whether
 % node $i$ is put into part $j$.
 
-\section{Vertices of the Symmetric Partitioning Orbitopes}
-Let $p$ be the number of columns and $q$ be the number of rows of
-matrices in the set \(M \subseteq \left\{0,1\right\}^{p\times q}\) of all
-\(0/1\)-matrices with exactly one 1-entry in each row.  Let \(S = S_R
-\times S_C\) be the Cartesian product of the symmetric groups on rows
-and columns.  \(S\) acts on \(M\).
+\section{Definitions}
+We will use the notation introduced in \cite{faenza-2008} by Faenza
+and Kaibel.  In addition, let \(\mathbbm{1}_{p,q} \in \lrM{1}^{\lrE{p}
+  \times \lrE{q}}\) be the matrix of ones of size \(p \times q\).
 
-% Sortierung der Zeilen reicht auch schon für simple s.p.o.
+%Let \(\M_{p,q}\)
 
-Obviously we can require representatives to be lexicographically
-sorted along rows and columns.  Thus we get representative matrices
-with 1 in the top-left.  In each row the 1-entry stays in the column
-it dwelled in the row above -- or wanders off one column right.  In
-fact sorting along the rows is sufficent for this normal form; sorting
-the columns does not add to the requirements.
+% \begin{defn}[Partitioning Matrices]
+%   For some size \(p, q \in \naturals^{>0}\) consider the matrices \(\M_{p,q}^{=}
+%   \subseteq \{0, 1\}^{p \times q}\), such that for all \(m \in \M_{p,q}^{=}\)
+%   \[m \cdot \mathbbm{1}_{q, 1} = \mathbbm{1}_{p, 1}\]
+%   (\Ie{} consider the matrices with exactly one 1-entry per row.)
+%   Call \(\M_{p,q}^{=}\) the partitioning matrices of size \(p, q\).
+% \end{defn}
+
+% \begin{defn}[Packing Matrices]
+%   Let \(\M_{p,q}^{=}\) be the partitioning matrices of a certain size
+%   \(p, q \in \naturals^{>0}\). Call
+%   \[\M_{p,q}^{\leq} := \lrM{m \mid m \leq m' \in \M_{p,q}^{=}} \cap \lrM{0, 1}^{p \times q}\]
+%   the packing matrices of that size.
+% \end{defn}
+
+% \begin{defn}[Orbitope]
+%   Let \(G\) be a group acting on a set \(A\).  Let \(A\) have a total order \(\lex\), such that \(a\lex b \lex a\) implies \(a = b\).
+%   Look at the set \(V \subseteq A\) uniquely determined by
+%     \[v  \lex  G \cdot v  \text{ for all \(v \in V\)}\]
+%   and
+%   \[G \cdot V =  A \text{.}\]
+%   Call its convex hull \(O \lr{G, A} := \conv V\) the orbitope of
+%   \(G\) on \(A\) with order \(\lex\).  Normally we will omit stating
+%   the order and imply lexicographic ordering on \(A\).
+% \end{defn}
+
+\begin{defn}[Columns and Rows]
+  Fix \(p, q \in \naturals^+\).  Consider the set of matrices \(M :=
+  \mathbb{C}^{p \times q}\).  Let \(R_i := M_{i, *}\) be the \(i\)-th
+  row of those matrices, and let \(R\) be the set of all rows.
+  \(\Sym_R\) shall designate the symmetric group over them.  Define
+  \(C_j\), \(C\) and \(\Sym_C\) in analogue for the columns.  Call
+  \(\Sym_{R \times C} := \Sym_R \times \Sym_C\).  As an abuse of
+  notation --- if it is clear from the context that a specific matrix
+  \(m \in M\) is meant, \(R\) and \(C\) can also refer to the rows
+  and columns of that specific matrix.  We will also usually supply \(p\)
+  and \(q\) by context only.
+\end{defn}
+
+% Often we face a optimization problems over partitioning
+% matrices where the action of \(\Sym_C\) on the columns conserves
+% feasibility and objective values; then restricting the space of
+% solutions to the orbitope of \(\Sym_C\) on \(O^=\) conserves the
+% occurrence\footnote{and non-occurrence} of all objective values ---
+% obviously including the optimum.  Thus the following definition:
+
+%More formally the group \(S = S_R \times S_C\) acts on the solution,
+%where \(S_R\) and \(S_C\) are the symmetric groups on rows and
+%columns.  The next section gives a description of the representatives
+%contained in a symmetric partitioning orbitope.
+
+% \begin{defn}[Partitioning Orbitope]
+%   Call \(O^=_C := O \lr{S_C, \M_{p,q}^=}\) the partitioning orbitope.
+% \end{defn}
+
+\begin{defn}[Symmetric Partitioning and Packing Orbitopes]
+%  \label{espo}
+Introduce the following orbitopes:
+\begin{description}
+\item[Symmetric partitioning orbitope] \(\mathcal{O}^=_{p,q} := O^=_{p, q} \lr{\Sym_{R \times C}} \)
+\item[Symmetric packing orbitope] \(\mathcal{O}^\leq_{p,q} := O^\leq_{p, q} \lr{\Sym_{R \times C}} \)
+\end{description}
+\end{defn}
+
+
+
+%\begin{defn}[Partial Symmetric Partitioning Orbitope]
+%  Add definition
+%\todo{add definition}
+%\end{defn}
+
+\section{Vertices of the Full Symmetric Partitioning Orbitope}
+\todo{Komplett ueberarbeiten.}  Let's take a closer look at the
+vertices of the partitioning orbitope \(O^=_{R \times C}\) of size
+\(p, q \in \naturals^{>0}\).
+
+\mpar{Note that \(O^=_{R \times C} \subsetneq O^=_{R} \cap O^=_{C}\).
+  In general stating the orbitope of an internal direct product in
+  terms of the orbitopes of both factor groups is a hard
+  problem.}
+
+%  Let \(p\) be the number of columns and \(q\) be the number of rows of
+%  matrices in the set \(\M_{p,q} \subseteq \left\{0, 1\right\}^{p\times q}\) of all
+%  \(0/1\)-matrices with exactly one 1-entry in each row.  Let \(S = S_R
+% \times S_C\) be the Cartesian product of the symmetric groups on rows
+%  and columns.  \(S\) acts on \(\M_{p,q}\).
+
+%  Sortierung der Zeilen reicht auch schon für simple s.p.o.
+
+% Obviously we can require representatives to be lexicographically
+% sorted along rows and columns.  Thus we get representative matrices
+% with 1 in the top-left.  In each row the 1-entry stays in the column
+% it dwelled in the row above -- or wanders off one column right.  In
+% fact sorting along the rows is sufficent for this normal form; sorting
+% the columns does not add to the requirements.
 
 Using a very simple flow network one can easily find the facettes of
 the resulting \textit{simple symmetric partition orbitope} -- see
@@ -142,20 +285,12 @@ Unfortunately this way some orbits of $S$ intersect the orbitope with
 more than one member.  To guarantee exactly one representative per
 orbit we restrict the orbitope further:
 
-\begin{defn}[ Symmetric Partitioning Orbitope]
-  \label{espo}
-  Given \(p, q \in \mathbb{N} \setminus \{0\}\), define the 
-  symmetric partitioning orbitope \(S^=_{p,q}\) as the convex hull of
-  all matrices in \(\left\{0,1\right\}^{p\times q}\) whose rows are in
-  lexicographically decreasing order and whose columns are in
-  decreasing order by Hamming weight.
-\end{defn}
 
 Computer generated examples suggest that no polynomial in \(p \cdot
 q\) limits the number of  symmetric partioning orbitope's
 facettes.
 
-But - I will show an extended formulation for \(S^=_{p,q}\) by linear
+But - I will show an extended formulation for \(S^=_{p, q}\) by linear
 inequalities that is polynomially bounded in number of both variables
 and facettes in \(p \cdot q\).
 
@@ -185,11 +320,11 @@ Let \(p, q \in \mathbb{N} \setminus \{0\}\).  Given a matrix \(M \in
 \mathbb{Q}^{p \times q}\) of objective values, consider the program:
 \begin{equation}
 \label{optS}
-\max \left<M, \mathbf{x} \right>  \text{ s.t. } x \in S^=_{p,q}
+\max \left<M, \mathbf{x} \right>  \text{ s.t. } x \in S^=_{p, q}
 \end{equation}
-where \[\left<M, \mathbf{x} \right> := \sum_{(i,j)\in [p]\times [q]} x_{i,j}\cdot M_{i,j}\text{.}\]
+where \[\left<M, \mathbf{x} \right> := \sum_{(i, j)\in [p]\times [q]} x_{i, j}\cdot M_{i, j}\text{.}\]
 We will construct a acyclic weighted graph \(D := (V, A)\) to project each vertex of
-\(S^=_{p,q}\) and its objective value to one \(s\)-\(t\)-path in \(D\) and its length.
+\(S^=_{p, q}\) and its objective value to one \(s\)-\(t\)-path in \(D\) and its length.
 
 Define the vertex set:
 \[V := \left( [p]\times [q] \times [p]\right) \uplus \{s\} \uplus \{t\}\text{.}\] 
@@ -199,11 +334,11 @@ maximum Hamming weight per column still allowed.
 
 The arcs \(A := \overline{A} \uplus A_t\) can be described as a union
 of ordinary arcs \(\overline{A}\) and arcs \(A_t\) ending in \(t\).  Setting
-\(s:=(0,\, 0,\,q)\) allows the arcs from $s$ to be formalized as
+\(s:=(0, 0, q)\) allows the arcs from $s$ to be formalized as
 ordinary arcs.
 \begin{align}
   \overline{A} &:=
-  \left\{ \left(r,\, c,\, h\right) \rightarrow \left(r+h',\, c+1,\, h'\right) \in V \times V \colon
+  \left\{ \left(r, c, h\right) \rightarrow \left(r+h', c+1, h'\right) \in V \times V \colon
   h' \leq h \right\} \\
   A_t &:= ([p] \times {q} \times [p]) \times \{t\}
 \end{align}
@@ -219,19 +354,19 @@ v &\mapsto \left(\{v\} \times V\right) \cap A\\
 %\end{align*}
 %\begin{align*}
 \inv\colon  V &\to \mathcal{P}(V) \\
-v &\mapsto \left\{ u \colon \left(u,v\right) \in \ina(v) \right\}\\
+v &\mapsto \left\{ u \colon \left(u, v\right) \in \ina(v) \right\}\\
 %\end{align*}
 %\begin{align*}
 \outv\colon  V &\to \mathcal{P}(V) \\
-v &\mapsto \left\{w \colon \left(v,w\right) \in \outa\left(v\right) \right\}\\
+v &\mapsto \left\{w \colon \left(v, w\right) \in \outa\left(v\right) \right\}\\
 \end{align*}
 
-To link objective values over \(S^=_{p,q}\) with
+To link objective values over \(S^=_{p, q}\) with
 \(s\)-\(t\)-path-lengths in \(D\) we introduce arc weights \(m\colon A \to \mathbb{Q}\).
 \begin{align}
 \label{objLink}
-  m\left(\left(r,\, c,\, h\right) \rightarrow \left(r+h',\, c+1,\, h'\right) \right) & := \sum_{i=r+1}^{r+h'} M_{i,c+1} \\
-  m\left(\left(r,\, c,\, h\right) \rightarrow t \right) & := 0
+  m\left(\left(r, c, h\right) \rightarrow \left(r+h', c+1, h'\right) \right) & := \sum_{i=r+1}^{r+h'} M_{i, c+1} \\
+  m\left(\left(r, c, h\right) \rightarrow t \right) & := 0
 \end{align}
 
 % \subsection{Finding the Longest \(s\)-\(t\)-Path in \(D\)}
@@ -281,7 +416,7 @@ formulation for the  symmetric partitioning orbitope.  For this
 formulation we have to construct a linear description of finding the
 longest path in a digraph.  Fortunately -- as it is well known --
 network flows do the trick.  The transformation from network flows
-back to the original variable space of \(S^=_{p,q}\) can be done with
+back to the original variable space of \(S^=_{p, q}\) can be done with
 a linear function, as well.
 
 We introduce flow variables \(f \in \mathbb{R}^A_{\geq 0}\).  
@@ -291,7 +426,7 @@ For sets \(M\) we define
 
 Now, we can begin with the extendend formulation for the 
 symmetric partitioning orbitope.  For each vertex \(v \in V \setminus
-\{s,t\}\) we have:
+\{s, t\}\) we have:
 \begin{equation}
 f\left(\ina(v)\right) = f\left(\outa(v)\right)
 \end{equation}
@@ -301,7 +436,7 @@ f\left(\outa(s)\right) = 1
 \end{equation}
 
 % subto coupling:
-% forall <sx,cx> in Y:
+% forall <sx, cx> in Y:
 %        y[sx,cx] == sum <s, c, h, s_, c_, h_> in A
 %               	   with c+1 == cx
 % 		   and cx == c_
@@ -313,51 +448,86 @@ To link \(f\) with \(x\) of our original problem (\ref{optS}) we
 introduce the following conditions that are in analogue to \ref{objLink}:
 %TODO: nachschauen, wie man die Indexbereiche unter der Summe stapelt
 \begin{equation}
-  x \left( r,\, c \right) =
-  \sum_{r' - h' \leq r \leq r'; h' \leq h} f\left(\left(r'-h',\, c-1,\, h\right)
-    \rightarrow \left(r',\, c,\, h'\right) \right)
+  x \left( r, c \right) =
+  \sum_{r' - h' \leq r \leq r'; h' \leq h} f\left(\left(r'-h', c-1, h\right)
+    \rightarrow \left(r', c, h'\right) \right)
 2\end{equation}
 
 \section{Restricting the Symmetric Group}
-In this section we will have a look at some other groups \(G =
-G_{Rows} \times S_{Columns}\) operating on the solutions.  Always the
-permutation of all columns will be allowed.  But we will look at
-\(G_{Rows}\) being the symmetric group on the last \(t\) rows and then
-on the first \(t\) rows in order.
-
-\subsection{Permuting a subset of rows}
 
 Allowing permutations of all columns and a subset of rows produces an
-NP hard optimization problem.  This can be shown by reducing a know NP hard problem:
+NP-hard optimization problem in general.  This can be shown by
+reducing another problem, that is already proven to be NP-hard.
 
-For some \(p,q \in \Naturals\) consider the packing matrices \(M
-\subseteq \{0,1\}^{p,q}\), \ie a matrices with exactly one 1-entry per
-row.  Choose some disjoint pairs \((c_{i,1}, c_{i,2})\) of adjacent
-columns.  Let \(G\) be the cartesian product of symmetric groups
-\(S_i\) over those pairs.  Let \(G\) operate on \(M\), and let \(O\)
-be the orbitope of \(G\) on \(M\), \ie the set of lexicographically
-smallest representatives of each orbit.  Given an objective function
-\(o\) linear in the entries of \(M\), maximization of \(o\) over \(O\)
-is a NP hard problem in the chosen inputs \(p,q,\lrM{\lr{c_{i,1},c_{i,2}}}_i, o\).
+\begin{defn}[Partial symmetric partitioning orbitope]
+  Fix \(p, q \in \naturals^+\).  Fix a subset \(J \subseteq \lrE{p}\).
+  Call \(\Sym_{J}\) the symmetric group acting on \(R_J\) of \(\M^=_{p, q}\).
+  Define \(\mathcal{O}^=_{p,q}\lr{J} := O^=_{p, q} \lr{\Sym_{J} \times \Sym_{C}} \) as the partial symmetric partitioning orbitope.
+\end{defn}
 
-the
-problem of optimization on a packing orbitope over a cartesian product
-of symmetric groups on the rows
+\begin{theorem}[Subset of rows]
+  \label{subset-rows}
+  Optimizing a linear function \(d \in \Hom\lr{\rationals^{p,q},\rationals}\) over the partial symmetric partitioning orbitope
+  \(\mathcal{O}^=_{p, q}\lr{I}\) is NP-hard in \(\lrX{d}+\lrX{I}\).
+\end{theorem}
 
-For a natural number \(a \leq q\), let \(G_{Rows} = S_a\) operate on
-the first \(a\) rows.  As usually \(G_{Columns} = S_p\) operates on
-all columns.  Look at the orbits of \(G_{Columns} \times G_{Rows}\)
-and take each orbit's lexicographically smallest member as its
-representative.
+For the proof of theorem \ref{subset-rows}, we will need a result by
+Kaibel and Peinhardt\todo{Wer noch? + Quelle}:
 
-\[\lrE{\lr{\begin{matrix}
-1 & 0 & 0 \\
-0 & 1 & 0 \\
-0 & 1 & 0 \\
-0 & 0 & 1\\
-\end{matrix}
-}}
-\]
+\begin{theorem}[``Pairwise permutations of columns are NP-hard'']
+  \label{pairwise}
+  For some \(p, q \in \naturals^+\) consider the packing matrices
+  \(\M^=_{p \times q}\).   \todo{Ist das so korrekt formuliert?} Choose some mutually disjoint pairs of
+  adjacent columns, call their indices \(I\) with \(\lr{I + 1} \cap I
+  = \emptyset\) and \(I \subseteq \lrE{q}\).
+  Let 
+  \[P_I := \prod_{i \in I} \Sym_{\lrM{C_{i}, C_{i+i}}}\] 
+  be the cartesian product of symmetric groups acting on those pairs.
+  Optimizing a linear objective function \(c \in \Hom\lr{\rationals^{p \times
+    q}, \rationals}\) over \(O^=_{p, q} \lr{P_I}\) is NP-hard in
+  \(\lrX{I}+\lrX{c}\).
+\end{theorem}
+
+\begin{proof}[Subset of rows]
+  We prove \ref{subset-rows} by reducing the problem given in
+  \ref{pairwise} to the subset-of-rows problem: Given the linear
+  objective function in \(\Hom \lr{\M^=_{p, q}, \rationals} \), we
+  will extend it upwards to a function in \(\Hom \lr{\M^=_{e+p, q},
+    \rationals}\) on a 
+  set of much taller partitioning matrices.
+  The extra co\"efficients at the top will encode the
+  structure of the disjoint pairs of columns.
+
+  Fix a size \(p, q\), an objective function \(c\) and pairs of
+  columns \(I\) as in the statement of theorem \ref{pairwise}.  Assume
+  -- without loss of generality -- that we are maximizing \(c\) on
+  \(\M^=_{p,q}\).  Without fixing \(e\) yet, embed \(\M^=_{p,q}\) at
+  `the bottom of' \(\M^=_{e+p,q}\), \ie
+  \begin{align}
+    \varphi \colon \M^=_{p,q} & \to \M^=_{e+p,q} \\
+    \nonumber
+     m & \mapsto \lr{\begin{matrix}
+       \mathbf{0} \\
+       m
+     \end{matrix}}
+  \end{align}
+\end{proof}
+
+
+% For a natural number \(a \leq q\), let \(G_{Rows} = S_a\) act on
+% the first \(a\) rows.  As usually \(G_{Columns} = S_p\) acts on
+% all columns.  Look at the orbits of \(G_{Columns} \times G_{Rows}\)
+% and take each orbit's lexicographically smallest member as its
+% representative.
+
+% \[\lrE{\lr{\begin{matrix}
+% 1 & 0 & 0 \\
+% 0 & 1 & 0 \\
+% 0 & 1 & 0 \\
+% 0 & 0 & 1\\
+% \end{matrix}
+% }}
+% \]
 
 
 % In a representative the columns will be sorted, and the last rows,
@@ -390,9 +560,9 @@ representative.
 % ,0 0 1
 % ,0 0 1]
 
-\todo{Einfach zu machen, da die Gleichheitsprobleme erst in den
-  letzten rows anfangen, und keinen Einfluss auf die Spalten und
-  Zeilen vorher haben.  Oder?}
+%\todo{Einfach zu machen, da die Gleichheitsprobleme erst in den
+%  letzten rows anfangen, und keinen Einfluss auf die Spalten und
+%  Zeilen vorher haben.  Oder?}
 
 % \subsection{Permuting the first rows}
 
