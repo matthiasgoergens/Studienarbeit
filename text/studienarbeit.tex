@@ -44,6 +44,7 @@
 \def\ie{\emph{i.e.}}
 \def\Ie{\emph{I.e.}}
 \def\eg{\emph{e.g.}}
+\def\Eg{\emph{E.g.}}
 \def\vitae{vit\ae{}}
 \def\apriori{\emph{a~priori}}
 \def\aposteriori{\emph{a~posteriori}}
@@ -460,6 +461,7 @@ NP-hard optimization problem in general.  This can be shown by
 reducing another problem, that is already proven to be NP-hard.
 
 \begin{defn}[Partial symmetric partitioning orbitope]
+  \label{def-subset-rows}
   Fix \(p, q \in \naturals^+\).  Fix a subset \(J \subseteq \lrE{p}\).
   Call \(\Sym_{J}\) the symmetric group acting on \(R_J\) of \(\M^=_{p, q}\).
   Define \(\mathcal{O}^=_{p,q}\lr{J} := O^=_{p, q} \lr{\Sym_{J} \times \Sym_{C}} \) as the partial symmetric partitioning orbitope.
@@ -469,6 +471,7 @@ reducing another problem, that is already proven to be NP-hard.
   \label{subset-rows}
   Optimizing a linear function \(d \in \Hom\lr{\rationals^{p,q},\rationals}\) over the partial symmetric partitioning orbitope
   \(\mathcal{O}^=_{p, q}\lr{I}\) is NP-hard in \(\lrX{d}+\lrX{I}\).
+  \todo{Unify counters.}
 \end{theorem}
 
 For the proof of theorem \ref{subset-rows}, we will need a result by
@@ -493,10 +496,11 @@ Kaibel and Peinhardt\todo{Wer noch? + Quelle}:
   \ref{pairwise} to the subset-of-rows problem: Given the linear
   objective function in \(\Hom \lr{\M^=_{p, q}, \rationals} \), we
   will extend it upwards to a function in \(\Hom \lr{\M^=_{e+p, q},
-    \rationals}\) on a 
-  set of much taller partitioning matrices.
-  The extra co\"efficients at the top will encode the
-  structure of the disjoint pairs of columns.
+    \rationals}\) on a set of much taller partitioning matrices.  The
+  extra co\"efficients at the top will encode the structure of the
+  disjoint pairs of columns: We will force commuting columns in the
+  original problem, to have the same number of ones in the upper part
+  of the extended matrix.
 
   Fix a size \(p, q\), an objective function \(c\) and pairs of
   columns \(I\) as in the statement of theorem \ref{pairwise}.  Assume
@@ -510,7 +514,43 @@ Kaibel and Peinhardt\todo{Wer noch? + Quelle}:
        \mathbf{0} \\
        m
      \end{matrix}}
+ \end{align}
+ And to get back, use the projection \(\pi\):
+ \begin{align}
+   \pi \colon \M^=_{e+p,q} & \to \M^=_{p,q} \\
+    \nonumber
+     \lr{\begin{matrix}
+         l \\
+         m
+     \end{matrix}} & \mapsto m
   \end{align}
+ 
+  Let \(J := \lrE{e}\) and define \(\Sym_{J}\) as in \ref{def-subset-rows}.
+  How long does the upper part have to be?  Long enough to contain the following:
+  \begin{align}
+  \Delta \lr{j}  & = \Delta \lr{j+1} + \begin{cases} 0 & \text{if } j \in I\\
+    1 & \text{otherwise} \\
+  \end{cases} \\
+  o \lr{j+1} & = o \lr{j} + \Delta \lr{j} + 1 \\
+  \Delta \lr{q} & = 0\\
+  o \lr{1} & = 1
+ \end{align}
+ So \(e := o \lr{q} \leq \frac{q \lr{q+1}}{2} \).  Now only the objective function \(d\) is left to be defined:
+ \begin{align}
+   d & \in \Hom \lr{\rationals^{\lr{e + p} \times q}, \rationals} \\
+   d_{i,j} & := \begin{cases} s+1 & \text{if } i \in \left[o\lr{j},o\lr{j}+\Delta\lr{j} \right]\\
+     c_{i,j} & \text{if } i \geq o\lr{q}\\
+     -s-1 & otherwise
+     \end{cases}
+ \end{align}
+ where \(s\) has to be chosen large enough, to force the upper part of
+ the partition matrix no matter what the rest does, \eg
+ \begin{align}
+   s := p \cdot \lr{\max_{i,j \in \lrE{p}\times \lrE{q}} c_{i,j}
+     - \min_{i,j \in \lrE{p}\times \lrE{q}} c_{i,j}}
+ \end{align}
+
+  
 \end{proof}
 
 
