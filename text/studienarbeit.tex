@@ -177,7 +177,7 @@ acting on the rows.
 
 \section{Definitions}
 We will use the notation introduced in \cite{orbi} by Pfetsch
-and Kaibel.  In addition, let \(\mathbbm{1}_{p,q} \in \lrM{1}^{\lrE{p}
+and Kaibel.  Let \(\mathbbm{1}_{p,q} \in \lrM{1}^{\lrE{p}
   \times \lrE{q}}\) be the matrix composed of one-entries of size \(p \times q\).
 Let \(\M_{p,q} = \{0, 1\}^{p \times q} \). 
 
@@ -222,8 +222,16 @@ Let \(\M_{p,q} = \{0, 1\}^{p \times q} \).
     }\text{.}
   \]
 \end{remark}
+\begin{remark}
+  Our definition of orbitopes is slightly more generalized than the definition in \cite{orbi}.
+\end{remark}
 
-In \cite{faenza-2008} Faenza and Kaibel
+Kaibel and Fetsch talk about orbitopes for partitioning and packing
+matrices.  In associated problems the labels of the partitions can
+often be exchanged without altering the quality of a solution.  For
+example in the graph coloring problem the colors can be permuted.  For
+the matrices this means that we can let a symmetric group act on the
+columns.
 
 \begin{defn}[Columns and Rows]
   Fix \(p, q \in \naturals^+\).  Consider the set of matrices \(M :=
@@ -258,6 +266,11 @@ In \cite{faenza-2008} Faenza and Kaibel
    \end{description}
 \end{defn}
 
+In this paper we will have a look at even more symmetric problems.
+Here not only the columns can be permuted but also the rows.  For
+example take vertex coloring on a graph whose automorphism group is
+isomorphic to the symmetric group on its vertices.  Rows correspond to
+vertices and columns to a colors.
 
 \begin{defn}[Symmetric Partitioning and Packing Orbitopes]
 %  \label{espo}
@@ -275,7 +288,7 @@ Introduce the following orbitopes:
 %\todo{add definition}
 %\end{defn}
 
-\section{Vertices of the Full Symmetric Partitioning Orbitope}
+\section{Vertices of the Symmetric Partitioning Orbitope}
 \todo{Komplett ueberarbeiten.}  Let's take a closer look at the
 vertices of the partitioning orbitope \(O^=_{R \times C}\) of size
 \(p, q \in \naturals^{>0}\).
@@ -321,18 +334,18 @@ inequalities that is polynomially bounded in number of both variables
 and facettes in \(p \cdot q\).
 
 
-\section{Facettes of the Simple Symmetric Partitioning Orbitope}
-%Bild!
+% \section{Facettes of the Simple Symmetric Partitioning Orbitope}
+% %Bild!
 
-The simple symmetric partitioning orbitope permits an efficient
-description by equalities and inequalities in the original space of
-variables.
+% The simple symmetric partitioning orbitope permits an efficient
+% description by equalities and inequalities in the original space of
+% variables.
 
-% 1  1  1
-%-1 -1 -1
+% % 1  1  1
+% %-1 -1 -1
 
-%-1 -1 -1
-% 1  1  1  1
+% %-1 -1 -1
+% % 1  1  1  1
 
 \section{Polynomial Optimization on the  Symmetric Partitioning
   Orbitope}
@@ -566,16 +579,29 @@ Kaibel and Peinhardt\todo{Wer noch? + Quelle}:
   Let \(J := \lrE{e}\) and define \(\Sym_{J}\) as in
   \ref{def-subset-rows}.  How can the upper \(e\) rows encode \(I\)?
   
-  Suppose we can choose the objective function, such that 
+  We want to force the upper \(e\) rows so that columns that permute
+  in \(P_I\) have the same number of 1-entries.  The number of
+  1-entries per column can not increase as we go from left to
+  right. \todo{Describe the vertices above.}
+
+  So we choose the number \(\Delta\lr{j}\) of ones per column \(j\) such that
   \begin{align}
-  \Delta \lr{j}  & = \Delta \lr{j+1} + \begin{cases} 0 & \text{if } j \in I\\
-    1 & \text{otherwise} \\
-  \end{cases} \\
+    \Delta \lr{j+1} & =  \Delta \lr{j} - \begin{cases} 0 & \text{if } j \in I\\
+      1 & \text{otherwise} \\
+    \end{cases}\\
+    \Delta \lr{q} & = 0 \text{.}
+  \end{align}
+  Now, number of zeros \(o\lr{j}\) in a column \(j\) above the first one is governed by the following two equations
+\begin{align}
   o \lr{j+1} & = o \lr{j} + \Delta \lr{j} + 1 \\
-  \Delta \lr{q} & = 0\\
-  o \lr{1} & = 1
+  o \lr{1} & = 0
  \end{align}
- So \(e := o \lr{q} \leq \frac{q \lr{q+1}}{2} \).  Now only the objective function \(d\) is left to be defined:
+ Choose \(e := o\lr{q} + \Delta\lr{q} \leq \frac{q \lr{q+1}}{2}\) as
+ the smallest number of rows that can accommodate all ones as given
+ above.
+ 
+ Now only the objective function \(d\) is left to be defined to
+ actually enforce the structure of ones and zero that we desire:
  \begin{align}
    d & \in \Hom \lr{\rationals^{\lr{e + p} \times q}, \rationals} \\
    d_{i,j} & := \begin{cases} s+1 & \text{if } i \in \left[o\lr{j},o\lr{j}+\Delta\lr{j} \right]\\
@@ -583,17 +609,27 @@ Kaibel and Peinhardt\todo{Wer noch? + Quelle}:
      -s-1 & otherwise
      \end{cases}
  \end{align}
- where \(s\) has to be chosen large enough, to force the upper part of
- the partition matrix no matter what the rest does, \eg
+ Where \(s\) has to be chosen large enough, to force the upper part of
+ the partition matrix no matter what the rest does:
  \begin{align}
    s := p \cdot \lr{\max_{i,j \in \lrE{p}\times \lrE{q}} c_{i,j}
      - \min_{i,j \in \lrE{p}\times \lrE{q}} c_{i,j}}
  \end{align}
+ \(\lrX{d}+\lrX{J}\) is certainly polynomial in \(\lrX{c} + \lrX{I}\).  And to get from
+ \begin{align}
+   \hat{d} := \max d \lr{m} \text{ s.t. } m \in \mathcal{O}^=_{p, q}\lr{I}
+ \end{align}
+ to
+ \begin{align}
+   \hat{c} := \max c \lr{m} \text{ s.t. } m \in O^=_{p, q} \lr{P_I}
+ \end{align}
+ \todo{Why does the lower part of the new matrix resemble the old matrix?}
+ you just exploit
+ \begin{align}
+   \hat{c} = \hat{d} - s \cdot e \text{.}
+ \end{align}
 
-
-  
 \end{proof}
-
 
 % For a natural number \(a \leq q\), let \(G_{Rows} = S_a\) act on
 % the first \(a\) rows.  As usually \(G_{Columns} = S_p\) acts on
@@ -640,16 +676,6 @@ Kaibel and Peinhardt\todo{Wer noch? + Quelle}:
 % ,0 1 0
 % ,0 0 1
 % ,0 0 1]
-
-%\todo{Einfach zu machen, da die Gleichheitsprobleme erst in den
-%  letzten rows anfangen, und keinen Einfluss auf die Spalten und
-%  Zeilen vorher haben.  Oder?}
-
-% \subsection{Permuting the first rows}
-
-% Erstmal Repr. beschreiben.
-
-% Schwieriger.  Vielleicht einfach mehrere Reps pro Orbit aktzeptieren?
 
 % S_t auf t-elementiger Teilmengen der Zeilen:
 % z.B. erste t-Zeilen,
