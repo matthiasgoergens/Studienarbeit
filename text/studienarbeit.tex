@@ -176,37 +176,54 @@ acting on the rows.
 % node $i$ is put into part $j$.
 
 \section{Definitions}
-We will use the notation introduced in \cite{faenza-2008} by Faenza
+We will use the notation introduced in \cite{orbi} by Pfetsch
 and Kaibel.  In addition, let \(\mathbbm{1}_{p,q} \in \lrM{1}^{\lrE{p}
-  \times \lrE{q}}\) be the matrix of ones of size \(p \times q\).
-
-%Let \(\M_{p,q}\)
+  \times \lrE{q}}\) be the matrix composed of one-entries of size \(p \times q\).
+Let \(\M_{p,q} = \{0, 1\}^{p \times q} \). 
 
 \begin{defn}[Partitioning and Packing Matrices]
-  For some size \(p, q \in \naturals^{>0}\) consider the matrices \(\M_{p,q}^{=}
-  \subseteq \{0, 1\}^{p \times q}\), such that for all \(m \in \M_{p,q}^{=}\)
-  \[m \cdot \mathbbm{1}_{q, 1} = \mathbbm{1}_{p, 1}\]
-  (\Ie{} consider the matrices with exactly one 1-entry per row.)
-  Call \(\M_{p,q}^{=}\) the partitioning matrices of size \(p, q\).
+  For some size \(p, q \in \naturals^{>0}\) consider the sets of
+  matrices \(\M_{p,q}^{=},\M_{p,q}^{\leq} \subseteq \M_{p, q}\), such
+  that 
+  \begin{align}
+    \M_{p,q}^{=} & := \lrM{m \in \M_{p,q} \mid m \cdot \mathbbm{1}_{q, 1} = \mathbbm{1}_{p, 1}} & \text{(Partitioning Matrices)}\\
+    \M_{p,q}^{\leq} & := \lrM{m \in \M_{p,q} \mid m \cdot \mathbbm{1}_{q, 1} \leq \mathbbm{1}_{p, 1}} & \text{(Packing Matrices)}
+  \end{align}
+  (\Ie{} consider the matrices with exactly one 1-entry per row and the matrices with at most one 1-entry per row.)
 \end{defn}
 
-\begin{defn}[Packing Matrices]
-  Let \(\M_{p,q}^{=}\) be the partitioning matrices of a certain size
-  \(p, q \in \naturals^{>0}\). Call
-  \[\M_{p,q}^{\leq} := \lrM{m \mid m \leq m' \in \M_{p,q}^{=}} \cap \lrM{0, 1}^{p \times q}\]
-  the packing matrices of that size.
-\end{defn}
+ \begin{defn}[Orbitopes]
+   Let \(G\) be a group acting on a set \(A \subseteq \rationals^{p,q}\).  Let \(A\) have a total order \(\lex\), such that \(a\lex b \lex a\) implies \(a = b\).
+   Look at the set \(V \subseteq A\) uniquely determined by
+   \begin{align}
+       v  \lex  G \cdot v  \text{ for all } v \in V
+     \end{align}
+   and
+   \begin{align}
+     G \cdot V =  A \text{.}
+   \end{align}
+   Call its convex hull \(O_{\lex} \lr{G, A} := \conv{}  V\) the orbitope of
+   \(G\) on \(A\) with ordering \(\lex\).  
+ \end{defn}
+\begin{remark}
+  We will omit stating the ordering and imply lexicographic ordering
+  on the matrices, where entries with lexicographically lower indices
+  are considered more significant.  For example
+  \[\lr{\begin{matrix}
+      1 & \mathbf{2} \\
+      3 & 4 \\
+      \end{matrix}
+    }
+    \lex
+    \lr{\begin{matrix}
+      1 & \mathbf{3} \\
+      2 & 4 \\
+      \end{matrix}
+    }\text{.}
+  \]
+\end{remark}
 
-% \begin{defn}[Orbitope]
-%   Let \(G\) be a group acting on a set \(A\).  Let \(A\) have a total order \(\lex\), such that \(a\lex b \lex a\) implies \(a = b\).
-%   Look at the set \(V \subseteq A\) uniquely determined by
-%     \[v  \lex  G \cdot v  \text{ for all \(v \in V\)}\]
-%   and
-%   \[G \cdot V =  A \text{.}\]
-%   Call its convex hull \(O \lr{G, A} := \conv V\) the orbitope of
-%   \(G\) on \(A\) with order \(\lex\).  Normally we will omit stating
-%   the order and imply lexicographic ordering on \(A\).
-% \end{defn}
+In \cite{faenza-2008} Faenza and Kaibel
 
 \begin{defn}[Columns and Rows]
   Fix \(p, q \in \naturals^+\).  Consider the set of matrices \(M :=
@@ -233,9 +250,14 @@ and Kaibel.  In addition, let \(\mathbbm{1}_{p,q} \in \lrM{1}^{\lrE{p}
 %columns.  The next section gives a description of the representatives
 %contained in a symmetric partitioning orbitope.
 
-% \begin{defn}[Partitioning Orbitope]
-%   Call \(O^=_C := O \lr{S_C, \M_{p,q}^=}\) the partitioning orbitope.
-% \end{defn}
+\begin{defn}[Packing and Partitioning Orbitopes]
+  We will work with the following two orbitopes
+  \begin{description}
+    \item[Partitioning orbitope] \(O^=_C := O \lr{S_C, \M_{p,q}^=}\)
+    \item[Packing orbitope] \(O^{\leq}_C := O \lr{S_C, \M_{p,q}^=}\)
+   \end{description}
+\end{defn}
+
 
 \begin{defn}[Symmetric Partitioning and Packing Orbitopes]
 %  \label{espo}
