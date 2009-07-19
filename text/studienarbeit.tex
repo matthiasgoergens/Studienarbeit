@@ -21,7 +21,9 @@
 
 \newtheorem{theorem}{Theorem}
 \theoremstyle{definition}
-\newtheorem{defn}{Definition}
+\newtheorem{defn}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
 
 \usepackage{units}
 %\usepackage{icomma}
@@ -180,20 +182,20 @@ and Kaibel.  In addition, let \(\mathbbm{1}_{p,q} \in \lrM{1}^{\lrE{p}
 
 %Let \(\M_{p,q}\)
 
-% \begin{defn}[Partitioning Matrices]
-%   For some size \(p, q \in \naturals^{>0}\) consider the matrices \(\M_{p,q}^{=}
-%   \subseteq \{0, 1\}^{p \times q}\), such that for all \(m \in \M_{p,q}^{=}\)
-%   \[m \cdot \mathbbm{1}_{q, 1} = \mathbbm{1}_{p, 1}\]
-%   (\Ie{} consider the matrices with exactly one 1-entry per row.)
-%   Call \(\M_{p,q}^{=}\) the partitioning matrices of size \(p, q\).
-% \end{defn}
+\begin{defn}[Partitioning and Packing Matrices]
+  For some size \(p, q \in \naturals^{>0}\) consider the matrices \(\M_{p,q}^{=}
+  \subseteq \{0, 1\}^{p \times q}\), such that for all \(m \in \M_{p,q}^{=}\)
+  \[m \cdot \mathbbm{1}_{q, 1} = \mathbbm{1}_{p, 1}\]
+  (\Ie{} consider the matrices with exactly one 1-entry per row.)
+  Call \(\M_{p,q}^{=}\) the partitioning matrices of size \(p, q\).
+\end{defn}
 
-% \begin{defn}[Packing Matrices]
-%   Let \(\M_{p,q}^{=}\) be the partitioning matrices of a certain size
-%   \(p, q \in \naturals^{>0}\). Call
-%   \[\M_{p,q}^{\leq} := \lrM{m \mid m \leq m' \in \M_{p,q}^{=}} \cap \lrM{0, 1}^{p \times q}\]
-%   the packing matrices of that size.
-% \end{defn}
+\begin{defn}[Packing Matrices]
+  Let \(\M_{p,q}^{=}\) be the partitioning matrices of a certain size
+  \(p, q \in \naturals^{>0}\). Call
+  \[\M_{p,q}^{\leq} := \lrM{m \mid m \leq m' \in \M_{p,q}^{=}} \cap \lrM{0, 1}^{p \times q}\]
+  the packing matrices of that size.
+\end{defn}
 
 % \begin{defn}[Orbitope]
 %   Let \(G\) be a group acting on a set \(A\).  Let \(A\) have a total order \(\lex\), such that \(a\lex b \lex a\) implies \(a = b\).
@@ -256,10 +258,11 @@ Introduce the following orbitopes:
 vertices of the partitioning orbitope \(O^=_{R \times C}\) of size
 \(p, q \in \naturals^{>0}\).
 
-\mpar{Note that \(O^=_{R \times C} \subsetneq O^=_{R} \cap O^=_{C}\).
-  In general stating the orbitope of an internal direct product in
-  terms of the orbitopes of both factor groups is a hard
-  problem.}
+\begin{remark}
+  Note that \(O^=_{R \times C} \subsetneq O^=_{R} \cap O^=_{C}\).  In
+  general expressing the orbitope of an internal direct product in
+  terms of the orbitopes of both factor groups is a hard problem.
+\end{remark}
 
 %  Let \(p\) be the number of columns and \(q\) be the number of rows of
 %  matrices in the set \(\M_{p,q} \subseteq \left\{0, 1\right\}^{p\times q}\) of all
@@ -467,11 +470,15 @@ reducing another problem, that is already proven to be NP-hard.
   Define \(\mathcal{O}^=_{p,q}\lr{J} := O^=_{p, q} \lr{\Sym_{J} \times \Sym_{C}} \) as the partial symmetric partitioning orbitope.
 \end{defn}
 
+\todo{Describe lexicographically maximal elements of the orbits of
+  \(\Sym_J \times \Sym_C\)} Let's examine the vertices of
+\(\mathcal{O}^=_{p,q}\lr{J}\), \ie{} the lexicographically maximal
+elements of the orbits of \(\Sym_J \times \Sym_C\) acting on \(\M^=_{p,q}\).
+
 \begin{theorem}[Subset of rows]
   \label{subset-rows}
   Optimizing a linear function \(d \in \Hom\lr{\rationals^{p,q},\rationals}\) over the partial symmetric partitioning orbitope
   \(\mathcal{O}^=_{p, q}\lr{I}\) is NP-hard in \(\lrX{d}+\lrX{I}\).
-  \todo{Unify counters.}
 \end{theorem}
 
 For the proof of theorem \ref{subset-rows}, we will need a result by
@@ -491,16 +498,17 @@ Kaibel and Peinhardt\todo{Wer noch? + Quelle}:
   \(\lrX{I}+\lrX{c}\).
 \end{theorem}
 
-\begin{proof}[Subset of rows]
+\begin{proof}[Proof of `Subset of rows']
   We prove \ref{subset-rows} by reducing the problem given in
   \ref{pairwise} to the subset-of-rows problem: Given the linear
   objective function in \(\Hom \lr{\M^=_{p, q}, \rationals} \), we
   will extend it upwards to a function in \(\Hom \lr{\M^=_{e+p, q},
     \rationals}\) on a set of much taller partitioning matrices.  The
   extra co\"efficients at the top will encode the structure of the
-  disjoint pairs of columns: We will force commuting columns in the
-  original problem, to have the same number of ones in the upper part
-  of the extended matrix.
+  disjoint pairs of columns: We will force both elements of any
+  commuting column pair in the original problem, to have the same
+  number of ones in the upper part of the extended matrix.
+  %% Since we only include lexicographically maximal elements of 
 
   Fix a size \(p, q\), an objective function \(c\) and pairs of
   columns \(I\) as in the statement of theorem \ref{pairwise}.  Assume
@@ -524,9 +532,19 @@ Kaibel and Peinhardt\todo{Wer noch? + Quelle}:
          m
      \end{matrix}} & \mapsto m
   \end{align}
- 
-  Let \(J := \lrE{e}\) and define \(\Sym_{J}\) as in \ref{def-subset-rows}.
-  How long does the upper part have to be?  Long enough to contain the following:
+  We will call the complementary projection \(\pi^\bot\):
+  \begin{align}
+    \pi^\bot \colon \M^=_{e+p,q} & \to \M^=_{e,q} \\
+    \nonumber
+    \lr{\begin{matrix}
+        l \\
+        m
+      \end{matrix}} & \mapsto l
+  \end{align}
+  Let \(J := \lrE{e}\) and define \(\Sym_{J}\) as in
+  \ref{def-subset-rows}.  How can the upper \(e\) rows encode \(I\)?
+  
+  Suppose we can choose the objective function, such that 
   \begin{align}
   \Delta \lr{j}  & = \Delta \lr{j+1} + \begin{cases} 0 & \text{if } j \in I\\
     1 & \text{otherwise} \\
@@ -549,6 +567,7 @@ Kaibel and Peinhardt\todo{Wer noch? + Quelle}:
    s := p \cdot \lr{\max_{i,j \in \lrE{p}\times \lrE{q}} c_{i,j}
      - \min_{i,j \in \lrE{p}\times \lrE{q}} c_{i,j}}
  \end{align}
+
 
   
 \end{proof}
