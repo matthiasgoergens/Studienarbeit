@@ -20,3 +20,5 @@ fourmotz/
 *.logtext/
 prv_studienarbeit.fmt
 text/studienarbeit.out
+*.bbl
+*.blg
