@@ -517,7 +517,7 @@ elements of the orbits of \(\Sym_J \times \Sym_C\) acting on \(\M^=_{p,q}\).
 \end{theorem}
 
 For the proof of theorem \ref{subset-rows}, we will need a result by
-Kaibel and Peinhardt\todo{Wer noch? + Quelle}:
+Yuri Faenza\todo{Wer noch? + Quelle}:
 
 \begin{theorem}[``Pairwise permutations of columns are NP-hard'']
   \label{pairwise}
@@ -591,10 +591,9 @@ Kaibel and Peinhardt\todo{Wer noch? + Quelle}:
     \end{cases}\\
     \Delta \lr{q} & = 0 \text{.}
   \end{align}
-  Now, number of zeros \(o\lr{j}\) in a column \(j\) above the first one is governed by the following two equations
+  Now, number of zeros \(o\lr{j}\) in a column \(j\) above the first one is governed by the following equation
 \begin{align}
-  o \lr{j+1} & = o \lr{j} + \Delta \lr{j} + 1 \\
-  o \lr{1} & = 0
+  o \lr{j} & = \sum_{k \in \lrE{j-1}} \Delta \lr{k} \\
  \end{align}
  Choose \(e := o\lr{q} + \Delta\lr{q} \leq \frac{q \lr{q+1}}{2}\) as
  the smallest number of rows that can accommodate all ones as given
@@ -604,8 +603,8 @@ Kaibel and Peinhardt\todo{Wer noch? + Quelle}:
  actually enforce the structure of ones and zero that we desire:
  \begin{align}
    d & \in \Hom \lr{\rationals^{\lr{e + p} \times q}, \rationals} \\
-   d_{i,j} & := \begin{cases} s+1 & \text{if } i \in \left[o\lr{j},o\lr{j}+\Delta\lr{j} \right]\\
-     c_{i,j} & \text{if } i \geq o\lr{q}\\
+   d_{i,j} & := \begin{cases} s+1 & \text{if } o\lr{j} < i \leq o\lr{j}+\Delta\lr{j}\\
+     c_{i-o\lr{q},j} & \text{if } i \geq o\lr{q}\\
      -s-1 & otherwise
      \end{cases}
  \end{align}
@@ -623,7 +622,7 @@ Kaibel and Peinhardt\todo{Wer noch? + Quelle}:
  \begin{align}
    \hat{c} := \max c \lr{m} \text{ s.t. } m \in O^=_{p, q} \lr{P_I}
  \end{align}
- \todo{Why does the lower part of the new matrix resemble the old matrix?}
+ \todo{Why does the lower part of the new matrix resemble the old matrix?} 
  you just exploit
  \begin{align}
    \hat{c} = \hat{d} - s \cdot e \text{.}
