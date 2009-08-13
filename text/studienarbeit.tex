@@ -20,6 +20,8 @@
 \usepackage{listing}
 
 \newtheorem{theorem}{Theorem}
+\theoremstyle{lemma}
+\newtheorem{lemma}{Lemma}
 \theoremstyle{definition}
 \newtheorem{defn}[theorem]{Definition}
 \theoremstyle{remark}
@@ -100,6 +102,7 @@
 \newcommand{\Hom}{\ensuremath{\mathrm{Hom}}}
 
 \newcommand{\M}{\ensuremath{\mathcal{M}}}
+\newcommand{\calO}{\ensuremath{\mathcal{O}}}
 \newcommand{\Sym}{\ensuremath{\mathfrak{S}}}
 
 \usepackage{hyperref}
@@ -126,7 +129,7 @@ results.''% -- or, if you want to be more formal and use a programming
 %\end{verbatim}
 %You may even calculate in parallel.
 
-But symmetry can also be a problem.  Take Buridan's ass.
+But symmetry can also be a problem.  Take Buridan's ass.\todo{Weniger Schmalz.}
 \todo{Recherche, about name and so on} Placed exactly at the midpoint
 between two equally enticing haystacks, the philosopher's ass can not
 decide where to go and starves \todo{kl"aglich!}.  Of course even if
@@ -273,7 +276,7 @@ In this paper we will have a look at even more symmetric problems.
 Here not only the columns can be permuted but also the rows.  For
 example take vertex coloring on a graph whose automorphism group is
 isomorphic to the symmetric group on its vertices.  Rows correspond to
-vertices and columns to a colors.
+vertices and columns to colors.
 
 \begin{defn}[Symmetric Partitioning and Packing Orbitopes]
 %  \label{espo}
@@ -292,21 +295,57 @@ Introduce the following orbitopes:
 %\end{defn}
 
 \section{Vertices of the Symmetric Partitioning Orbitope}
-\todo{Komplett ueberarbeiten.}  Let's take a closer look at the
-vertices of the partitioning orbitope \(O^=_{R \times C}\) of size
+Let's take a closer look at the
+vertices of the symmetric partitioning orbitope \(\calO^=_{p, q}\) of size
 \(p, q \in \naturals^{>0}\).
 
 \begin{remark}
-  Note that \(O^=_{R \times C} \subsetneq O^=_{R} \cap O^=_{C}\).  In
+  Note that \(\calO^=_{p, q} := O^=_{p, q} \lr{\Sym_{R \times C}} \subsetneq
+                                O^=\lr{\Sym_C,\M^=_{p, q}} \cap O^=\lr{\Sym_R, \M^=_{p, q}}\).  In
   general expressing the orbitope of an internal direct product in
   terms of the orbitopes of both factor groups is a hard problem.
 \end{remark}
 
+\todo{Wie sehen vertices aus?  Wie viele gibt es?  Wie sehen Seiten aus?  Wie viele gibt es?}
+
+\begin{lemma}[Characterizing vertices of \(\calO^=_{p, q}\)]
+  \label{charVert}
+  Look at \(v \in \M^=_{p, q}\).  \(v\) is a vertice of \(\calO^=_{p, q}\) iff the following conditions hold:
+  \begin{enumerate}
+  \item \label{cond1} As we look down the rows, the position of the 1-entry never
+    moves left.  It either stays in the same column or wanders one
+    position to the right: \(v_{i,j} = 1\) implies \(v_{i+1,j} = 1\) or \(v_{i+1,j+1} = 1\) for all \(\lr{i,j} \in \lrE{p-1} \times
+    \lrE{q}\).
+  \item \label{cond2} And the number of 1-entries per column decreases from left to
+    right: \(\mathop{sum} v_{*, j} \geq \mathop{sum} v_{*, j+1}\) for
+    all \(j \in \lrE{q}\).
+  \end{enumerate}
+  (Where the outside entries \(v_{i,q+1}\) are presumed zero to avoid dealing with edge cases).
+\end{lemma}
+
+\begin{proof}
+  We will prove \ref{charVert} in two parts.  First we show that
+  \(\calO^=_{p, q}\) has no vertices other than described.  Then we
+  show that all the elements of \(\M^=_{p, q}\) that meet the conditions are truly vertices of \(\calO^=_{p, q}\).
+  \todo{Dran denken, zu zeigen, dass die vorgeblichen Vertices ueberhaupt Elemente von  \(\calO^=_{p, q}\) sind!}
+  \todo{Alternativ: Zeige dass die vorgeblichen Vertices \lex unter allen \(\M^=_{p, q}\) minimieren.}
+
+  Take \(v \in \M^=_{p, q}\).  Suppose \(v\) violates condition
+  \ref{cond1}.  Then we can find another matrix \(w\) in the same
+  orbit of \(\Sym_{R \times C}\), that is lexicographically smaller than \(v\). %Thus \(v \nin \calO^=_{p, q}\).
+  Consider at the topmost violation, say \(v_{i,j} = 1\) and \(v_{i+1,k} = 1\) with \(k \notin \lrM{j,j+1}\) and \(i\) as minimal.
+  Look at two cases. In the first case the topmost violation sends the 1-entry to the left: \(k < j\).
+  \todo{Weitermachen!}
+
+  % \(\calO^=_{p, q}\).
+  % \(v \in \M^=_{p, q}\)
+\end{proof}
+
 %  Let \(p\) be the number of columns and \(q\) be the number of rows of
-%  matrices in the set \(\M_{p,q} \subseteq \left\{0, 1\right\}^{p\times q}\) of all
-%  \(0/1\)-matrices with exactly one 1-entry in each row.  Let \(S = S_R
-% \times S_C\) be the Cartesian product of the symmetric groups on rows
-%  and columns.  \(S\) acts on \(\M_{p,q}\).
+%   matrices in the set \(\M_{p,q} \subseteq \left\{0, 1\right\}^{p\times q}\) of all
+%   \(0/1\)-matrices with exactly one 1-entry in each row.  Let \(S = S_R
+%  \times S_C\) be the Cartesian product of the symmetric groups on rows
+%   and columns.  \(S\) acts on \(\M_{p,q}\).
 
 %  Sortierung der Zeilen reicht auch schon für simple s.p.o.
 
@@ -317,15 +356,15 @@ vertices of the partitioning orbitope \(O^=_{R \times C}\) of size
 % fact sorting along the rows is sufficent for this normal form; sorting
 % the columns does not add to the requirements.
 
-Using a very simple flow network one can easily find the facettes of
-the resulting \textit{simple symmetric partition orbitope} -- see
-\ref{fluss}.
+%Using a very simple flow network one can easily find the facettes of
+%the resulting \textit{simple symmetric partition orbitope} -- see
+%\ref{fluss}.
 
 % sort columns by hamming distance
 
-Unfortunately this way some orbits of $S$ intersect the orbitope with
-more than one member.  To guarantee exactly one representative per
-orbit we restrict the orbitope further:
+% Unfortunately this way some orbits of $S$ intersect the orbitope with
+% more than one member.  To guarantee exactly one representative per
+% orbit we restrict the orbitope further:
 
 
 Computer generated examples suggest that no polynomial in \(p \cdot
@@ -602,10 +641,11 @@ Yuri Faenza\todo{Wer noch? + Quelle}:
  the smallest number of rows that can accommodate all ones as given
  above.
  
- Now only the objective function \(d\) is left to be defined to
- actually enforce the structure of ones and zero that we desire:
+ Now only the objective function \(d\) is left to be defined, so that it
+ actually enforce the structure of ones and zeroes that we desire:
  \begin{align}
    d & \in \Hom \lr{\rationals^{\lr{e + p} \times q}, \rationals} \\
+   \nonumber
    d_{i,j} & := \begin{cases} s+1 & \text{if } o\lr{j} < i \leq o\lr{j}+\Delta\lr{j}\\
      c_{i-o\lr{q},j} & \text{if } i \geq o\lr{q}\\
      -s-1 & otherwise
