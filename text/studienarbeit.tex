@@ -72,6 +72,7 @@
 \newcommand{\outa}{\ensuremath{\vec{\Out}}}
 
 \newcommand{\lex}{\ensuremath{\prec}} % \leq_{\mathop{lex}}}}
+\newcommand{\nlex}{\ensuremath{\nprec}} % \leq_{\mathop{lex}}}}
 
 %für knoten ein/aus-gehender kanten.
 \newcommand{\inv}{\ensuremath{\dot{\In}}}
@@ -151,7 +152,7 @@ Obviously, any optimization algorithm that only considers at least one
 representative of each orbit will still find an optimal solution, if
 there is one.  Orbitopes are the convex hulls of all representatives
 thus considered.  It is customary to take the lexicographically
-smallest member of each orbit as its representative.
+largest member of each orbit as its representative.
 
 In this paper I will consider a certain kind of partitioning
 orbitopes.  Partitioning orbitopes are polytopes that live in the set
@@ -202,10 +203,12 @@ Let \(\M_{p,q} = \{0, 1\}^{p \times q} \).
    Let \(G\) be a group acting on a set \(A \subseteq \rationals^{p,q}\).  Let \(A\) have a total order \(\lex\), such that \(a\lex b \lex a\) implies \(a = b\).
    Look at the set \(V \subseteq A\) uniquely determined by
    \begin{align}
-       v  \lex  G \cdot v  \text{ for all } v \in V
+     \label{biggest}
+       G \cdot v  \preceq v  \text{ for all } v \in V
      \end{align}
    and
    \begin{align}
+     \label{complete}
      G \cdot V =  A \text{.}
    \end{align}
    Call its convex hull \(O_{\lex} \lr{G, A} := \conv{}  V\) the orbitope of
@@ -332,10 +335,28 @@ vertices of the symmetric partitioning orbitope \(\calO^=_{p, q}\) of size
 
   Take \(v \in \M^=_{p, q}\).  Suppose \(v\) violates condition
   \ref{cond1}.  Then we can find another matrix \(w\) in the same
-  orbit of \(\Sym_{R \times C}\), that is lexicographically smaller than \(v\). %Thus \(v \nin \calO^=_{p, q}\).
-  Consider at the topmost violation, say \(v_{i,j} = 1\) and \(v_{i+1,k} = 1\) with \(k \notin \lrM{j,j+1}\) and \(i\) as minimal.
-  Look at two cases. In the first case the topmost violation sends the 1-entry to the left: \(k < j\).
-  \todo{Weitermachen!}
+  orbit of \(\Sym_{R \times C}\), that is lexicographically bigger
+  than \(v\): \(v \prec w = g \cdot v\), where \(g \in \Sym_{R \times
+    C}\). 
+  Thus \(v\) does violates \ref{biggest} in the definition of
+  an orbitope.  % \(v \nin \calO^=_{p, q}\).
+  How do we find \(w = g \cdot v\)? Consider the topmost violation,
+  say \(v_{i,j} = 1\) and \(v_{i+1,k} = 1\) with \(k \notin
+  \lrM{j,j+1}\) and \(i \in \lrE{p-1}\) minimal.  Look at two
+  cases. In the first case the topmost violation sends the 1-entry to
+  the left: \(k < j\).  Here we swap the rows \(v_{i,*}\) and \(v_{i+1,*}\)
+  to obtain a lexicographically bigger matrix in the same orbit.  In
+  the second case the topmost violation send the 1-entry to far the
+  right: \(k > j+1\).  Here we swap the columns \(v_{*,k}\) and
+  \(v_{*,j+1}\) to obtain a lexicographically bigger matrix.  This works
+  since we are dealing with the topmost violation --- so there can be
+  no 1-entry in those columns above the \(i\)-th row.
+
+  Now suppose \(v\) satisfies condition \ref{cond1}, but violates
+  condition \ref{cond2}.  Look at the leftmost violation:
+  \(\mathop{sum} C_i < \mathop{sum} C_{i+1}\) where \(i \in \lrE{p-1}\) minimal.
+  
+
 
   % \(\calO^=_{p, q}\).
   % \(v \in \M^=_{p, q}\)
