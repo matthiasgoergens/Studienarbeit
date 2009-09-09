@@ -357,19 +357,23 @@ vertices of the symmetric partitioning orbitope \(\calO^=_{p, q}\) of size
   \(s := \mathop{sum} v_{*,j} < \mathop{sum} v_{*,j+1} := S\) where \(j \in
   \lrE{q}\) minimal.  Let all 1-entries of those columns lie in
   \(v_{\lrE{a,a+s-1},j}\) and \(v_{\lrE{a+s,a+s+S-1},j+1}\).  By
-  swapping \(v_{*,j}\) and \(v_{*,j+1}\) and rotating rows via
-  \[R_{a+k} \mapsto \begin{cases}
-    R_{a+ \lr{k+s \mod s + S}} & \text{if } 0 \leq k < s+S \\
-    R_{a+k} & \text{otherwise}
+  swapping \(v_{*,j}\) and \(v_{*,j+1}\) with a function called \(h\) and rotating rows via
+  \[\lr{f v}_{*,a+k} := \begin{cases}
+    v_{*,a+ \lr{k+s \mod s + S}} & \text{if } 0 \leq k < s+S \\
+    v_{*,a+k} & \text{otherwise}
   \end{cases}\]
     we can make those 1-entries lie in
-  \(\lr{g\cdot v}_{\lrE{a,a+S-1},j}\) and \(\lr{g \cdot
-    v}_{\lrE{a+S,a+s+S-1},j+1}\) and not change anything else.
-  The new matrix \(g \cdot v\) is lexicographically bigger than the old one \(v\).
+  \(\lr{\lr{f \circ h} v}_{\lrE{a,a+S-1},j}\) and \(\lr{\lr{f \circ h} v}_{\lrE{a+S,a+s+S-1},j+1}\) and not change anything else.
+  The new matrix \(\lr{f \circ h} v\) is lexicographically bigger than the old one \(v\).
   
   We have seen that all candidates for vertices of the orbitope
   \(\calO^=_{p, q}\) have to satisfy conditions \ref{cond1} and
   \ref{cond2}.  Do those conditions suffice?
+
+  Consider two matrices \(v,w \in \M^=_{p, q}\) in the same orbit,
+  \ie{} \(v = g w\) where \(g \in \Sym_{R \times C}\).  Let \(v \lex
+  w\), but suppose that \(v\) satisfies conditions \ref{cond1} and
+  \ref{cond2}.
 
   % \(\calO^=_{p, q}\).
   % \(v \in \M^=_{p, q}\)
@@ -380,26 +384,6 @@ vertices of the symmetric partitioning orbitope \(\calO^=_{p, q}\) of size
 %   \(0/1\)-matrices with exactly one 1-entry in each row.  Let \(S = S_R
 %  \times S_C\) be the Cartesian product of the symmetric groups on rows
 %   and columns.  \(S\) acts on \(\M_{p,q}\).
-
-%  Sortierung der Zeilen reicht auch schon für simple s.p.o.
-
-% Obviously we can require representatives to be lexicographically
-% sorted along rows and columns.  Thus we get representative matrices
-% with 1 in the top-left.  In each row the 1-entry stays in the column
-% it dwelled in the row above -- or wanders off one column right.  In
-% fact sorting along the rows is sufficent for this normal form; sorting
-% the columns does not add to the requirements.
-
-%Using a very simple flow network one can easily find the facettes of
-%the resulting \textit{simple symmetric partition orbitope} -- see
-%\ref{fluss}.
-
-% sort columns by hamming distance
-
-% Unfortunately this way some orbits of $S$ intersect the orbitope with
-% more than one member.  To guarantee exactly one representative per
-% orbit we restrict the orbitope further:
-
 
 Computer generated examples suggest that no polynomial in \(p \cdot
 q\) limits the number of facettes of the symmetric partioning
@@ -416,12 +400,6 @@ and facettes in \(p \cdot q\).
 % The simple symmetric partitioning orbitope permits an efficient
 % description by equalities and inequalities in the original space of
 % variables.
-
-% % 1  1  1
-% %-1 -1 -1
-
-% %-1 -1 -1
-% % 1  1  1  1
 
 \section{Polynomial Optimization on the  Symmetric Partitioning
   Orbitope}
