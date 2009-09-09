@@ -336,27 +336,40 @@ vertices of the symmetric partitioning orbitope \(\calO^=_{p, q}\) of size
   Take \(v \in \M^=_{p, q}\).  Suppose \(v\) violates condition
   \ref{cond1}.  Then we can find another matrix \(w\) in the same
   orbit of \(\Sym_{R \times C}\), that is lexicographically bigger
-  than \(v\): \(v \prec w = g \cdot v\), where \(g \in \Sym_{R \times
-    C}\). 
-  Thus \(v\) does violates \ref{biggest} in the definition of
+  than \(v\): \(v \prec w := g \cdot v\), where \(g \in \Sym_{R \times
+    C}\).  Thus \(v\) does violates \ref{biggest} in the definition of
   an orbitope.  % \(v \nin \calO^=_{p, q}\).
-  How do we find \(w = g \cdot v\)? Consider the topmost violation,
-  say \(v_{i,j} = 1\) and \(v_{i+1,k} = 1\) with \(k \notin
+  But how do we find \(w = g \cdot v\)?  Consider the topmost
+  violation, say \(v_{i,j} = 1\) and \(v_{i+1,k} = 1\) with \(k \notin
   \lrM{j,j+1}\) and \(i \in \lrE{p-1}\) minimal.  Look at two
   cases. In the first case the topmost violation sends the 1-entry to
-  the left: \(k < j\).  Here we swap the rows \(v_{i,*}\) and \(v_{i+1,*}\)
-  to obtain a lexicographically bigger matrix in the same orbit.  In
-  the second case the topmost violation send the 1-entry to far the
-  right: \(k > j+1\).  Here we swap the columns \(v_{*,k}\) and
-  \(v_{*,j+1}\) to obtain a lexicographically bigger matrix.  This works
-  since we are dealing with the topmost violation --- so there can be
-  no 1-entry in those columns above the \(i\)-th row.
+  the left: \(k < j\).  Here we swap the rows \(v_{i,*}\) and
+  \(v_{i+1,*}\) to obtain a lexicographically bigger matrix in the
+  same orbit.  In the second case the topmost violation sends the
+  1-entry too far to the right: \(k > j+1\).  Here we swap the columns
+  \(v_{*,k}\) and \(v_{*,j+1}\) to obtain a lexicographically bigger
+  matrix.  This matrix is really lexicographically bigger, since we
+  are dealing with the topmost violation --- so there can be no
+  1-entry in those columns above the \(i\)-th row.
 
   Now suppose \(v \in \M^=_{p, q}\) satisfies condition \ref{cond1}, but violates
   condition \ref{cond2}.  Look at the leftmost violation:
-  \(\mathop{sum} v_{*,j} < \mathop{sum} v_{*,j+1}\) where \(j \in \lrE{q}\) minimal.
+  \(s := \mathop{sum} v_{*,j} < \mathop{sum} v_{*,j+1} := S\) where \(j \in
+  \lrE{q}\) minimal.  Let all 1-entries of those columns lie in
+  \(v_{\lrE{a,a+s-1},j}\) and \(v_{\lrE{a+s,a+s+S-1},j+1}\).  By
+  swapping \(v_{*,j}\) and \(v_{*,j+1}\) and rotating rows via
+  \[R_{a+k} \mapsto \begin{cases}
+    R_{a+ \lr{k+s \mod s + S}} & \text{if } 0 \leq k < s+S \\
+    R_{a+k} & \text{otherwise}
+  \end{cases}\]
+    we can make those 1-entries lie in
+  \(\lr{g\cdot v}_{\lrE{a,a+S-1},j}\) and \(\lr{g \cdot
+    v}_{\lrE{a+S,a+s+S-1},j+1}\) and not change anything else.
+  The new matrix \(g \cdot v\) is lexicographically bigger than the old one \(v\).
   
-  \todo{Copy the rest of the proof from Ingrid's Notebook.}
+  We have seen that all candidates for vertices of the orbitope
+  \(\calO^=_{p, q}\) have to satisfy conditions \ref{cond1} and
+  \ref{cond2}.  Do those conditions suffice?
 
   % \(\calO^=_{p, q}\).
   % \(v \in \M^=_{p, q}\)
