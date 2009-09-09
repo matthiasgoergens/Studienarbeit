@@ -323,11 +323,11 @@ vertices of the symmetric partitioning orbitope \(\calO^=_{p, q}\) of size
     right: \(\mathop{sum} v_{*, j} \geq \mathop{sum} v_{*, j+1}\) for
     all \(j \in \lrE{q}\).
   \end{enumerate}
-  (Where the outside entries \(v_{i,q+1}\) are presumed zero to avoid dealing with edge cases).
+  (Where the outside entries \(v_{*,q+1}\) are presumed zero to avoid dealing with edge cases).
 \end{lemma}
 
 \begin{proof}
-  We will prove \ref{charVert} in two parts.  First we show that
+  We will prove lemma \ref{charVert} in two parts.  First we show that
   \(\calO{}^=_{p, q}\) has no vertices other than described.  Then we
   show that all the elements of \(\M^=_{p, q}\) that meet the conditions are truly vertices of \(\calO^=_{p, q}\).
   \todo{Dran denken, zu zeigen, dass die vorgeblichen Vertices ueberhaupt Elemente von  \(\calO^=_{p, q}\) sind!}
@@ -352,9 +352,9 @@ vertices of the symmetric partitioning orbitope \(\calO^=_{p, q}\) of size
   since we are dealing with the topmost violation --- so there can be
   no 1-entry in those columns above the \(i\)-th row.
 
-  Now suppose \(v\) satisfies condition \ref{cond1}, but violates
+  Now suppose \(v \in \M^=_{p, q}\) satisfies condition \ref{cond1}, but violates
   condition \ref{cond2}.  Look at the leftmost violation:
-  \(\mathop{sum} C_i < \mathop{sum} C_{i+1}\) where \(i \in \lrE{p-1}\) minimal.
+  \(\mathop{sum} v_{*,j} < \mathop{sum} v_{*,j+1}\) where \(j \in \lrE{q}\) minimal.
   
   \todo{Copy the rest of the proof from Ingrid's Notebook.}
 
