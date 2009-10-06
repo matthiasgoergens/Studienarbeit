@@ -130,15 +130,15 @@ results.''% -- or, if you want to be more formal and use a programming
 %\end{verbatim}
 %You may even calculate in parallel.
 
-But symmetry can also be a problem.  Take Buridan's ass.\todo{Weniger Schmalz.}
-\todo{Recherche, about name and so on} Placed exactly at the midpoint
-between two equally enticing haystacks, the philosopher's ass can not
-decide where to go and starves \todo{kl"aglich!}.  Of course even if
-such an exact placement was possibly, no real donkey \todo{synonym
-  ok?} would have a problem making an arbitrary choice for one of the
-stacks.  However contrived the relation to a real animal, Buridan's
-ass does bear some resemblance to computer programs.  One has to teach
-them explicitly how to make arbitrary decisions to get out of these traps.
+But symmetry can also be a problem.  Take Buridan's ass.\todo{Weniger
+  Schmalz.}  \todo{Recherche, about name and so on} Placed exactly at
+the midpoint between two equally enticing haystacks, the philosopher's
+ass can not decide where to go and starves.  Of course even if such an
+exact placement was possibly, no real donkey \todo{synonym ok?} would
+have a problem making an arbitrary choice for one of the stacks.
+However contrived the relation to a real animal, Buridan's ass does
+bear some resemblance to computer programs.  One has to teach them
+explicitly how to make arbitrary decisions to get out of these traps.
 
 Programs for solving linear integer optimization problems have often
 been caught between haystacks, forced to evaluate all possibilities
@@ -275,11 +275,11 @@ columns.
    \end{description}
 \end{defn}
 
-In this paper we will have a look at even more symmetric problems.
-Here not only the columns can be permuted but also the rows.  For
-example take vertex coloring on a graph whose automorphism group is
-isomorphic to the symmetric group on its vertices.  Rows correspond to
-vertices and columns to colors.
+We will have a look at even more symmetric problems.  Here not only
+the columns can be permuted but also the rows.  For example take
+vertex coloring on a graph whose automorphism group is isomorphic to
+the symmetric group on its vertices.  Rows correspond to vertices and
+columns to colors.
 
 \begin{defn}[Symmetric Partitioning and Packing Orbitopes]
 %  \label{espo}
@@ -323,12 +323,12 @@ vertices of the symmetric partitioning orbitope \(\calO^=_{p, q}\) of size
     right: \(\mathop{sum} v_{*, j} \geq \mathop{sum} v_{*, j+1}\) for
     all \(j \in \lrE{q}\).
   \end{enumerate}
-  (Where the outside entries, like \(v_{*,q+1}\), are presumed zero to avoid dealing with edge cases.)
+  (Where the outside entries \(v_{*,q+1}\) are presumed zero to avoid dealing with edge cases).
 \end{lemma}
 
 \begin{proof}
-  We will prove \ref{charVert} in two parts.  First we show that
-  \(\calO^=_{p, q}\) has no vertices other than described.  Then we
+  We will prove lemma \ref{charVert} in two parts.  First we show that
+  \(\calO{}^=_{p, q}\) has no vertices other than described.  Then we
   show that all the elements of \(\M^=_{p, q}\) that meet the conditions are truly vertices of \(\calO^=_{p, q}\).
   \todo{Dran denken, zu zeigen, dass die vorgeblichen Vertices ueberhaupt Elemente von  \(\calO^=_{p, q}\) sind!}
   \todo{Alternativ: Zeige dass die vorgeblichen Vertices \lex unter allen \(\M^=_{p, q}\) minimieren.}
@@ -352,25 +352,30 @@ vertices of the symmetric partitioning orbitope \(\calO^=_{p, q}\) of size
   are dealing with the topmost violation --- so there can be no
   1-entry in those columns above the \(i\)-th row.
 
-  Now suppose \(v\) satisfies condition \ref{cond1}, but violates
-  condition \ref{cond2}.  Look at the leftmost violation: \(s :=
-  \mathop{sum} v_{*,j} < \mathop{sum} v_{*,j+1} := S\) where \(j \in
-  \lrE{p-1}\) minimal.  Let all 1-entries of those columns lie in
+  Now suppose \(v \in \M^=_{p, q}\) satisfies condition \ref{cond1}, but violates
+  condition \ref{cond2}.  Look at the leftmost violation:
+  \(s := \mathop{sum} v_{*,j} < \mathop{sum} v_{*,j+1} := S\) where \(j \in
+  \lrE{q}\) minimal.  Let all 1-entries of those columns lie in
   \(v_{\lrE{a,a+s-1},j}\) and \(v_{\lrE{a+s,a+s+S-1},j+1}\).  By
-  swapping \(v_{*,j}\) and \(v_{*,j+1}\) and rotating rows via
-  \[R_{a+k} \mapsto \begin{cases}
-    R_{a+ \lr{k+s \mod s + S}} & \text{if } 0 \leq k < s+S \\
-    R_{a+k} & \text{otherwise}
+  swapping \(v_{*,j}\) and \(v_{*,j+1}\) with a function called \(h\) and rotating rows via
+  \[\lr{f v}_{*,a+k} := \begin{cases}
+    v_{*,a+ \lr{k+s \mod s + S}} & \text{if } 0 \leq k < s+S \\
+    v_{*,a+k} & \text{otherwise}
   \end{cases}\]
     we can make those 1-entries lie in
-  \(\lr{g\cdot v}_{\lrE{a,a+S-1},j}\) and \(\lr{g \cdot
-    v}_{\lrE{a+S,a+s+S-1},j+1}\) and not change anything else.
-  The new matrix \(g \cdot v\) is lexicographically bigger than the old one \(v\).
+  \(\lr{\lr{f \circ h} v}_{\lrE{a,a+S-1},j}\) and \(\lr{\lr{f \circ h} v}_{\lrE{a+S,a+s+S-1},j+1}\) and not change anything else.
+  The new matrix \(\lr{f \circ h} v\) is lexicographically bigger than the old one \(v\).
   
   We have seen that all candidates for vertices of the orbitope
   \(\calO^=_{p, q}\) have to satisfy conditions \ref{cond1} and
   \ref{cond2}.  Do those conditions suffice?
 
+  Consider two matrices \(v,w \in \M^=_{p, q}\) in the same orbit,
+  \ie{} \(v = g w\) where \(g \in \Sym_{R \times C}\).  Let \(v \lex
+  w\), but suppose that \(v\) satisfies conditions \ref{cond1} and
+  \ref{cond2}.
+
+  \todo{R\"uckrichtung weiter ausbauen.}
 
   % \(\calO^=_{p, q}\).
   % \(v \in \M^=_{p, q}\)
@@ -382,29 +387,9 @@ vertices of the symmetric partitioning orbitope \(\calO^=_{p, q}\) of size
 %  \times S_C\) be the Cartesian product of the symmetric groups on rows
 %   and columns.  \(S\) acts on \(\M_{p,q}\).
 
-%  Sortierung der Zeilen reicht auch schon für simple s.p.o.
-
-% Obviously we can require representatives to be lexicographically
-% sorted along rows and columns.  Thus we get representative matrices
-% with 1 in the top-left.  In each row the 1-entry stays in the column
-% it dwelled in the row above -- or wanders off one column right.  In
-% fact sorting along the rows is sufficent for this normal form; sorting
-% the columns does not add to the requirements.
-
-%Using a very simple flow network one can easily find the facettes of
-%the resulting \textit{simple symmetric partition orbitope} -- see
-%\ref{fluss}.
-
-% sort columns by hamming distance
-
-% Unfortunately this way some orbits of $S$ intersect the orbitope with
-% more than one member.  To guarantee exactly one representative per
-% orbit we restrict the orbitope further:
-
-
 Computer generated examples suggest that no polynomial in \(p \cdot
-q\) limits the number of  symmetric partioning orbitope's
-facettes.
+q\) limits the number of facettes of the symmetric partioning
+orbitope.
 
 But - I will show an extended formulation for \(S^=_{p, q}\) by linear
 inequalities that is polynomially bounded in number of both variables
@@ -417,12 +402,6 @@ and facettes in \(p \cdot q\).
 % The simple symmetric partitioning orbitope permits an efficient
 % description by equalities and inequalities in the original space of
 % variables.
-
-% % 1  1  1
-% %-1 -1 -1
-
-% %-1 -1 -1
-% % 1  1  1  1
 
 \section{Polynomial Optimization on the  Symmetric Partitioning
   Orbitope}
