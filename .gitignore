@@ -22,3 +22,4 @@ prv_studienarbeit.fmt
 text/studienarbeit.out
 *.bbl
 *.blg
+prv_*.fmt
