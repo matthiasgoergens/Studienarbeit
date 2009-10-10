@@ -300,9 +300,8 @@ Introduce the following orbitopes:
 %\end{defn}
 
 \section{Vertices of the Symmetric Partitioning Orbitope}
-Let's take a closer look at the
-vertices of the symmetric partitioning orbitope \(\calS^=_{p, q}\) of size
-\(p, q \in \naturals^{>0}\)V.
+Let's take a closer look at the vertices of the symmetric partitioning
+orbitope \(\calS^=_{p, q}\) of size \(p, q \in \naturals^{>0}\)V.
 
 \begin{remark}
   Note that \(\calS^=_{p, q} := O^=_{p, q} \lr{\SymRC} \subsetneq
@@ -311,12 +310,10 @@ vertices of the symmetric partitioning orbitope \(\calS^=_{p, q}\) of size
   terms of the orbitopes of both factor groups is a hard problem.
 \end{remark}
 
-\todo{Wie sehen vertices aus?  Wie viele gibt es?  Wie sehen Seiten
-  aus?  Wie viele gibt es?}
-
 \begin{lemma}[Characterizing vertices of \(\calS^=_{p, q}\)]
   \label{charVert}
-  Look at \(v \in \M^=_{p, q}\).  \(v\) is a vertice of \(\calS^=_{p, q}\), iff the following conditions hold:
+  Look at \(v \in \M^=_{p, q}\).  \(v\) is a vertice of \(\calS^=_{p,
+    q}\), iff the following conditions hold:
   \begin{enumerate}
   \item \label{cond1} The number of zeros left of the 1-entry in
     successive rows increases by zero or one:
@@ -389,7 +386,7 @@ vertices of the symmetric partitioning orbitope \(\calS^=_{p, q}\) of size
   construct for each orbit the unique member satisfying the conditions.
 \end{proof}
 
-Computer generated examples suggest that no polynomial in \(p \cdot
+Computer generated examples suggest that no polynomial in \(p \cdot{}
 q\) limits the number of facets of the symmetric partioning orbitope.
 
 But - I will show an extended formulation for \(S^=_{p, q}\) by linear
@@ -417,14 +414,14 @@ Let \(p, q \in \mathbb{N} \setminus \{0\}\).  Given a matrix \(M \in
 \mathbb{Q}^{p \times q}\) of objective values, consider the program:
 \begin{equation}
 \label{optS}
-\max \left<M, \mathbf{x} \right>  \text{ s.t. } x \in S^=_{p, q}
+\max \lrX{M, \mathbf{x} }  \text{ s.t. } x \in S^=_{p, q}
 \end{equation}
-where \[\left<M, \mathbf{x} \right> := \sum_{(i, j)\in [p]\times [q]} x_{i, j}\cdot M_{i, j}\text{.}\]
+where \[\lrX{M, \mathbf{x} } := \sum_{(i, j)\in [p]\times [q]} x_{i, j}\cdot M_{i, j}\text{.}\]
 We will construct an acyclic weighted graph \(D := (V, A)\) to project each vertex of
 \(S^=_{p, q}\) and its objective value to one \(s\)-\(t\)-path in \(D\) and its length.
 
 Define the set of nodes:
-\[V := \left( [p]\times [q] \times [p]\right) \uplus \{s\} \uplus \{t\}\text{.}\] 
+\[V := \lr{ [p]\times [q] \times [p]} \uplus \{s\} \uplus \{t\}\text{.}\] 
 Each \textit{ordinary} node, that is
 each node besides \(s\) and \(t\), encodes a row, a column and the
 maximum Hamming weight per column still allowed.
@@ -435,27 +432,27 @@ of ordinary arcs \(\overline{A}\) and arcs \(A_t\) ending in \(t\).  Setting
 ordinary arcs.
 \begin{align}
   \overline{A} &:=
-  \left\{ \left(r, c, h\right) \rightarrow \left(r+h', c+1, h'\right) \in V \times V \colon
-  h' \leq h \right\} \\
+  \lrM{ \lr{r, c, h} \rightarrow \lr{r+h', c+1, h'} \in V \times V \colon
+  h' \leq h }} \\
   A_t &:= ([p] \times {q} \times [p]) \times \{t\}
 \end{align}
 
 For parent and child nodes and arcs we will use the following notation:
 \begin{align*}
 \ina\colon  V &\to 2^A \\
-v &\mapsto \left(V \times \{v\}\right) \cap A\\
+v &\mapsto \lr{V \times \{v\}} \cap A\\
 %\end{align*}
 %\begin{align*}
 \outa\colon  V &\to 2^A \\
-v &\mapsto \left(\{v\} \times V\right) \cap A\\
+v &\mapsto \lr{\{v\} \times V} \cap A\\
 %\end{align*}
 %\begin{align*}
 \inv\colon  V &\to 2^A \\
-v &\mapsto \left\{ u \colon \left(u, v\right) \in \ina(v) \right\}\\
+v &\mapsto \lrM{ u \colon \lr{u, v} \in \ina(v) }}\\
 %\end{align*}
 %\begin{align*}
 \outv\colon  V &\to 2^A \\
-v &\mapsto \left\{w \colon \left(v, w\right) \in \outa\left(v\right) \right\}\\
+v &\mapsto \lrM{w \colon \lr{v, w} \in \outa\lr{v} }\\
 \end{align*}
 (Where \(2^A\) means the set of all subsets of \(A\).)
 
@@ -463,13 +460,11 @@ To link objective values over \(S^=_{p, q}\) with
 \(s\)-\(t\)-path-lengths in \(D\) we introduce arc weights \(m\colon A \to \mathbb{Q}\).
 \begin{align}
 \label{objLink}
-  m\left(\left(r, c, h\right) \rightarrow \left(r+h', c+1, h'\right) \right) & := \sum_{i=r+1}^{r+h'} M_{i, c+1} \\
-  m\left(\left(r, c, h\right) \rightarrow t \right) & := 0
+  m\lr{\lr{r, c, h} \rightarrow \lr{r+h', c+1, h'} } & := \sum_{i=r+1}^{r+h'} M_{i, c+1} \\
+  m\lr{\lr{r, c, h} \rightarrow t } & := 0
 \end{align}
 
-% \subsection{Finding the Longest \(s\)-\(t\)-Path in \(D\)}
-\subsection{Finding the Longest s-t-Path in D}
-\todo{Change to the math-version of the subsection headline}
+\subsection{Finding the Longest \(s\)-\(t\)-Path in \(D\)}
 
 Call \(P_s \colon V \to A^* \) the function that maps each node \(v\)
 to the longest path connecting \(s\) and \(v\).  Here \(A^*\) means
@@ -477,7 +472,7 @@ the Kleene closure of \(A\): I.e. the set of all strings of arcs \(a
 \in A\) including the empty string.  Also let
 \begin{align*}
 m \colon A^* &\to \mathbb{R} \\
-\omega &\mapsto \sum_{a\in \omega} m \left(a \right)
+\omega &\mapsto \sum_{a\in \omega} m \lr{a }
 \end{align*}
 
 To find the longest \(s\)-\(t\)-path in \(D\) is to calculate
@@ -485,13 +480,13 @@ To find the longest \(s\)-\(t\)-path in \(D\) is to calculate
 \(D\) is acyclic we start knowing \(P_s (s) = \lambda\).
 
 For some nodes \(v \in V\) the paths \(P_s\) will be known for all its parents \(\inv{} \lr{v} \).  We conclude:
-\[m\left(P_s \left(v\right)\right) = \max_{w \in \inv(v)}
+\[m\lr{P_s \lr{v}} = \max_{w \in \inv(v)}
 m\lr{P_s(w) | \lr{w \rightarrow v }}\text{.}\]
 The graph \(D\) admits at least one trivial path from \(s\) to \(t\).
 Together with the acyclic and finite nature of \(D\) this guarantees that we
 learn \(P_s (t)\) eventually.  More specifically we get to know \(P_s
 (t)\) after looking at each arc of \(D\) at most a constant number of
-times.
+times, using dynamic programming.
 
 %the
 %following dynamic programming technique: Since \(D\) is an acyclic
@@ -503,7 +498,7 @@ times.
 
 %Topologische Sortierung, 
 
-%Bilder!
+\todo{Bilder!}
 
 \section{Extended Formulation for the Symmetric Partitioning Orbitope}
 The aforementioned Graph \(D\) can be used to derive an extended
@@ -523,11 +518,11 @@ Now, we can begin with the extendend formulation for the
 symmetric partitioning orbitope.  For each node \(v \in V \setminus
 \{s, t\}\) we have:
 \begin{equation}
-f\left(\ina(v)\right) = f\left(\outa(v)\right)
+f\lr{\ina(v)} = f\lr{\outa(v)}
 \end{equation}
 and for \(s\) we get:
 \begin{equation}
-f\left(\outa(s)\right) = 1
+f\lr{\outa(s)} = 1
 \end{equation}
 
 % subto coupling:
@@ -543,10 +538,10 @@ To link \(f\) to the \(x\) of our original problem (\ref{optS}) we
 introduce the following conditions that are in analogue to \ref{objLink}:
 %\todo{nachschauen, wie man die Indexbereiche unter der Summe stapelt}
 \begin{equation}
-  x \left( r, c \right) =
-  \sum_{r' - h' \leq r \leq r'; h' \leq h} f\left(\left(r'-h', c-1, h\right)
-    \rightarrow \left(r', c, h'\right) \right)
-2\end{equation}
+  x \lr{ r, c }=
+  \sum_{r' - h' \leq r \leq r'; h' \leq h} f\lr{\lr{r'-h', c-1, h}
+    \rightarrow \lr{r', c, h'} }
+\end{equation}
 
 \section{Restricting the Symmetric Group}
 
@@ -556,13 +551,33 @@ reduction from another problem, that is already proven to be NP-hard.
 
 \begin{defn}[Partial symmetric partitioning orbitope]
   \label{def-subset-rows}
-  Fix \(p, q \in \naturals^+\).  Fix a subset \(J \subseteq \lrE{p}\).
-  Call \(\Sym_{J}\) the symmetric group acting on \(R_J\) of \(\M^=_{p, q}\).
-  Define \(\mathcal{S}^=_{p,q}\lr{J} := O^=_{p, q} \lr{\Sym_{J} \times \Sym_{C}} \) as the partial symmetric partitioning orbitope.
+  Let \(p, q \in \naturals^+\).  Fix a subset \(J \subseteq \lrE{p}\).
+  Call \(\Sym_{J}\) the symmetric group acting on \(R_J\) of
+  \(\M^=_{p, q}\).  Define the partial symmetric partitioning orbitope
+  as \(\mathcal{S}^=_{p,q}\lr{J} := O^=_{p, q} \lr{\Sym_{J} \times
+    \Sym_{C}} \).
 \end{defn}
 
+Vertices of \(\calS^=_{p,q}\lr{J}\) are lexicographically maximal elements of orbits of \(\M^=_{p,q}\) under \(\Sym_{J} \times
+    \Sym_{C}\).  Their upper \(J\) rows satisfy the conditions of lemma
+\ref{charVert}, \ie \(\lr{\calS^=_{p,q} \lr{J} }_{*,J} = \calS^=_{p,J}\).  This is because all elements of the lower
+rows \(l \subseteq \M^=_{p,  \lrE{q}\setminus J}\) have lexicographically less significant
+indices than the upper part.
+
+Below the structure is more complicated: Consider the set \(l\lr{u} :=\lrM{ m  \mid  \lr{\begin{matrix}u\\m\end{matrix}} \in \calS^=_{p,q}\lr{J}}\)
+of lower rows that complement a given upper part \(u\in\calS^=_{J,q}\).
+The columns are partitioned naturally by the sum of their entries in the upper part \(u\): \(E_s = \lrM{\lr{i,*} \mid \mathop{sum} \lr{u_{i,*}} = s}\).
+
+\todo{Weitermachen!  \(\sym{E_s} \dots\)}
+
+%For a set matrix \(m \subset \(\calS^=_{p,q}\lr{J}\)\) fixed upper part let
+%\(E\) be a partition of rows by the sum of entries in their upper \(J\) rows
+
+
 \todo{Describe lexicographically maximal elements of the orbits of
-  \(\Sym_J \times \Sym_C\)} Let's examine the vertices of
+  \(\Sym_J \times \Sym_C\)}
+
+Let's examine the vertices of
 \(\mathcal{S}^=_{p,q}\lr{J}\), \ie{} the lexicographically maximal
 elements of the orbits of \(\Sym_J \times \Sym_C\) acting on
 \(\M^=_{p,q}\).
