@@ -157,21 +157,20 @@ there is one.  Orbitopes are the convex hulls of all representatives
 thus considered.  It is customary to take the lexicographically
 largest member of each orbit as its representative.
 
-In this paper I will consider a certain kind of partitioning
-orbitopes.  Partitioning orbitopes are polytopes that live in the set
-of \(0/1\)-matrices with exactly, one 1-entry per row.
-Matrices that can be transformed into each other by permutation of
-columns are considered equal and belong to one orbit.  The
-partitioning orbitopes are inclusion minimal polytopes that contain
-one and only one member from each orbit: the unique representative
-matrix with lexicographically descending sorted columns.  (Henceforth
-we will silently imply lexicographically whenever we speak of
-``biggest'', or ``least'', and furthermore imply descending order with
-``sorting'', .)
+I will consider a certain kind of partitioning orbitopes.
+Partitioning orbitopes are polytopes that live in the set of
+\(0/1\)-matrices with exactly, one 1-entry per row.  Matrices that can
+be transformed into each other by permutation of columns are
+considered equal and belong to one orbit.  The partitioning orbitopes
+are inclusion minimal polytopes that contain one and only one member
+from each orbit: the unique representative matrix with
+lexicographically descending sorted columns.  (Henceforth we will
+silently imply lexicographically whenever we speak of ``biggest'', or
+``least'', and furthermore imply descending order with ``sorting'', .)
 
 In \cite{faenza-2008} Faenza and Kaibel give compact extended
-formulations for the packing and partitioning orbitopes.  In this
-paper I want to review symmetric partitioning orbitopes: In addition
+formulations for the packing and partitioning orbitopes.
+I want to review symmetric partitioning orbitopes: In addition
 to column permutation allowed for mere partitoning orbitopes, row
 permutations are allowed as well.  I will give an extended formulation
 for symmetric partitioning orbitopes with full row symmetry. And I
@@ -303,7 +302,7 @@ Introduce the following orbitopes:
 \section{Vertices of the Symmetric Partitioning Orbitope}
 Let's take a closer look at the
 vertices of the symmetric partitioning orbitope \(\calS^=_{p, q}\) of size
-\(p, q \in \naturals^{>0}\).
+\(p, q \in \naturals^{>0}\)V.
 
 \begin{remark}
   Note that \(\calS^=_{p, q} := O^=_{p, q} \lr{\SymRC} \subsetneq
@@ -540,9 +539,9 @@ f\left(\outa(s)\right) = 1
 % 	   	   f[s, c, h, s_, c_, h_];
 
 
-To link \(f\) with \(x\) of our original problem (\ref{optS}) we
+To link \(f\) to the \(x\) of our original problem (\ref{optS}) we
 introduce the following conditions that are in analogue to \ref{objLink}:
-%TODO: nachschauen, wie man die Indexbereiche unter der Summe stapelt
+%\todo{nachschauen, wie man die Indexbereiche unter der Summe stapelt}
 \begin{equation}
   x \left( r, c \right) =
   \sum_{r' - h' \leq r \leq r'; h' \leq h} f\left(\left(r'-h', c-1, h\right)
@@ -553,7 +552,7 @@ introduce the following conditions that are in analogue to \ref{objLink}:
 
 Allowing permutations of all columns and a subset of rows produces an
 NP-hard optimization problem in general.  This can be shown by
-reducing another problem, that is already proven to be NP-hard.
+reduction from another problem, that is already proven to be NP-hard.
 
 \begin{defn}[Partial symmetric partitioning orbitope]
   \label{def-subset-rows}
@@ -565,7 +564,8 @@ reducing another problem, that is already proven to be NP-hard.
 \todo{Describe lexicographically maximal elements of the orbits of
   \(\Sym_J \times \Sym_C\)} Let's examine the vertices of
 \(\mathcal{S}^=_{p,q}\lr{J}\), \ie{} the lexicographically maximal
-elements of the orbits of \(\Sym_J \times \Sym_C\) acting on \(\M^=_{p,q}\).
+elements of the orbits of \(\Sym_J \times \Sym_C\) acting on
+\(\M^=_{p,q}\).
 
 \begin{theorem}[Subset of rows]
   \label{subset-rows}
@@ -579,8 +579,7 @@ Yuri Faenza\todo{Wer noch? + Quelle.  Nachfragen!}:
 \begin{theorem}[``Pairwise permutations of columns are NP-hard'']
   \label{pairwise}
   For some \(p, q \in \naturals^+\) consider the partitioning matrices
-  \(\M^=_{p \times q}\).   \todo{Ist das so korrekt formuliert?} 
-  Let 
+  \(\M^=_{p \times q}\).  \todo{Ist das so korrekt formuliert?}  Let
   \[P_I := \prod_{i=1}^{\lceil q/2 \rceil}
 \Sym_{\lrM{C_{2i-1}, C_{2i}}}\]
   be the cartesian product of symmetric groups whose action swaps pairs of adjacent columns.
