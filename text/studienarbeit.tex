@@ -618,8 +618,6 @@ to reduce to optimization over \(\calS^=_{p,q}\lr{J}\).
   \(\mathcal{S}^=_{p, q}\lr{I}\) is NP-hard.
 \end{theorem}
 
-
-
 \begin{proof}[Proof of `Subset of rows']
   We prove theorem \ref{subset-rows} by reducing the problem given in
   theorem \ref{pairwise} to the sub\/set-\/of-\/rows problem: Given the linear
@@ -640,19 +638,19 @@ to reduce to optimization over \(\calS^=_{p,q}\lr{J}\).
   \begin{align}
     \varphi \colon \M^=_{p,q} & \to \M^=_{e+p,q} \\
     \nonumber
-     m & \mapsto \lr{\begin{matrix}
-       \mathbf{0} \\
-       m
-     \end{matrix}}
- \end{align}
- And to get back, use the projection \(\pi\):
- \begin{align}
-   \pi \colon \M^=_{e+p,q} & \to \M^=_{p,q} \\
+    m & \mapsto \lr{\begin{matrix}
+        \mathbf{0} \\
+        m
+      \end{matrix}}
+  \end{align}
+  And to get back, use the projection \(\pi\):
+  \begin{align}
+    \pi \colon \M^=_{e+p,q} & \to \M^=_{p,q} \\
     \nonumber
-     \lr{\begin{matrix}
-         l \\
-         m
-     \end{matrix}} & \mapsto m
+    \lr{\begin{matrix}
+        l \\
+        m
+      \end{matrix}} & \mapsto m
   \end{align}
   We will call the complementary projection \(\pi^\bot\):
   \begin{align}
@@ -679,42 +677,42 @@ to reduce to optimization over \(\calS^=_{p,q}\lr{J}\).
     \Delta \lr{q} & = 0 \text{.}
   \end{align}
   Now, number of zeros \(o\lr{j}\) in a column \(j\) above the first one is governed by the following equation
-\begin{align}
-  o \lr{j} & = \sum_{k \in \lrE{j-1}} \Delta \lr{k} \\
- \end{align}
- Choose \(e := o\lr{q} + \Delta\lr{q} \leq \frac{q \lr{q+1}}{2}\) as
- the smallest number of rows that can accommodate all ones as given
- above.
+  \begin{align}
+    o \lr{j} & = \sum_{k \in \lrE{j-1}} \Delta \lr{k}
+  \end{align}
+  Choose \(e := o\lr{q} + \Delta\lr{q} \leq \frac{q \lr{q+1}}{2}\) as
+  the smallest number of rows that can accommodate all ones as given
+  above.
  
- Now only the objective function \(d\) is left to be defined, so that it
- actually enforces the structure of ones and zeroes that we desire:
- \begin{align}
-   d & \in \Hom \lr{\rationals^{\lr{e + p} \times q}, \rationals} \\
-   \nonumber
-   d_{i,j} & := \begin{cases} s+1 & \text{if } o\lr{j} < i \leq o\lr{j}+\Delta\lr{j}\\
-     c_{i-o\lr{q},j} & \text{if } i \geq o\lr{q}\\
-     -s-1 & otherwise
-     \end{cases}
- \end{align}
- Where \(s\) has to be chosen large enough, to force the upper part of
- the partition matrix no matter what the rest does:
- \begin{align}
-   s := p \cdot \lr{\max_{i,j \in \lrE{p}\times \lrE{q}} c_{i,j}
-     - \min_{i,j \in \lrE{p}\times \lrE{q}} c_{i,j}}
- \end{align}
- \(\lrX{d}+\lrX{J}\) is certainly polynomial in \(\lrX{c} + \lrX{I}\).  And to get from
- \begin{align}
-   \hat{d} := \max d \lr{m} \text{ s.t. } m \in \mathcal{S}^=_{p, q}\lr{I}
- \end{align}
- to
- \begin{align}
-   \hat{c} := \max c \lr{m} \text{ s.t. } m \in O^=_{p, q} \lr{P_I}
- \end{align}
- you just exploit
- \begin{align}
-   \hat{c} = \hat{d} - s \cdot e \text{.}
- \end{align}
- Together with remark \ref{rem_sym} this proves the result.
+  Now only the objective function \(d\) is left to be defined, so that it
+  actually enforces the structure of ones and zeroes that we desire:
+  \begin{align}
+    d & \in \Hom \lr{\rationals^{\lr{e + p} \times q}, \rationals} \\
+    \nonumber
+    d_{i,j} & := \begin{cases} s+1 & \text{if } o\lr{j} < i \leq o\lr{j}+\Delta\lr{j}\\
+      c_{i-o\lr{q},j} & \text{if } i \geq o\lr{q}\\
+      -s-1 & otherwise
+    \end{cases}
+  \end{align}
+  Where \(s\) has to be chosen large enough, to force the upper part of
+  the partition matrix no matter what the rest does:
+  \begin{align}
+    s := p \cdot \lr{\max_{i,j \in \lrE{p}\times \lrE{q}} c_{i,j}
+      - \min_{i,j \in \lrE{p}\times \lrE{q}} c_{i,j}}
+  \end{align}
+  \(\lrX{d}+\lrX{J}\) is certainly polynomial in \(\lrX{c} + \lrX{I}\).  And to get from
+  \begin{align}
+    \hat{d} := \max d \lr{m} \text{ s.t. } m \in \mathcal{S}^=_{p, q}\lr{I}
+  \end{align}
+  to
+  \begin{align}
+    \hat{c} := \max c \lr{m} \text{ s.t. } m \in O^=_{p, q} \lr{P_I}
+  \end{align}
+  you just exploit
+  \begin{align}
+    \hat{c} = \hat{d} - s \cdot e \text{.}
+  \end{align}
+  Together with remark \ref{rem_sym} this proves the result.
 \end{proof}
 
 \bibliographystyle{plain}
