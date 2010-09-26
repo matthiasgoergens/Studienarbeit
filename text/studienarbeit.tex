@@ -15,18 +15,25 @@
 \usepackage{amsthm}
 \usepackage{amssymb}
 \usepackage{amsfonts}
-% what was it for?
-%\usepackage{bbm}
+% for blackboard bold
+\usepackage{bbm}
+% for bold math
+\usepackage{bm}
+
+
+\usepackage[usenames]{color}
 
 \usepackage{listing}
 
 \newtheorem{theorem}{Theorem}
 \theoremstyle{lemma}
-\newtheorem{lemma}{Lemma}
+\newtheorem{lemma}[theorem]{Lemma}
 \theoremstyle{definition}
 \newtheorem{defn}[theorem]{Definition}
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
+\theoremstyle{example}
+\newtheorem{example}[theorem]{Example}
 
 \usepackage{units}
 %\usepackage{icomma}
@@ -38,8 +45,6 @@
 \usepackage{longtable}
 \usepackage{booktabs}
 \setcounter{LTchunksize}{1000}
-
-
 
 \graphicspath{{img/}}
 \author{Matthias Görgens}
@@ -79,13 +84,16 @@
 \newcommand{\inv}{\ensuremath{\dot{\In}}}
 \newcommand{\outv}{\ensuremath{\dot{\Out}}}
 
+\newcommand{\ol}[1]{\overline{#1}}
+
 \newcommand\mpar[1]{\marginpar {\flushleft\sffamily\small #1}}
 \setlength{\marginparwidth}{3cm}
 \setlength{\marginparpush}{1cm}
 
-\newcommand{\ol}[1]{\overline{#1}}
-\newcommand{\todo}[1]{\mpar{#1}}
-%\newcommand{\todo}[1]{\footnote{#1}}
+\newcounter{todo}
+\newcommand{\todo}[1]{\({}^{\text{{\arabic{todo}}}}\) \mpar{todo \arabic{todo}: #1} \addtocounter{todo}{1}}
+\newcommand{\redo}[1]{\({}^{\text{{\arabic{todo}}}}\) \mpar{remark \arabic{todo}: #1} \addtocounter{todo}{1}}
+
 
 % lr stands for left,right
 \newcommand{\lr}[1]{\ensuremath{\left( #1 \right)}}
@@ -133,29 +141,20 @@ results.''% -- or, if you want to be more formal and use a programming
 %\end{verbatim}
 %You may even calculate in parallel.
 
-But symmetry can also be a problem.  Take Buridan's ass.\todo{Weniger
-  Schmalz.}  \todo{Recherche, about name and so on} Placed exactly at
-the midpoint between two equally enticing haystacks, the philosopher's
-ass can not decide where to go and starves.  Of course even if such an
-exact placement was possibly, no real donkey would
-have a problem making an arbitrary choice for one of the stacks.
-However contrived the relation to a real animal, Buridan's ass does
-bear some resemblance to computer programs.  One has to teach them
-explicitly how to make arbitrary decisions to get out of these traps.
-
-Programs for solving linear integer optimization problems have often
-been caught between haystacks, forced to evaluate all possibilities
-and not deciding until the last moment.  The introduction and analysis
-of orbitopes has been one recent step towards fashioning those
-programs with more judgement to cut short their search for the
-optimum.  Orbitopes exploit the situation where one can introduce
-groups acting on the feasible solutions of an integer problem such
-that members of the same orbit share the same objective value.
-Obviously, any optimization algorithm that only considers at least one
-representative of each orbit will still find an optimal solution, if
-there is one.  Orbitopes are the convex hulls of all representatives
-thus considered.  It is customary to take the lexicographically
-largest member of each orbit as its representative.
+But symmetry can also be a problem.  Programs for solving linear
+integer optimization problems have often been caught between
+haystacks, forced to evaluate all possibilities and not deciding until
+the last moment.  The introduction and analysis of orbitopes has been
+one recent step towards fashioning those programs with more judgement
+to cut short their search for the optimum.  Orbitopes exploit the
+situation where one can introduce groups acting on the feasible
+solutions of an integer problem such that members of the same orbit
+share the same objective value.  Obviously, any optimization algorithm
+that only considers at least one representative of each orbit will
+still find an optimal solution, if there is one.  Orbitopes are the
+convex hulls of all representatives thus considered.  It is customary
+to take the lexicographically largest member of each orbit as its
+representative.
 
 I will consider a certain kind of partitioning orbitopes.
 Partitioning orbitopes are polytopes that live in the set of
@@ -184,10 +183,9 @@ be an NP-hard problem with certain other groups acting on the rows.
 % node $i$ is put into part $j$.
 
 \section{Definitions}
-We will use the notation introduced in \cite{orbi} by Pfetsch
-and Kaibel.  Let \(\mathbbm{1}_{p,q} \in \lrM{1}^{\lrE{p}
-  \times \lrE{q}}\) be the matrix composed of one-entries of size \(p \times q\).
-Let \(\M_{p,q} = \{0, 1\}^{p \times q} \). 
+We will mostly follow the notation introduced in \cite{orbi} by Pfetsch
+and Kaibel.  Let \(\mathbbm{1}_{p,q} \in \lrM{1}^{p \times q}\) be the matrix composed of one-entries of size \(p \times q\).
+Let \(\M_{p,q} = \{0, 1\}^{p \times q} \) be the set of binary matrices of a this size. 
 
 \begin{defn}[Partitioning and Packing Matrices]
   For some size \(p, q \in \naturals^{>0}\) consider the sets of
@@ -202,7 +200,7 @@ Let \(\M_{p,q} = \{0, 1\}^{p \times q} \).
 
  \begin{defn}[Orbitopes]
    Let \(G\) be a group acting on a set \(A \subseteq \rationals^{p,q}\).  Let \(A\) have a total order \(\lex\), such that \(a\lex b \lex a\) implies \(a = b\).
-   Look at the set \(V \subseteq A\) uniquely determined by
+   Look at the set \(V \subseteq A\) of orbital maximums uniquely determined by
    \begin{align}
      \label{biggest}
        G \cdot v  \preceq v  \text{ for all } v \in V
@@ -216,45 +214,47 @@ Let \(\M_{p,q} = \{0, 1\}^{p \times q} \).
    \(G\) on \(A\) with ordering \(\lex\).  
  \end{defn}
 \begin{remark}
+  Our definition of orbitopes is slightly more generalized than the definition in \cite{orbi}.
+\end{remark}
+\begin{remark}
   We will omit stating the ordering and imply lexicographic ordering
   on the matrices, where entries with lexicographically lower indices
-  are considered more significant.  For example
+  are considered more significant.  See the next example.
+\end{remark}
+\begin{example}
+  \label{lex_ex}
   \[\lr{\begin{matrix}
       1 & \mathbf{2} \\
       3 & 4 \\
-      \end{matrix}
-    }
-    \lex
-    \lr{\begin{matrix}
+    \end{matrix}
+  }
+  \lex
+  \lr{\begin{matrix}
       1 & \mathbf{3} \\
       2 & 4 \\
-      \end{matrix}
-    }\text{.}
+    \end{matrix}
+  }\text{.}
   \]
-\end{remark}
-\begin{remark}
-  Our definition of orbitopes is slightly more generalized than the definition in \cite{orbi}.
-\end{remark}
-
+\end{example}
 Kaibel and Pfetsch talk about orbitopes for partitioning and packing
 matrices.  In associated problems the labels of the partitions can
 often be exchanged without altering the quality of a solution.  For
 example in the graph vertice coloring problem the colors can be
 permuted.  When one describes such a coloring as a binary matrix,
 where each column relates to a color and each row relates to a vertice
-of the graph; then one can let a symmetric group act on the columns
-(of course).
+of the graph; then letting a symmetric group act on the columns will
+preserve the objective value.
 
 \begin{defn}[Columns and Rows]
   Fix \(p, q \in \naturals^+\).  Consider the set of matrices \(M :=
   \mathbb{C}^{p \times q}\).  Let \(R_i := M_{i, *}\) be the \(i\)-th
   row of those matrices, and let \(R\) be the set of all rows.
   \(\Sym_R\) shall designate the symmetric group over them.  Define
-  \(C_j\), \(C\) and \(\Sym_C\) in analogue for the columns.  As an abuse of
-  notation --- if it is clear from the context that a specific matrix
-  \(m \in M\) is meant, \(R\) and \(C\) can also refer to the rows
-  and columns of that specific matrix.  We will also usually supply \(p\)
-  and \(q\) by context only.
+  \(C_j\), \(C\) and \(\Sym_C\) in analogue for the columns.  As an
+  abuse of notation---if it is clear from the context that a specific
+  matrix \(m \in M\) is meant, \(R\) and \(C\) can also refer to the
+  rows and columns of that specific matrix.  We will occasionally
+  supply \(p\) and \(q\) by context only.
 \end{defn}
 
 % Often we face a optimization problems over partitioning
@@ -277,11 +277,11 @@ of the graph; then one can let a symmetric group act on the columns
    \end{description}
 \end{defn}
 
-We will have a look at even more symmetric problems.  Here not only
-the columns can be permuted but also the rows.  For example take
-vertex coloring on a graph whose automorphism group is isomorphic to
-the symmetric group on its vertices.  Rows correspond to vertices and
-columns to colors.
+To further the study of orbitopes, we will have a look at even more
+symmetric problems.  Here not only the columns can be permuted but
+also the rows.  For example take vertex coloring on a graph whose
+automorphism group is isomorphic to the symmetric group on its
+vertices.  Rows correspond to vertices and columns to colors.
 
 \begin{defn}[Symmetric Partitioning and Packing Orbitopes]
 %  \label{espo}
@@ -292,41 +292,50 @@ Introduce the following orbitopes:
 \end{description}
 \end{defn}
 
-
-
-%\begin{defn}[Partial Symmetric Partitioning Orbitope]
-%  Add definition
-%\todo{add definition}
-%\end{defn}
-
 \section{Vertices of the Symmetric Partitioning Orbitope}
 Let's take a closer look at the vertices of the symmetric partitioning
 orbitope \(\calS^=_{p, q}\) of size \(p, q \in \naturals^{>0}\)V.
 
 \begin{remark}
-  Note that \(\calS^=_{p, q} := O^=_{p, q} \lr{\SymRC} \subsetneq
+  Note that \(\calS^=_{p, q} := O^=_{p, q} \lr{\SymRC} {\color{red}\subsetneq}
   O^=\lr{\Sym_C,\M^=_{p, q}} \cap O^=\lr{\Sym_R, \M^=_{p, q}}\).  In
   general expressing the orbitope of an internal direct product in
   terms of the orbitopes of both factor groups is a hard problem.
 \end{remark}
+
+\definecolor{lightgray}{rgb}{0.85,0.85,0.85}
+\begin{example}[A vertice of \(\calS^=_{p, q}\)]
+\label{zumBild}
+\[\lr{\begin{matrix}
+      1 & {\color{lightgray} 0} & {\color{lightgray} 0} & {\color{lightgray} 0} \\
+      1 & {\color{lightgray} 0} & {\color{lightgray} 0} & {\color{lightgray} 0} \\
+      1 & {\color{lightgray} 0} & {\color{lightgray} 0} & {\color{lightgray} 0} \\
+      {\color{lightgray} 0} & 1 & {\color{lightgray} 0} & {\color{lightgray} 0} \\      
+      {\color{lightgray} 0} & 1 & {\color{lightgray} 0} & {\color{lightgray} 0} \\
+      {\color{lightgray} 0} & {\color{lightgray} 0} & 1 & {\color{lightgray} 0} \\      
+      {\color{lightgray} 0} & {\color{lightgray} 0} & 1 & {\color{lightgray} 0} \\      
+    \end{matrix}
+  } \in \calS^=_{10, 4}
+\]
+\end{example}
 
 \begin{lemma}[Characterizing vertices of \(\calS^=_{p, q}\)]
   \label{charVert}
   Look at \(v \in \M^=_{p, q}\).  \(v\) is a vertice of \(\calS^=_{p,
     q}\), iff the following conditions hold:
   \begin{enumerate}
-  \item \label{cond1} The number of zeros left of the 1-entry in
-    successive rows increases by zero or one:
+  \item \label{cond1} The position of of the 1-entry in
+    successive rows moves right by zero or one columns:
     \begin{equation*}
-      v_{i,j} = 1\) \implies 1 \in \lrM{v_{i+1,j}, v_{i+1,j+1}} \text{
+      v_{i,j} = 1 \implies 1 \in \lrM{v_{i+1,j}, v_{i+1,j+1}} \text{
         for all }\lr{i,j} \in \lrE{p-1} \times \lrE{q} \text{.}
     \end{equation*}
     (Where the outside entries \(v_{*,q+1}\) are presumed zero to
     avoid dealing with edge cases).
   \item \label{cond2} And the number of 1-entries per column decreases
     from left to right:
-    \begin{equation*} \mathop{sum} \lr{v_{*, j}} \geq \mathop{sum}
-      \lr{v_{*, j+1}}\) \text{ for all \(j \in \lrE{q-1}\).}
+    \begin{equation*} \sum_{i\in \lrE{p}} {v_{i, j}} \geq \sum_{i \in \lrE{p}}
+      {v_{i, j+1}} \text{ for all \(j \in \lrE{q-1}\).}
     \end{equation*}
   \end{enumerate}
 \end{lemma}
@@ -335,9 +344,7 @@ orbitope \(\calS^=_{p, q}\) of size \(p, q \in \naturals^{>0}\)V.
   We will prove lemma \ref{charVert} in two parts.  First we show that
   \(\calS{}^=_{p, q}\) has no vertices other than described.  Then we
   show that all the elements of \(\M^=_{p, q}\) that meet the
-  conditions are truly vertices of \(\calS^=_{p, q}\).  \todo{Alternativ: Zeige
-    dass die vorgeblichen Vertices \lex unter allen \(\M^=_{p, q}\)
-    minimieren.}
+  conditions are truly vertices of \(\calS^=_{p, q}\). 
 
   Take \(v \in \M^=_{p, q}\).  Suppose \(v\) violates condition
   \ref{cond1}.  Then we can find another matrix \(w\) in the orbit of
@@ -372,8 +379,6 @@ orbitope \(\calS^=_{p, q}\) of size \(p, q \in \naturals^{>0}\)V.
   \(\lr{f \circ h} \lr{v}\) is lexicographically bigger than the old
   one \(v\).
 
-  \todo{Introduce ranges of indices as first-class values?}
-  
   We have seen that all candidates for vertices of the orbitope
   \(\calS^=_{p, q}\) have to satisfy conditions \ref{cond1} and
   \ref{cond2}.  Do these conditions suffice?
@@ -404,9 +409,17 @@ number of both variables and facets in \(p \cdot q\).
   Orbitope}
 \label{fluss}
 We will reduce maximization over the orbitope to finding a longest
-\(s\)-\(t\)-path in an acyclic weighted digraph.
+\(s\)-\(t\)-path in an acyclic weighted digraph.  See figure
+\ref{example1graph} for an example that conveys the flavor of the
+graphs we construct.
 
-\todo{Bild f\"ur die Konstruktion des Graphen!}
+\begin{figure}
+\includegraphics[width=\textwidth{}]{graph/example1.pdf}
+\caption{The acyclic graph for the extended formulation of
+  \(\calS^=_{7, 4}\).  The orbitope vertice of example \ref{zumBild}
+  is represented as the red path.}
+\label{example1graph}
+\end{figure}
 
 \subsection{Setup}
 
@@ -433,7 +446,7 @@ ordinary arcs.
 \begin{align}
   \overline{A} &:=
   \lrM{ \lr{r, c, h} \rightarrow \lr{r+h', c+1, h'} \in V \times V \colon
-  h' \leq h }} \\
+  h' \leq h } \\
   A_t &:= ([p] \times {q} \times [p]) \times \{t\}
 \end{align}
 
@@ -448,7 +461,7 @@ v &\mapsto \lr{\{v\} \times V} \cap A\\
 %\end{align*}
 %\begin{align*}
 \inv\colon  V &\to 2^A \\
-v &\mapsto \lrM{ u \colon \lr{u, v} \in \ina(v) }}\\
+v &\mapsto \lrM{ u \colon \lr{u, v} \in \ina(v) }\\
 %\end{align*}
 %\begin{align*}
 \outv\colon  V &\to 2^A \\
@@ -464,24 +477,28 @@ To link objective values over \(S^=_{p, q}\) with
   m\lr{\lr{r, c, h} \rightarrow t } & := 0
 \end{align}
 
-\subsection{Finding the Longest \(s\)-\(t\)-Path in \(D\)}
+\subsection{Finding the Longest s-t-Path in D}
+%\subsection{Finding the Longest \(s\)-\(t\)-Path in \(D\)}
+\todo{Reactivate math in the headline.  (Taken out to make preview work.)}
+
 
 Call \(P_s \colon V \to A^* \) the function that maps each node \(v\)
 to the longest path connecting \(s\) and \(v\).  Here \(A^*\) means
-the Kleene closure of \(A\): I.e. the set of all strings of arcs \(a
-\in A\) including the empty string.  Also let
+the Kleene closure of \(A\): \ie{} the set of all strings of arcs \(a
+\in A\) including the empty string.  View the strings as a free group
+with \(\circ{}\) as the group operator.  Also extend \(m\) from individual arcs to strings by summation:
 \begin{align*}
 m \colon A^* &\to \mathbb{R} \\
-\omega &\mapsto \sum_{a\in \omega} m \lr{a }
+\omega &\mapsto \sum_{a\in \omega} m \lr{a}
 \end{align*}
 
 To find the longest \(s\)-\(t\)-path in \(D\) is to calculate
 \(P_s (t)\).  Dynamic programming lends itself to this task.  Since
 \(D\) is acyclic we start knowing \(P_s (s) = \lambda\).
 
-For some nodes \(v \in V\) the paths \(P_s\) will be known for all its parents \(\inv{} \lr{v} \).  We conclude:
+For some nodes \(v \in V\) the paths \(P_s\) will be known for all their parents \(\inv{} \lr{v} \).  We conclude:
 \[m\lr{P_s \lr{v}} = \max_{w \in \inv(v)}
-m\lr{P_s(w) | \lr{w \rightarrow v }}\text{.}\]
+m\lr{P_s(w) \circ{} \lr{w \rightarrow v }}\text{.}\]
 The graph \(D\) admits at least one trivial path from \(s\) to \(t\).
 Together with the acyclic and finite nature of \(D\) this guarantees that we
 learn \(P_s (t)\) eventually.  More specifically we get to know \(P_s
@@ -497,8 +514,6 @@ times, using dynamic programming.
 %\(s\)-\(w\)-distances
 
 %Topologische Sortierung, 
-
-\todo{Bilder!}
 
 \section{Extended Formulation for the Symmetric Partitioning Orbitope}
 The aforementioned Graph \(D\) can be used to derive an extended
@@ -536,10 +551,9 @@ f\lr{\outa(s)} = 1
 
 To link \(f\) to the \(x\) of our original problem (\ref{optS}) we
 introduce the following conditions that are in analogue to \ref{objLink}:
-%\todo{nachschauen, wie man die Indexbereiche unter der Summe stapelt}
 \begin{equation}
-  x \lr{ r, c }=
-  \sum_{r' - h' \leq r \leq r'; h' \leq h} f\lr{\lr{r'-h', c-1, h}
+  x \lr{ r, c } =
+  \sum_{\begin{matrix}r' - h' \leq r \leq r'\\ h' \leq h\end{matrix}} f\lr{\lr{r'-h', c-1, h}
     \rightarrow \lr{r', c, h'} }
 \end{equation}
 
@@ -551,46 +565,41 @@ reduction from another problem, that is already proven to be NP-hard.
 
 \begin{defn}[Partial symmetric partitioning orbitope]
   \label{def-subset-rows}
-  Let \(p, q \in \naturals^+\).  Fix a subset \(J \subseteq \lrE{p}\).
+  Let \(p, q \in \naturals^+\).  Fix a subset \(J := \lrE{j} \subseteq \lrE{p}\).
   Call \(\Sym_{J}\) the symmetric group acting on \(R_J\) of
   \(\M^=_{p, q}\).  Define the partial symmetric partitioning orbitope
   as \(\mathcal{S}^=_{p,q}\lr{J} := O^=_{p, q} \lr{\Sym_{J} \times
     \Sym_{C}} \).
 \end{defn}
 
-Vertices of \(\calS^=_{p,q}\lr{J}\) are lexicographically maximal elements of orbits of \(\M^=_{p,q}\) under \(\Sym_{J} \times
-    \Sym_{C}\).  Their upper \(J\) rows satisfy the conditions of lemma
-\ref{charVert}, \ie \(\lr{\calS^=_{p,q} \lr{J} }_{*,J} = \calS^=_{p,J}\).  This is because all elements of the lower
-rows \(l \subseteq \M^=_{p,  \lrE{q}\setminus J}\) have lexicographically less significant
-indices than the upper part.
+Vertices of \(\calS^=_{p,q}\lr{J}\) are lexicographically maximal
+elements of orbits of \(\M^=_{p,q}\) under \(\Sym_{J} \times
+\Sym_{C}\).  Their upper \(J\) rows satisfy the conditions of lemma
+\ref{charVert}, so \(\lr{\calS^=_{p,q} \lr{J} }_{*,J} =
+\calS^=_{p,J}\).  This is because all elements of the lower rows \(l
+\subseteq \M^=_{p, \lrE{q}\setminus J}\) have lexicographically less
+significant indices than the upper part.
 
-Below the structure is more complicated: Consider the set \(l\lr{u} :=\lrM{ m  \mid  \lr{\begin{matrix}u\\m\end{matrix}} \in \calS^=_{p,q}\lr{J}}\)
-of lower rows that complement a given upper part \(u\in\calS^=_{J,q}\).
-The columns are partitioned naturally by the sum of their entries in the upper part \(u\): \(E_s = \lrM{\lr{i,*} \mid \mathop{sum} \lr{u_{i,*}} = s}\).
+Below the structure is more complicated: Consider the set \[l\lr{u}
+:=\lrM{ m \mid \lr{\begin{matrix}u\\m\end{matrix}} \in
+  \calS^=_{p,q}\lr{J}}\] of lower rows that complement a given upper
+part \(u\in\calS^=_{J,q}\).  The columns are naturally partitioned
+into equivalence classes by the sum of their entries in the upper part
+\(u\): \[E_s = \lrM{\lr{i,*} \mid \mathop{sum} \lr{u_{i,*}} =
+  s}\text{.}\]
+\begin{remark}
+\label{rem_sym}
+With a fixed upper part \(u\) the set of lower parts \(l\lr{u}\) shows
+less symmetry than the original permutation of all columns.  We can
+only swap columns in the same equivalence class, thus the symmetric
+group whose action on \(l\lr{u}\) preserves objective values is
+\(\lr{\begin{matrix}u\\l\end{matrix}}\) is \(\prod_{s\in \naturals} E_s\).
+\end{remark}
 
-\todo{Weitermachen!  \(\sym{E_s} \dots\)}
 
-%For a set matrix \(m \subset \(\calS^=_{p,q}\lr{J}\)\) fixed upper part let
-%\(E\) be a partition of rows by the sum of entries in their upper \(J\) rows
-
-
-\todo{Describe lexicographically maximal elements of the orbits of
-  \(\Sym_J \times \Sym_C\)}
-
-Let's examine the vertices of
-\(\mathcal{S}^=_{p,q}\lr{J}\), \ie{} the lexicographically maximal
-elements of the orbits of \(\Sym_J \times \Sym_C\) acting on
-\(\M^=_{p,q}\).
-
-\begin{theorem}[Subset of rows]
-  \label{subset-rows}
-  Optimizing a linear function \(d \in \Hom\lr{\rationals^{p,q},\rationals}\) over the partial symmetric partitioning orbitope
-  \(\mathcal{S}^=_{p, q}\lr{I}\) is NP-hard.
-\end{theorem}
-
-For the proof of theorem \ref{subset-rows}, we will need a result by
-Yuri Faenza\todo{Wer noch? + Quelle.  Nachfragen!}:
-
+Here we introduce a result of Yuri Faenza\todo{Wer noch? + Quelle.
+  Nachfragen!}.  It establishes the NP-hardness of the problem we want
+to reduce to optimization over \(\calS^=_{p,q}\lr{J}\).
 \begin{theorem}[``Pairwise permutations of columns are NP-hard'']
   \label{pairwise}
   For some \(p, q \in \naturals^+\) consider the partitioning matrices
@@ -601,6 +610,15 @@ Yuri Faenza\todo{Wer noch? + Quelle.  Nachfragen!}:
   Optimizing a linear objective function \(c \in \Hom\lr{\rationals^{p \times
     q}, \rationals}\) over \(O^=_{p, q} \lr{P_I}\) is NP-hard.
 \end{theorem}
+
+
+\begin{theorem}[Subset of rows]
+  \label{subset-rows}
+  Optimizing a linear function \(d \in \Hom\lr{\rationals^{p,q},\rationals}\) over the partial symmetric partitioning orbitope
+  \(\mathcal{S}^=_{p, q}\lr{I}\) is NP-hard.
+\end{theorem}
+
+
 
 \begin{proof}[Proof of `Subset of rows']
   We prove theorem \ref{subset-rows} by reducing the problem given in
@@ -651,7 +669,7 @@ Yuri Faenza\todo{Wer noch? + Quelle.  Nachfragen!}:
   We want to force the upper \(e\) rows so that columns that permute
   in \(P_I\) have the same number of 1-entries.  The number of
   1-entries per column can not increase as we go from left to
-  right. \todo{Describe the vertices above.}
+  right.
 
   So we choose the number \(\Delta\lr{j}\) of ones per column \(j\) such that
   \begin{align}
@@ -669,7 +687,7 @@ Yuri Faenza\todo{Wer noch? + Quelle.  Nachfragen!}:
  above.
  
  Now only the objective function \(d\) is left to be defined, so that it
- actually enforce the structure of ones and zeroes that we desire:
+ actually enforces the structure of ones and zeroes that we desire:
  \begin{align}
    d & \in \Hom \lr{\rationals^{\lr{e + p} \times q}, \rationals} \\
    \nonumber
@@ -692,67 +710,12 @@ Yuri Faenza\todo{Wer noch? + Quelle.  Nachfragen!}:
  \begin{align}
    \hat{c} := \max c \lr{m} \text{ s.t. } m \in O^=_{p, q} \lr{P_I}
  \end{align}
- \todo{Why does the lower part of the new matrix resemble the old matrix?} 
  you just exploit
  \begin{align}
    \hat{c} = \hat{d} - s \cdot e \text{.}
  \end{align}
-
+ Together with remark \ref{rem_sym} this proves the result.
 \end{proof}
-
-% For a natural number \(a \leq q\), let \(G_{Rows} = S_a\) act on
-% the first \(a\) rows.  As usually \(G_{Columns} = S_p\) acts on
-% all columns.  Look at the orbits of \(G_{Columns} \times G_{Rows}\)
-% and take each orbit's lexicographically smallest member as its
-% representative.
-
-% \[\lrE{\lr{\begin{matrix}
-% 1 & 0 & 0 \\
-% 0 & 1 & 0 \\
-% 0 & 1 & 0 \\
-% 0 & 0 & 1\\
-% \end{matrix}
-% }}
-% \]
-
-
-% In a representative the columns will be sorted, and the last rows,
-% too.  But we can demand even more.  Say \(a = 3\), then the following
-% two matrices satisfy both condition, but are still in the same
-% equivalency class:
-
-% \[\lrE{\lr{\begin{matrix}
-% 1 & 0 & 0 \\
-% 0 & 1 & 0 \\
-% 0 & 1 & 0 \\
-% 0 & 0 & 1 \\
-% \end{matrix}}} = \lrE{\lr{\begin{matrix}
-% 1 & 0 & 0 \\
-% 0 & 1 & 0 \\
-% 0 & 1 & 0 \\
-% 0 & 0 & 1 \\
-% \end{matrix}}}
-% \]
-
-
-
-% [1 0 0
-% ,0 1 0
-% ,0 1 0
-% ,0 0 1]
-
-% [1 0 0
-% ,0 1 0
-% ,0 0 1
-% ,0 0 1]
-
-% S_t auf t-elementiger Teilmengen der Zeilen:
-% z.B. erste t-Zeilen,
-%      letzte t-Zeilen
-% beliebige t-Zeilen (erstmal t=2)
-
-%\section{Cartesian Products of Symmetric Groups}
-%Kartesisches Produkt von symmetrischen Gruppen (vereinfachung?)
 
 \bibliographystyle{plain}
 \bibliography{quellen}
