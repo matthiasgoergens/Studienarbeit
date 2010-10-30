@@ -343,9 +343,10 @@ orbitope \(\calS^=_{p, q}\) of size \(p, q \in \naturals^{>0}\)V.
 
 \begin{proof}
   We will prove lemma \ref{charVert} in two parts.  First we show that
-  \(\calS{}^=_{p, q}\) has no vertices other than described.  Then we
-  show that all the elements of \(\M^=_{p, q}\) that meet the
-  conditions are truly vertices of \(\calS^=_{p, q}\). 
+  \(\calO{}^=_{p, q}\) has no vertices other than described.  Then we
+  show that all the elements of \(\M^=_{p, q}\) that meet the conditions are truly vertices of \(\calO^=_{p, q}\).
+  \todo{Dran denken, zu zeigen, dass die vorgeblichen Vertices ueberhaupt Elemente von  \(\calO^=_{p, q}\) sind!}
+  \todo{Alternativ: Zeige dass die vorgeblichen Vertices \lex unter allen \(\M^=_{p, q}\) minimieren.}
 
   Take \(v \in \M^=_{p, q}\).  Suppose \(v\) violates condition
   \ref{cond1}.  Then we can find another matrix \(w\) in the orbit of
@@ -368,9 +369,6 @@ orbitope \(\calS^=_{p, q}\) of size \(p, q \in \naturals^{>0}\)V.
 
   Now suppose \(v \in \M^=_{p, q}\) satisfies condition \ref{cond1}, but violates
   condition \ref{cond2}.  Look at the leftmost violation:
-
-
-
   \(s := \mathop{sum} \lr{v_{*,j}} < \mathop{sum} \lr{v_{*,j+1}} := S\) where \(j \in
   \lrE{q}\) minimal.  Let all 1-entries of those columns lie in
   \(v_{\lrE{a,a+s-1},j}\) and \(v_{\lrE{a+s,a+s+S-1},j+1}\).  By
@@ -402,8 +400,7 @@ orbitope \(\calS^=_{p, q}\) of size \(p, q \in \naturals^{>0}\)V.
 %   and columns.  \(S\) acts on \(\M_{p,q}\).
 
 Computer generated examples suggest that no polynomial in \(p \cdot
-q\) limits the number of facettes of the symmetric partioning
-orbitope.
+q\) limits the number of facets of the symmetric partioning orbitope.
 
 But - I will show an extended formulation for \(S^=_{p, q}\) by linear
 inequalities in a higher dimension that is polynomially bounded in
